@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccds6drvg4py2"]
+
+[ext_resource type="Script" path="res://src/units/Architect.gd" id="1_l6t7a"]
+[ext_resource type="Texture2D" uid="uid://cwew6rfuf01ay" path="res://assets/prototype/player.png" id="2_ealhd"]
+[ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="3_r4cj1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_766fm"]
+size = Vector2(12, 12)
+
+[node name="Architect" type="CharacterBody2D"]
+position = Vector2(444, 360)
+script = ExtResource("1_l6t7a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("2_ealhd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_766fm")
+
+[node name="ActionQueue" type="Node" parent="."]
+script = ExtResource("3_r4cj1")
+
+[node name="ActionPath" type="Line2D" parent="ActionQueue"]
+width = 1.5
+default_color = Color(0, 0.596078, 0.596078, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2

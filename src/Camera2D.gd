@@ -29,7 +29,3 @@ func _process(_dt):
 	if Input.is_action_pressed("ui_pan_camera"):
 		var deltaMousePosition = get_local_mouse_position() - panStartMousePosition
 		position = panStartCameraPosition + deltaMousePosition * PAN_SPEED
-		print(get_local_mouse_position())
-		
-		
-		

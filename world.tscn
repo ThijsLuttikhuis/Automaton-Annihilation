@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://buvbgg2tiq82g"]
+[gd_scene load_steps=11 format=3 uid="uid://buvbgg2tiq82g"]
 
 [ext_resource type="Script" path="res://src/Camera2D.gd" id="1_3rnb4"]
 [ext_resource type="Texture2D" uid="uid://bsj2bfyn7pldx" path="res://assets/prototype/tilesgrass.png" id="1_8j2s4"]
@@ -11,50 +11,28 @@
 resource_name = "background"
 texture = ExtResource("1_8j2s4")
 0:0/0 = 0
-0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-0:0/0/physics_layer_0/angular_velocity = 0.0
 1:0/0 = 0
-1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-1:0/0/physics_layer_0/angular_velocity = 0.0
 0:1/0 = 0
-0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-0:1/0/physics_layer_0/angular_velocity = 0.0
 1:1/0 = 0
-1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-1:1/0/physics_layer_0/angular_velocity = 0.0
 2:0/0 = 0
-2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-2:0/0/physics_layer_0/angular_velocity = 0.0
 2:1/0 = 0
-2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-2:1/0/physics_layer_0/angular_velocity = 0.0
 3:1/0 = 0
-3:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-3:1/0/physics_layer_0/angular_velocity = 0.0
 3:0/0 = 0
-3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-3:0/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j7o0o"]
 resource_name = "drill"
 texture = ExtResource("2_les3x")
 0:0/0 = 0
-0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-0:0/0/physics_layer_0/angular_velocity = 0.0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.3125, -6.875, 6.8125, -7, 5.1875, 1, -0.0625, 8, -5.3125, 1.25)
 
 [sub_resource type="TileSet" id="TileSet_ipf82"]
-physics_layer_0/collision_layer = 1
-custom_data_layer_0/name = "nodePath"
-custom_data_layer_0/type = 22
 sources/0 = SubResource("TileSetAtlasSource_p2iv7")
 sources/1 = SubResource("TileSetAtlasSource_j7o0o")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cx40e"]
+
 [node name="World" type="Node2D"]
 
-[node name="Buildings" type="Node" parent="."]
-
-[node name="WorldTileMap" type="TileMap" parent="Buildings"]
+[node name="WorldTileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_ipf82")
 format = 2
 layer_0/name = "Floor"
@@ -75,6 +53,8 @@ layer_2/z_index = 2
 layer_2/tile_data = PackedInt32Array()
 script = ExtResource("3_hyaog")
 
+[node name="Buildings" type="Node" parent="."]
+
 [node name="Units" type="Node" parent="."]
 
 [node name="Architect" parent="Units" instance=ExtResource("1_s5w5l")]
@@ -87,3 +67,8 @@ script = ExtResource("5_fs5se")
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position_smoothing_speed = 12.0
 script = ExtResource("1_3rnb4")
+
+[node name="SelectBox" type="Area2D" parent="Player"]
+
+[node name="CollisionRectangle" type="CollisionShape2D" parent="Player/SelectBox"]
+shape = SubResource("RectangleShape2D_cx40e")

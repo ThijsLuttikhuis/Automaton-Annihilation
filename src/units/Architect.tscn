@@ -9,6 +9,8 @@ size = Vector2(12, 12)
 
 [node name="Architect" type="CharacterBody2D"]
 position = Vector2(444, 360)
+motion_mode = 1
+wall_min_slide_angle = 0.0872665
 script = ExtResource("1_l6t7a")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

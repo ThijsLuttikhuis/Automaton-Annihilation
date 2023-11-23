@@ -1,7 +1,6 @@
 class_name MoveAction extends UnitAction
 
 func _init(targetPos):
-	typeName = "MoveAction"
 	actionPosition = targetPos
 	
 func update(unit: Unit):

@@ -1,10 +1,6 @@
-class_name UnitAction
+class_name UnitAction extends Node
 
-var typeName: String
 var actionPosition: Vector2
-
-func _init():
-	typeName = "UnitAction"
 
 func update(_unit: Unit):
 	print("Unimplemented unit action update")

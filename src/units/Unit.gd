@@ -1,6 +1,7 @@
-class_name Unit extends CharacterBody2D
+class_name Unit extends PhysicsBody2D
 
 var player: Node
+var actionQueue : ActionQueue
 
 var selectedActionPriority: int = 0
 
@@ -9,22 +10,17 @@ var viewRange: float = 100.0
 var radarRange: float = 100.0
 
 func _ready():
-	player = get_node('../../Player')
-	var selectBox = player.get_node('SelectBox')
-	selectBox.body_entered.connect(_on_body_entered)
-	selectBox.body_exited.connect(_on_body_exited)
+	player = get_node('/root/World/Player')
+	actionQueue = get_node('ActionQueue')
 	
-func _physics_process(_dt):
-	var aq = get_node("ActionQueue")
-	aq.update(self)
+	on_ready()
+
+func on_ready():
+	pass # can be overwritten
 	
-	if moveSpeed > 0.0:
-		move_and_slide()
-
-
-func _on_body_entered(body):
-	player.addSelectedElement(body)
-
-func _on_body_exited(body):
-	player.removeSelectedElement(body)
+func _physics_process(dt):
+	actionQueue.update(self)
+	on_physics_process(dt)
 	
+func on_physics_process(_dt):
+	pass # can be overwritten	

@@ -1,7 +1,8 @@
 class_name ActionList
 
-var buildingsEconomy: int = 0
-var buildingsDefense: int = 0
-var buildingsUtility: int = 0
-var buildingsFactory: int = 0
+#TODO: make array of strings / identifiers to a central packed scene storage
+var buildingsEconomy: Array[PackedScene] = []
+var buildingsDefense: Array[PackedScene] = []
+var buildingsUtility: Array[PackedScene] = []
+var buildingsFactory: Array[PackedScene] = []
 

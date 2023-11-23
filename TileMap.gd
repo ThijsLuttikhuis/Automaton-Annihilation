@@ -7,7 +7,7 @@ extends TileMap
 #			var clickedCellIndex = local_to_map(mousePos)
 #			var data = get_cell_tile_data(1, clickedCellIndex)
 #			if data:
-#				print(data)
+#				print		(data)
 #
 #	if event is InputEventMouseMotion:
 #		var mousePos = get_viewport().get_camera_2d().get_global_mouse_position()

@@ -11,7 +11,7 @@ var panStartCameraPosition
 
 func _ready():
 	panStartMousePosition = Vector2()
-	panStartCameraPosition = Vector2();
+	panStartCameraPosition = Vector2()
 
 func _process(_dt):
 	if Input.is_action_just_pressed("ui_zoom_in"):

@@ -13,7 +13,3 @@ func update(unit: Unit):
 	else:
 		unit.velocity = deltaPos.normalized() * unit.moveSpeed
 		return false
-	
-	
-	
-	

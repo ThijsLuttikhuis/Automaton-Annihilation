@@ -8,20 +8,24 @@ func _ready():
 	line.clear_points()
 	line.add_point(get_parent().position)
 
-func push_back(value: UnitAction):
-	actions.push_back(value)
-	line.add_point(value.actionPosition)
+func push_back(values: Array[UnitAction]):
+	for value in values:
+		actions.push_back(value)
+		line.add_point(value.actionPosition)
 
 func pop_back():
 	actions.pop_back();
 
-func push_front(value: UnitAction):
-	actions.push_front(value)
-	line.add_point(value.actionPosition, 1)
-
+func push_front(values: Array[UnitAction]):
+	values.reverse()
+	for value in values:
+		actions.push_front(value)
+		line.add_point(value.actionPosition, 1)
+	values.reverse()
+	
 func pop_front():
 	actions.pop_front()
-	line.remove_point(1);
+	line.remove_point(1)
 
 func clear():
 	actions.clear()
@@ -34,6 +38,6 @@ func update(unit: Unit):
 		return
 	
 	var currentAction = actions.front()
-	var completed = currentAction.update(unit);
+	var completed = currentAction.update(unit)
 	if completed:
 		pop_front()

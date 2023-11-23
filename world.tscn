@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://buvbgg2tiq82g"]
+[gd_scene load_steps=12 format=3 uid="uid://buvbgg2tiq82g"]
 
 [ext_resource type="Script" path="res://src/Camera2D.gd" id="1_3rnb4"]
 [ext_resource type="Texture2D" uid="uid://bsj2bfyn7pldx" path="res://assets/prototype/tilesgrass.png" id="1_8j2s4"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bxgytyvis418g" path="res://assets/prototype/miningdrill.png" id="2_les3x"]
 [ext_resource type="Script" path="res://TileMap.gd" id="3_hyaog"]
 [ext_resource type="Script" path="res://Player.gd" id="5_fs5se"]
+[ext_resource type="Texture2D" uid="uid://dgpggh1oxsyga" path="res://assets/prototype/pixel.png" id="7_erhid"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p2iv7"]
 resource_name = "background"
@@ -29,6 +30,7 @@ sources/0 = SubResource("TileSetAtlasSource_p2iv7")
 sources/1 = SubResource("TileSetAtlasSource_j7o0o")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cx40e"]
+size = Vector2(0, 0)
 
 [node name="World" type="Node2D"]
 
@@ -72,3 +74,7 @@ script = ExtResource("1_3rnb4")
 
 [node name="CollisionRectangle" type="CollisionShape2D" parent="Player/SelectBox"]
 shape = SubResource("RectangleShape2D_cx40e")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player/SelectBox/CollisionRectangle"]
+self_modulate = Color(0.572549, 0.811765, 0.843137, 0.454902)
+texture = ExtResource("7_erhid")

@@ -1,8 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://ccds6drvg4py2"]
+[gd_scene load_steps=7 format=3 uid="uid://ccds6drvg4py2"]
 
 [ext_resource type="Script" path="res://src/units/Architect.gd" id="1_l6t7a"]
 [ext_resource type="Texture2D" uid="uid://cwew6rfuf01ay" path="res://assets/prototype/player.png" id="2_ealhd"]
+[ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_utb4v"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="3_r4cj1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tt46g"]
+shader = ExtResource("2_utb4v")
+shader_parameter/outline_width = 0.0
+shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_766fm"]
 size = Vector2(12, 12)
@@ -14,6 +20,7 @@ wall_min_slide_angle = 0.0872665
 script = ExtResource("1_l6t7a")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_tt46g")
 position = Vector2(0, -8)
 texture = ExtResource("2_ealhd")
 

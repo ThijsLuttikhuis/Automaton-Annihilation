@@ -1,17 +1,17 @@
 [gd_scene load_steps=14 format=3 uid="uid://buvbgg2tiq82g"]
 
-[ext_resource type="Script" path="res://src/Camera2D.gd" id="1_3rnb4"]
-[ext_resource type="Texture2D" uid="uid://bsj2bfyn7pldx" path="res://assets/prototype/tilesgrass.png" id="1_8j2s4"]
-[ext_resource type="PackedScene" uid="uid://ccds6drvg4py2" path="res://src/units/Architect.tscn" id="1_s5w5l"]
-[ext_resource type="Texture2D" uid="uid://bxgytyvis418g" path="res://assets/prototype/miningdrill.png" id="2_les3x"]
-[ext_resource type="Texture2D" uid="uid://co0cidvch2o7v" path="res://assets/prototype/Shack.png" id="3_4saw5"]
-[ext_resource type="Script" path="res://TileMap.gd" id="3_hyaog"]
-[ext_resource type="Script" path="res://Player.gd" id="5_fs5se"]
-[ext_resource type="Texture2D" uid="uid://dgpggh1oxsyga" path="res://assets/prototype/pixel.png" id="7_erhid"]
+[ext_resource type="Texture2D" uid="uid://bsj2bfyn7pldx" path="res://assets/prototype/tilesgrass.png" id="1_wmt4j"]
+[ext_resource type="Texture2D" uid="uid://bxgytyvis418g" path="res://assets/prototype/miningdrill.png" id="2_6enuf"]
+[ext_resource type="Texture2D" uid="uid://co0cidvch2o7v" path="res://assets/prototype/Shack.png" id="3_vpcjv"]
+[ext_resource type="Script" path="res://src/TileMap.gd" id="4_pg3by"]
+[ext_resource type="PackedScene" uid="uid://ccds6drvg4py2" path="res://src/units/Architect.tscn" id="5_et8q4"]
+[ext_resource type="Script" path="res://src/Player.gd" id="6_fa16l"]
+[ext_resource type="Script" path="res://src/Camera2D.gd" id="7_viimw"]
+[ext_resource type="Texture2D" uid="uid://dgpggh1oxsyga" path="res://assets/prototype/pixel.png" id="8_2txfb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p2iv7"]
 resource_name = "background"
-texture = ExtResource("1_8j2s4")
+texture = ExtResource("1_wmt4j")
 0:0/0 = 0
 1:0/0 = 0
 0:1/0 = 0
@@ -23,11 +23,11 @@ texture = ExtResource("1_8j2s4")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j7o0o"]
 resource_name = "drill"
-texture = ExtResource("2_les3x")
+texture = ExtResource("2_6enuf")
 0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mek4v"]
-texture = ExtResource("3_4saw5")
+texture = ExtResource("3_vpcjv")
 0:0/0 = 0
 1:0/0 = 0
 0:1/0 = 0
@@ -64,22 +64,22 @@ layer_2/y_sort_enabled = false
 layer_2/y_sort_origin = 0
 layer_2/z_index = 2
 layer_2/tile_data = PackedInt32Array()
-script = ExtResource("3_hyaog")
+script = ExtResource("4_pg3by")
 
 [node name="Buildings" type="Node" parent="."]
 
 [node name="Units" type="Node" parent="."]
 
-[node name="Architect" parent="Units" instance=ExtResource("1_s5w5l")]
+[node name="Architect" parent="Units" instance=ExtResource("5_et8q4")]
 z_index = 999
 position = Vector2(385, 362)
 
 [node name="Player" type="Node" parent="."]
-script = ExtResource("5_fs5se")
+script = ExtResource("6_fa16l")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position_smoothing_speed = 12.0
-script = ExtResource("1_3rnb4")
+script = ExtResource("7_viimw")
 
 [node name="SelectBox" type="Area2D" parent="Player"]
 
@@ -88,4 +88,4 @@ shape = SubResource("RectangleShape2D_cx40e")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player/SelectBox/CollisionRectangle"]
 self_modulate = Color(0.572549, 0.811765, 0.843137, 0.454902)
-texture = ExtResource("7_erhid")
+texture = ExtResource("8_2txfb")

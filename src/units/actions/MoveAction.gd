@@ -3,7 +3,7 @@ class_name MoveAction extends UnitAction
 func _init(targetPos):
 	actionPosition = targetPos
 	
-func update(unit: Unit):
+func update(unit: Unit, _dt):
 	var deltaPos = actionPosition - unit.position;
 	if deltaPos.length_squared() < 10:
 		actionPosition = unit.position

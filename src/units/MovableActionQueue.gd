@@ -31,12 +31,12 @@ func clear():
 	line.clear_points()
 	line.add_point(get_parent().position)
 
-func update(unit: Unit):
+func update(unit: Unit, dt):
 	line.points[0] = get_parent().position
 	if actions.is_empty():
 		return
 	
 	var currentAction = actions.front()
-	var completed = currentAction.update(unit)
+	var completed = currentAction.update(unit, dt)
 	if completed:
 		pop_front()

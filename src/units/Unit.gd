@@ -1,7 +1,7 @@
 class_name Unit extends PhysicsBody2D
 
 var player: Node
-var actionQueue : ActionQueue
+var actionQueue: ActionQueue
 
 var selectedActionPriority: int = 0
 
@@ -19,7 +19,7 @@ func on_ready():
 	pass # can be overwritten
 	
 func _physics_process(dt):
-	actionQueue.update(self)
+	actionQueue.update(self, dt)
 	on_physics_process(dt)
 	
 func on_physics_process(_dt):

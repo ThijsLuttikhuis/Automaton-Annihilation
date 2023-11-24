@@ -1,4 +1,4 @@
-extends Node
+class_name Player extends Node
 
 enum BUILD_MENU {NONE, ECONOMY, DEFENSE, UTILITY, FACTORY}
 
@@ -46,7 +46,7 @@ func updateSelectUnits():
 		if isBuilding:
 			pass
 			# TODO: show blueprint of buildings that would be built
-		else:	
+		else:
 			setCollisionBoxTransform((mouseClickPosition + mouseClickPath[0]) * 0.5, abs(deltaPos))
 	
 	if Input.is_action_just_released("mouse_button_1"):
@@ -54,7 +54,6 @@ func updateSelectUnits():
 		setCollisionBoxTransform(Vector2(9e9,9e9), Vector2(0,0))
 		
 		if isBuilding:
-
 			var buildingsNode = $"../Buildings"
 			var tileMapNode = $"../WorldTileMap"
 			if Input.is_action_pressed("ui_push_back_queue"):
@@ -70,6 +69,7 @@ func updateSelectUnits():
 				if data:
 					return # cell occupied 
 				
+				# add building as actionqueue item
 				var newBuilding = buildmenuBuilding.instantiate()
 				buildingsNode.add_child(newBuilding)
 				newBuilding.position = tileMapNode.map_to_local(clickedCellIndex)

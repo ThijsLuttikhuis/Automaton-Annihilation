@@ -10,8 +10,8 @@ var viewRange: float = 100.0
 var radarRange: float = 100.0
 
 func _ready():
-	player = get_node('/root/World/Player')
-	actionQueue = get_node('ActionQueue')
+	player = $"/root/World/Player"
+	actionQueue = $"ActionQueue"
 	
 	on_ready()
 
@@ -19,8 +19,20 @@ func on_ready():
 	pass # can be overwritten
 	
 func _physics_process(dt):
+	if !actionQueue:
+		return
+		
 	actionQueue.update(self, dt)
 	on_physics_process(dt)
 	
 func on_physics_process(_dt):
 	pass # can be overwritten	
+
+func makeGhost():
+	var collisionShape = $"CollisionShape2D"
+	collisionShape.queue_free()
+	actionQueue.queue_free()
+	get_node("Sprite2D").material.set_shader_parameter("ghost_greyout", true)
+
+
+

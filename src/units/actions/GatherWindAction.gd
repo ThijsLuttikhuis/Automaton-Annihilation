@@ -11,12 +11,9 @@ func _init(targetPos, efficiency_):
 	
 func update(unit: Unit, dt):
 	time += dt
-	if time < gatherWindTime:
-		return
-	
-	time -= gatherWindTime
-	var world = unit.player.get_parent()
-	var windSpeed = world.getWindSpeed()
-	var energyGain = windSpeed * gatherWindTime * efficiency
-	world.addEnergy(energyGain)
-	print("energy: ", world.getEnergy())
+	if fmod(time, gatherWindTime) < dt:
+		var world = unit.player.get_parent()
+		var windSpeed = world.getWindSpeed()
+		var energyGain = windSpeed * gatherWindTime * efficiency
+		world.addEnergy(energyGain)
+		print("energy: ", world.getEnergy())

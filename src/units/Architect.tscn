@@ -8,13 +8,13 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tt46g"]
 shader = ExtResource("2_utb4v")
 shader_parameter/outline_width = 0.0
+shader_parameter/ghost_greyout = false
 shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_766fm"]
 size = Vector2(12, 12)
 
 [node name="Architect" type="CharacterBody2D"]
-position = Vector2(444, 360)
 motion_mode = 1
 wall_min_slide_angle = 0.0872665
 script = ExtResource("1_l6t7a")

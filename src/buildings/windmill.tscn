@@ -8,6 +8,7 @@
 resource_local_to_scene = true
 shader = ExtResource("1_lhhw2")
 shader_parameter/outline_width = 0.0
+shader_parameter/ghost_greyout = false
 shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pqj30"]

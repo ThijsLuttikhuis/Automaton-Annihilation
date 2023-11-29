@@ -162,8 +162,6 @@ script = ExtResource("5_ir102")
 
 [node name="GhostBuildings" type="Node" parent="."]
 
-[node name="ActionGhostBuildings" type="Node" parent="."]
-
 [node name="Units" type="Node" parent="."]
 
 [node name="Architect" parent="Units" instance=ExtResource("6_ixb8k")]

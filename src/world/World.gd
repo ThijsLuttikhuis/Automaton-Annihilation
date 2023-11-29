@@ -40,9 +40,6 @@ func _physics_process(dt):
 		windSpeed = min(max(windSpeed, \
 			minWindSpeed - windSpeedVariationMinMaxDelta), \
 			maxWindSpeed + windSpeedVariationMinMaxDelta)
-		
-		print("updateWind: " + str(windSpeed))
-		print("deltaWind:  " + str(deltaWindSpeed))
 
 func addEnergy(energyGain):
 	energy += energyGain

@@ -1,31 +1,51 @@
 class_name ActionQueue extends Node
 
+var paused: bool = false
+
+var line: Line2D
+
 var actions: Array[UnitAction]
 var passives: Array[UnitAction]
 
+func _ready():
+	line = get_node("ActionPath")
+	line.clear_points()
+	line.add_point(get_parent().position)
+	
 func push_back(values: Array[UnitAction]):
 	for value in values:
 		if value.isPassive:
 			passives.push_back(value)
 		else:
 			actions.push_back(value)
-
-#func pop_back():
-#	actions.pop_back();
+			line.add_point(value.actionPosition)
 
 func push_front(values: Array[UnitAction]):
 	values.reverse()
 	for value in values:
-		actions.push_front(value)
+		if value.isPassive:
+			passives.push_front(value)
+		else:
+			actions.push_front(value)
+			line.add_point(value.actionPosition, 1)
 	values.reverse()
 
-#func pop_front():
-#	actions.pop_front()
+func pop_front():
+	actions.pop_front()
+	line.remove_point(1)
 
 func clear():
 	actions.clear()
+	line.clear_points()
+	line.add_point(get_parent().position)
 
 func update(unit: Unit, dt):
+	if !line.points.is_empty():
+		line.points[0] = get_parent().position
+		
+	if paused:
+		return
+		
 	updatePassives(unit, dt)
 	updateActions(unit, dt)
 
@@ -46,4 +66,4 @@ func updateActions(unit, dt):
 	var action = actions.front()
 	var completed = action.update(unit, dt)
 	if completed:
-		actions.pop_front()
+		pop_front()

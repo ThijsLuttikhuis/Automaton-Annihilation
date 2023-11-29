@@ -11,4 +11,3 @@ func onClickPlay():
 
 func onClickSettings():
 	print("settings")
-

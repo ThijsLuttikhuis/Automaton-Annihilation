@@ -14,5 +14,3 @@ func _process(_dt):
 	var windSpeed = world.getWindSpeed()
 	var windSpeedDisplay = $"TopDisplayBackground/WindSpeedDisplay"
 	windSpeedDisplay.text = "Wind Speed: " + str(round(windSpeed * 10.0) / 10.0)
-	
-	

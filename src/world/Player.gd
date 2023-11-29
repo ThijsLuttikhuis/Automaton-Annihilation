@@ -4,6 +4,8 @@ enum BUILD_MENU {NONE, ECONOMY, DEFENSE, UTILITY, FACTORY}
 
 const MIN_DIST_BETWEEN_MOVE_POINTS = 5
 
+var hud: Node
+
 var buildmenuState: BUILD_MENU = BUILD_MENU.NONE
 var buildmenuBuilding: PackedScene = null
 
@@ -18,6 +20,7 @@ func _ready():
 	var selectBox = $"SelectBox"
 	selectBox.body_entered.connect(addSelectedUnit)
 	selectBox.body_exited.connect(removeSelectedUnit)
+	hud = $"../HUD"
 	
 func _process(_dt):
 	mousePosition = get_viewport().get_camera_2d().get_global_mouse_position()
@@ -27,8 +30,7 @@ func _process(_dt):
 		if Input.is_action_pressed("mouse_button_2"):
 			return
 		if Input.is_action_just_released("mouse_button_2"):
-			buildmenuState = BUILD_MENU.NONE
-			buildmenuBuilding = null
+			setBuildMenuState(BUILD_MENU.NONE)
 			return
 	
 	updateSelectUnits()
@@ -53,14 +55,12 @@ func updateSelectUnits():
 	if Input.is_action_just_released("mouse_button_1"):
 		setCollisionBoxTransform(Vector2(9e9,9e9), Vector2(0,0))
 		
-		if buildmenuBuilding:			
-			var unit = selectedUnits[0]
+		if buildmenuBuilding:
+			var unit = getMainSelectedUnit()
 			if unit is BuildUnit:
 				var newBuildActions = convertToBuildActions()
 				pushToActionQueue(unit, newBuildActions)
-				buildmenuState = BUILD_MENU.NONE
-				buildmenuBuilding = null
-		
+				setBuildMenuState(BUILD_MENU.NONE)
 		else:
 			# selected a box
 			if selectedUnits.is_empty():
@@ -70,57 +70,51 @@ func updateSelectUnits():
 				print("selected elements: ", unit.name)
 			
 			selectedUnits.sort_custom(sortBySelectedActionPriority)
-			var unit = selectedUnits[0]
+			var unit = getMainSelectedUnit()
+			hud.updateBuildMenuPanel(buildmenuState, buildmenuBuilding)
 			#TODO set highest prio unit to show build queue in UI
 		
 		mouseClickPath.clear()
 		
 func updateUIBuildmenu():
 	if selectedUnits.is_empty():
-		buildmenuState = BUILD_MENU.NONE
 		return
 		
 	if Input.is_action_just_pressed("ui_cancel"):
-		buildmenuState = BUILD_MENU.NONE
-		print(buildmenuState)
+		setBuildMenuState(BUILD_MENU.NONE)
 		return
 	
 	if buildmenuState == BUILD_MENU.NONE:
 		if Input.is_action_just_pressed("ui_buildmenu_economy"):
-			buildmenuState = BUILD_MENU.ECONOMY
+			setBuildMenuState(BUILD_MENU.ECONOMY)
 			print(buildmenuState)
 			return
 			
 		if Input.is_action_just_pressed("ui_buildmenu_defense"):
-			buildmenuState = BUILD_MENU.DEFENSE
+			setBuildMenuState(BUILD_MENU.DEFENSE)
 			print(buildmenuState)
 			return
 			
 		if Input.is_action_just_pressed("ui_buildmenu_utility"):
-			buildmenuState = BUILD_MENU.UTILITY
+			setBuildMenuState(BUILD_MENU.UTILITY)
 			print(buildmenuState)
 			return
 			
 		if Input.is_action_just_pressed("ui_buildmenu_factory"):
-			buildmenuState = BUILD_MENU.FACTORY
+			setBuildMenuState(BUILD_MENU.FACTORY)
 			print(buildmenuState)
 			return
 	
-	if selectedUnits.is_empty():
-		return
-	
-	var element = selectedUnits[0]
-	
-	if element is BuildUnit:
+	var unit = getMainSelectedUnit()
+	if unit is BuildUnit:
 		for i in range(12):
 			var uibmstr = "ui_buildmenu_" + str(i)
 			if Input.is_action_just_pressed(uibmstr):
 				print(buildmenuState, str(i))
-				if buildmenuState == BUILD_MENU.ECONOMY:
-					var buildings = element.buildActionList.buildingsEconomy
-					if i < buildings.size():
-						buildmenuBuilding = buildings[i];
-						break
+				var buildings = unit.getBuildActionList(buildmenuState)
+				if i < buildings.size():
+					buildmenuBuilding = buildings[i];
+					break
 
 func updateActionQueue():
 	if selectedUnits.is_empty():
@@ -129,8 +123,7 @@ func updateActionQueue():
 	if Input.is_action_just_pressed("mouse_button_2"):
 		mouseClickPath.clear()
 		mouseClickPath.push_back(mousePosition)
-		buildmenuState = BUILD_MENU.NONE
-		buildmenuBuilding = null
+		setBuildMenuState(BUILD_MENU.NONE)
 		
 	if Input.is_action_pressed("mouse_button_2"):
 		mouseClickPath.push_back(mousePosition)
@@ -138,7 +131,7 @@ func updateActionQueue():
 	if Input.is_action_just_released("mouse_button_2"):
 		mouseClickPath.push_back(mousePosition)
 		
-		var unit = selectedUnits[0]
+		var unit = getMainSelectedUnit()
 		if unit is BuildUnit:
 			var newMoveActions = convertToMoveActions()
 			pushToActionQueue(unit, newMoveActions)
@@ -150,9 +143,8 @@ func updateGhosts():
 	
 	var ghostBuildings = ghostBuildingsNode.get_children()
 	if !buildmenuBuilding:
-		# remove ghosts
 		for ghostBuilding in ghostBuildings:
-			if is_instance_valid(ghostBuilding):
+			if !ghostBuilding.is_queued_for_deletion():
 				ghostBuilding.queue_free()
 		return
 	
@@ -211,16 +203,19 @@ func addSelectedUnit(unit):
 	if Input.is_action_pressed("mouse_button_1"):
 		unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0.5)
 		selectedUnits.push_back(unit)
+	hud.updateBuildMenuPanel(buildmenuState, buildmenuBuilding)
 	
 func removeSelectedUnit(unit):
 	if Input.is_action_pressed("mouse_button_1"):
 		unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0)
 		selectedUnits.erase(unit)
+	hud.updateBuildMenuPanel(buildmenuState, buildmenuBuilding)
 
 func removeAllSelectedUnits():
 	for unit in selectedUnits:
 		unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0)
 	selectedUnits.clear();
+	hud.updateBuildMenuPanel(buildmenuState, buildmenuBuilding)
 	
 func setCollisionBoxTransform(pos, size):
 	collisionBox.position = pos
@@ -249,6 +244,8 @@ func convertToBuildActions():
 	
 	var ghostBuildings = ghostBuildingsNode.get_children()
 	for ghostBuilding in ghostBuildings:
+		if ghostBuilding.is_queued_for_deletion():
+			continue
 		ghostBuildingsNode.remove_child(ghostBuilding)
 		ghostBuildingsActionQueueNode.add_child(ghostBuilding)
 		var action = BuildAction.new(ghostBuilding.position, ghostBuilding)
@@ -267,3 +264,30 @@ func pushToActionQueue(unit, newActions):
 
 func sortBySelectedActionPriority(a, b):
 	return a.selectedActionPriority > b.selectedActionPriority
+
+func getMainSelectedUnit():
+	if selectedUnits.is_empty():
+		return null
+	else:
+		return selectedUnits[0]
+
+func setBuildMenuState(state: BUILD_MENU):
+	buildmenuState = state
+	if state == BUILD_MENU.NONE:
+		buildmenuBuilding = null
+	hud.updateBuildMenuPanel(buildmenuState, buildmenuBuilding)
+
+func getBuildMenuString():
+	if buildmenuState == BUILD_MENU.ECONOMY:
+		return "Economy"
+	elif buildmenuState == BUILD_MENU.DEFENSE:
+		return "Defense"
+	elif buildmenuState == BUILD_MENU.UTILITY:
+		return "Utility"
+	elif buildmenuState == BUILD_MENU.FACTORY:
+		return "Factory"
+	else:
+		return "None"
+		
+	
+	

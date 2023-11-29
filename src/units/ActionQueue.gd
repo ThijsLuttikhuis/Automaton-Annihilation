@@ -31,10 +31,13 @@ func push_front(values: Array[UnitAction]):
 	values.reverse()
 
 func pop_front():
+	actions.front().clear()
 	actions.pop_front()
 	line.remove_point(1)
 
 func clear():
+	for action in actions:
+		action.clear()
 	actions.clear()
 	line.clear_points()
 	line.add_point(get_parent().position)

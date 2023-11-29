@@ -18,6 +18,11 @@ func update(unit: Unit, dt):
 		var hasResources = unit.inventory.ifHasResourcesRemove(ghostBuilding.cost)
 		if hasResources:
 			ghostBuilding.setGhost(false)
+			unit.velocity = Vector2(0,0)
 			return true
 	
 	return false
+
+func clear():
+	if ghostBuilding.isGhost():
+		ghostBuilding.queue_free()

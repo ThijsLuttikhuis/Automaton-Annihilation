@@ -5,3 +5,6 @@ var isPassive: bool = false
 
 func update(_unit: Unit, _dt):
 	print("Unimplemented unit action update")
+
+func clear():
+	pass

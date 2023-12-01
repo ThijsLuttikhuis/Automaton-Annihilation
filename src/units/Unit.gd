@@ -5,7 +5,7 @@ var actionQueue: ActionQueue
 
 var ghost = false
 
-var cost: Array[InventorySlot] = []
+var cost: Inventory = Inventory.new(999)
 
 var selectedActionPriority: int = 0
 

@@ -142,8 +142,8 @@ metadata/_edit_use_anchors_ = true
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -240.0
-offset_right = 400.0
+offset_top = -211.0
+offset_right = 373.0
 grow_vertical = 0
 color = Color(0.396078, 0.168627, 0.0392157, 0.662745)
 
@@ -153,262 +153,33 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -240.0
-offset_right = 400.0
+offset_top = -211.0
+offset_right = 373.0
 grow_vertical = 0
 tab_alignment = 1
-all_tabs_in_front = true
 
-[node name="Unit" type="VBoxContainer" parent="HUD/LeftBottomDisplayBackground/TabContainer"]
+[node name="Unit" type="HBoxContainer" parent="HUD/LeftBottomDisplayBackground/TabContainer"]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="HUD/LeftBottomDisplayBackground/TabContainer/Unit"]
-custom_minimum_size = Vector2(400, 0)
-layout_mode = 2
-size_flags_vertical = 1
-text = "Unit Name"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Unit" type="HBoxContainer" parent="HUD/LeftBottomDisplayBackground/TabContainer/Unit"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HUD/LeftBottomDisplayBackground/TabContainer/Unit/Unit"]
-custom_minimum_size = Vector2(96, 0)
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="HUD/LeftBottomDisplayBackground/TabContainer/Unit/Unit"]
-custom_minimum_size = Vector2(96, 0)
-layout_mode = 2
-
-[node name="Inventory" type="GridContainer" parent="HUD/LeftBottomDisplayBackground/TabContainer/Unit/Unit"]
-custom_minimum_size = Vector2(196, 0)
-layout_mode = 2
-columns = 5
 
 [node name="Economy" type="GridContainer" parent="HUD/LeftBottomDisplayBackground/TabContainer"]
 visible = false
 layout_mode = 2
 columns = 4
 
-[node name="TextureRect8" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Economy"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-stretch_mode = 4
-
-[node name="TextureRect9" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Economy"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-stretch_mode = 4
-
-[node name="TextureRect10" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Economy"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-stretch_mode = 4
-
-[node name="TextureRect11" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Economy"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-stretch_mode = 4
-
-[node name="TextureRect4" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Economy"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-stretch_mode = 4
-
-[node name="TextureRect5" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Economy"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-stretch_mode = 4
-
-[node name="TextureRect6" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Economy"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-stretch_mode = 4
-
-[node name="TextureRect7" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Economy"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-stretch_mode = 4
-
-[node name="TextureRect0" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Economy"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-stretch_mode = 4
-
-[node name="TextureRect1" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Economy"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-stretch_mode = 4
-
-[node name="TextureRect2" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Economy"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-stretch_mode = 4
-
-[node name="TextureRect3" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Economy"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-stretch_mode = 4
-
 [node name="Defense" type="GridContainer" parent="HUD/LeftBottomDisplayBackground/TabContainer"]
 visible = false
 layout_mode = 2
 columns = 4
 
-[node name="TextureRect8" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Defense"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect9" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Defense"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect10" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Defense"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect11" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Defense"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect4" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Defense"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect5" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Defense"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect6" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Defense"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect7" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Defense"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect0" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Defense"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect1" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Defense"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Defense"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect3" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Defense"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="Utilily" type="GridContainer" parent="HUD/LeftBottomDisplayBackground/TabContainer"]
+[node name="Utility" type="GridContainer" parent="HUD/LeftBottomDisplayBackground/TabContainer"]
 visible = false
 layout_mode = 2
 columns = 4
-
-[node name="TextureRect8" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Utilily"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect9" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Utilily"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect10" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Utilily"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect11" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Utilily"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect4" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Utilily"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect5" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Utilily"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect6" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Utilily"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect7" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Utilily"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect0" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Utilily"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect1" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Utilily"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Utilily"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect3" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Utilily"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
 
 [node name="Factory" type="GridContainer" parent="HUD/LeftBottomDisplayBackground/TabContainer"]
 visible = false
 layout_mode = 2
 columns = 4
-
-[node name="TextureRect8" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Factory"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect9" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Factory"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect10" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Factory"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect11" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Factory"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect4" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Factory"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect5" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Factory"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect6" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Factory"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect7" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Factory"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect0" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Factory"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect1" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Factory"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Factory"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
-
-[node name="TextureRect3" type="TextureRect" parent="HUD/LeftBottomDisplayBackground/TabContainer/Factory"]
-custom_minimum_size = Vector2(96, 64)
-layout_mode = 2
 
 [node name="WorldTileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_ipf82")

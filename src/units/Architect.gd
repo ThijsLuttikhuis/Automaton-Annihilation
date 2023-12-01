@@ -7,7 +7,7 @@ func _init():
 	
 	# TODO: remove
 	inventory = Inventory.new(10)
-	inventory.add([InventorySlot.new('Iron Ore', 50)])
+	inventory.add('Iron Ore', 500)
 	
 func on_ready():
 	buildActionList = BuildActionList.new()

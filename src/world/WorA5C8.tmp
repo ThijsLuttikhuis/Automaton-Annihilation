@@ -173,21 +173,7 @@ vertical_alignment = 1
 [node name="Unit" type="HBoxContainer" parent="HUD/LeftBottomDisplayBackground/TabContainer/Unit"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HUD/LeftBottomDisplayBackground/TabContainer/Unit/Unit"]
-custom_minimum_size = Vector2(96, 0)
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="HUD/LeftBottomDisplayBackground/TabContainer/Unit/Unit"]
-custom_minimum_size = Vector2(96, 0)
-layout_mode = 2
-
-[node name="Inventory" type="GridContainer" parent="HUD/LeftBottomDisplayBackground/TabContainer/Unit/Unit"]
-custom_minimum_size = Vector2(196, 0)
-layout_mode = 2
-columns = 5
-
 [node name="Economy" type="GridContainer" parent="HUD/LeftBottomDisplayBackground/TabContainer"]
-visible = false
 layout_mode = 2
 columns = 4
 

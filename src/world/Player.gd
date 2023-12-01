@@ -246,8 +246,10 @@ func convertToBuildActions():
 	for ghostBuilding in ghostBuildings:
 		if ghostBuilding.is_queued_for_deletion():
 			continue
-		ghostBuildingsNode.remove_child(ghostBuilding)
-		ghostBuildingsActionQueueNode.add_child(ghostBuilding)
+		
+		ghostBuilding.reparent(ghostBuildingsActionQueueNode)
+#		ghostBuildingsNode.remove_child(ghostBuilding)
+#		ghostBuildingsActionQueueNode.add_child(ghostBuilding)
 		var action = BuildAction.new(ghostBuilding.position, ghostBuilding)
 		newBuildActions.push_back(action)
 	return newBuildActions
@@ -277,17 +279,4 @@ func setBuildMenuState(state: BUILD_MENU):
 		buildmenuBuilding = null
 	hud.updateBuildMenuPanel(buildmenuState, buildmenuBuilding)
 
-func getBuildMenuString():
-	if buildmenuState == BUILD_MENU.ECONOMY:
-		return "Economy"
-	elif buildmenuState == BUILD_MENU.DEFENSE:
-		return "Defense"
-	elif buildmenuState == BUILD_MENU.UTILITY:
-		return "Utility"
-	elif buildmenuState == BUILD_MENU.FACTORY:
-		return "Factory"
-	else:
-		return "None"
-		
-	
 	

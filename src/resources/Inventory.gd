@@ -1,81 +1,104 @@
 class_name Inventory
 
+const name2StackSizeDict: Dictionary = {
+	'Iron Ingot': 50,
+	'Iron Ore': 50,
+	'Iron Gear': 100,
+	'Copper ingot': 50,
+	'Copper Ore': 50,
+	'Copper Wire': 200,
+	'Stone': 50,
+	'LimeStone': 50,
+	'Wood Log': 50,
+	'Wood Plank': 50,
+	'Electronic Circuit': 100,
+	'Sand': 200,
+	'Cement': 100,
+	'Concrete': 100,
+	'Water': 100
+}
+
 var nSlots: int
-var inventorySlots: Array[InventorySlot]
+var resources: Dictionary
 
 func _init(nSlots_: int = 5):
 	nSlots = nSlots_
 
-func remove(inventorySlotsToRemove: Array[InventorySlot]):
-	var missingSlots = removeTillEmpty(inventorySlotsToRemove)
-	assert(missingSlots.is_empty(), 'Inventory:error: inventory empty, try to use removeTillEmpty instead')
+func remove(resourcesToRemove, number: int = 0):
+	var missingSlots = removeTillEmpty(resourcesToRemove, number)
+	assert(missingSlots.resources.is_empty(), 'Inventory:error: inventory empty, try to use removeTillEmpty instead')
 
-func removeTillEmpty(inventorySlotsToRemove: Array[InventorySlot]):
-	var missingSlots: Array[InventorySlot] = []
-	for inventorySlotToRemove in inventorySlotsToRemove:
-		var name: String = inventorySlotToRemove.getResourceName()
-		var n: int = inventorySlotToRemove.number
-		for inventorySlot in inventorySlots:
-			if inventorySlot.getResourceName() == name:
-				n = inventorySlot.removeTillStackEmpty(n)
-				if n == 0:
-					break
-		
-		if n > 0:
-			var newSlot = InventorySlot.new(name, n)
-			missingSlots.push_back(newSlot)
+func removeTillEmpty(resourcesToRemove, number: int = 0):
+	if resourcesToRemove is String:
+		var inv = Inventory.new(999)
+		inv.resources[resourcesToRemove] = number
+		resourcesToRemove = inv
+	
+	assert(resourcesToRemove is Inventory, 'Inventory:error: please input an Inventory or a String / int to remove')
+	
+	var missingSlots: Inventory = Inventory.new(nSlots)
+	
+	for key in resourcesToRemove.resources.keys():
+		assert(resourcesToRemove.resources[key] > 0, 'Inventory:error: please input resources with positive amounts')
+		if resources.has(key):
+			if resourcesToRemove.resources[key] > resources[key]:
+				missingSlots.resources[key] = resourcesToRemove.resources[key] - resources[key]
+				resources[key] = 0
+			else:
+				resources[key] -= resourcesToRemove.resources[key]
+		else:
+			missingSlots[key] = resourcesToRemove.resources[key]
 	
 	return missingSlots
 
-func add(inventorySlotsToAdd: Array[InventorySlot]):
-	var overflow = addTillFull(inventorySlotsToAdd)
-	assert(overflow.is_empty(), 'Inventory:error: inventory full, try to use addTillFull instead')
+func add(resourcesToAdd, number: int = 0):
+	var overflow = addTillFull(resourcesToAdd, number)
+	assert(overflow.resources.is_empty(), 'Inventory:error: inventory full, try to use addTillFull instead')
 
-func addTillFull(inventorySlotsToAdd: Array[InventorySlot]):
-	var overflow: Array[InventorySlot] = []
-	for inventorySlotToAdd in inventorySlotsToAdd:
-		var name: String = inventorySlotToAdd.getResourceName()
-		var n: int = inventorySlotToAdd.number
-		for inventorySlot in inventorySlots:
-			if inventorySlot.getResourceName() == name:
-				n = inventorySlot.addTillStackFull(n)
-				if n == 0:
-					break
-		
-		assert(inventorySlots.size() <= nSlots, 'Inventory:error: more slots used than available')
-		while n > 0:
-			if inventorySlots.size() == nSlots:
-				overflow.push_back(InventorySlot.new(name, n))
-			
-			var stackSize = InventorySlot.name2StackSize(name)
-			var toAdd = min(n, stackSize)
-			var newSlot = InventorySlot.new(name, toAdd)
-			inventorySlots.push_back(newSlot)
-			n -= toAdd
+func addTillFull(resourcesToAdd, number: int = 0):
+	if resourcesToAdd is String:
+		var inv = Inventory.new(999)
+		inv.resources[resourcesToAdd] = number
+		resourcesToAdd = inv
 	
+	assert(resourcesToAdd is Inventory, 'Inventory:error: please input an Inventory or a String / int to remove')
+	
+	var overflow = Inventory.new(999)
+	
+	for key in resourcesToAdd.resources.keys():
+		assert(resourcesToAdd.resources[key] > 0, 'Inventory:error: please input resources with positive amounts')
+		if resources.has(key):
+			resources[key] += resourcesToAdd.resources[key]
+		else:
+			resources[key] = resourcesToAdd.resources[key]
+			
 	return overflow
 
-func hasResources(inventorySlotsToCheck: Array[InventorySlot]):
-	var inventorySlotsCopy = deepCopy(inventorySlots)
-	var inventorySlotsToCheckCopy = deepCopy(inventorySlotsToCheck)
+func hasResources(resourcesToCheck, number: int = 0):
+	if resourcesToCheck is String:
+		var inv = Inventory.new(999)
+		inv.resources[resourcesToCheck] = number
+		resourcesToCheck = inv
+		
+	var inventoryCopy = deepCopy(self)
+	var resourcesToCheckCopy = deepCopy(resourcesToCheck)
 	
-	var temp = inventorySlots
-	inventorySlots = inventorySlotsCopy
-	var missingSlots = removeTillEmpty(inventorySlotsToCheckCopy)
-	inventorySlots = temp
+	var temp = resources
+	resources = inventoryCopy.resources
+	var missingSlots = removeTillEmpty(resourcesToCheckCopy)
+	resources = temp
 	
-	return missingSlots.is_empty()
+	return missingSlots.resources.is_empty()
 
-func ifHasResourcesRemove(inventorySlotsToRemove: Array[InventorySlot]):
-	if hasResources(inventorySlotsToRemove):
-		remove(inventorySlotsToRemove)
+func ifHasResourcesRemove(resourcesToRemove, number: int = 0):
+	if hasResources(resourcesToRemove, number):
+		remove(resourcesToRemove, number)
 		return true
 	else:
 		return false
 	
-func deepCopy(slots: Array[InventorySlot]):
-	var copySlots: Array[InventorySlot] = []
-	for slot in slots:
-		var copySlot = InventorySlot.new(slot.getResourceName(), slot.number)
-		copySlots.push_back(copySlot)
-	return copySlots
+func deepCopy(inventoryToCopy: Inventory):
+	var copy: Inventory = Inventory.new(inventoryToCopy.nSlots)
+	copy.add(inventoryToCopy)
+		
+	return copy

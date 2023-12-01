@@ -15,10 +15,10 @@ func update(unit: Unit, dt):
 		else:
 			moveAction = MoveAction.new(actionPosition)
 	else:
+		unit.velocity = Vector2(0,0)
 		var hasResources = unit.inventory.ifHasResourcesRemove(ghostBuilding.cost)
 		if hasResources:
 			ghostBuilding.setGhost(false)
-			unit.velocity = Vector2(0,0)
 			return true
 	
 	return false

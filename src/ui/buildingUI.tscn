@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://0vt7rxyvpncv"]
+
+[ext_resource type="Texture2D" uid="uid://dgnelaqq34d32" path="res://assets/prototype/energy.png" id="1_j5ruq"]
+
+[node name="BuildingUI" type="HBoxContainer"]
+offset_right = 85.0
+offset_bottom = 62.0
+
+[node name="Cost" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = -8
+
+[node name="Energy" type="HBoxContainer" parent="Cost"]
+layout_mode = 2
+
+[node name="Texture" type="TextureRect" parent="Cost/Energy"]
+layout_mode = 2
+texture = ExtResource("1_j5ruq")
+stretch_mode = 5
+
+[node name="Value" type="Label" parent="Cost/Energy"]
+layout_mode = 2
+text = "1000"
+
+[node name="Resource1" type="HBoxContainer" parent="Cost"]
+layout_mode = 2
+
+[node name="Texture" type="TextureRect" parent="Cost/Resource1"]
+layout_mode = 2
+
+[node name="Value" type="Label" parent="Cost/Resource1"]
+layout_mode = 2
+text = "100"
+
+[node name="Resource2" type="HBoxContainer" parent="Cost"]
+layout_mode = 2
+
+[node name="Texture" type="TextureRect" parent="Cost/Resource2"]
+layout_mode = 2
+
+[node name="Value" type="Label" parent="Cost/Resource2"]
+layout_mode = 2
+text = "10"
+
+[node name="Texture" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(24, 48)
+layout_mode = 2
+stretch_mode = 6

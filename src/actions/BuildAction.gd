@@ -16,10 +16,14 @@ func update(unit: Unit, dt):
 			moveAction = MoveAction.new(actionPosition)
 	else:
 		unit.velocity = Vector2(0,0)
-		var hasResources = unit.inventory.ifHasResourcesRemove(ghostBuilding.cost)
-		if hasResources:
-			ghostBuilding.setGhost(false)
-			return true
+		var energy = unit.player.world.getEnergy()
+		var hasEnergy = energy > ghostBuilding.energyCost 
+		if hasEnergy:
+			var hasResources = unit.inventory.ifHasResourcesRemove(ghostBuilding.resourceCost)
+			if hasResources:
+				unit.player.world.removeEnergy(ghostBuilding.energyCost)
+				ghostBuilding.setGhost(false)
+				return true
 	
 	return false
 

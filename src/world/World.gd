@@ -20,7 +20,7 @@ var windSpeed: float = 10.0
 var deltaWindSpeed: float = 0.75
 
 # resources
-var energy: float = 0
+var energy: float = 400
 var energyStorage: float = 1000
 
 func _init():
@@ -45,6 +45,10 @@ func addEnergy(energyGain):
 	energy += energyGain
 	energy = min(energy, energyStorage)
 
+func removeEnergy(energyCost):
+	energy -= energyCost
+	assert(energy >= 0, 'world:energy: not enough energy to remove')
+	
 func getEnergy():
 	return energy
 

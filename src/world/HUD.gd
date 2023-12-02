@@ -2,71 +2,92 @@ class_name HUD extends CanvasLayer
 
 var world: World
 var player: Player
+var selectUnitPanel: Container
+var worldStatePanel: Container
+
 var lastUnit: Unit
 
 func _ready():
 	world = $".."
 	player = $"../Player"
+	worldStatePanel = $"WorldStateColor/WorldStatePanel"
+	selectUnitPanel = $"SelectUnitColor/SelectUnitPanel"
 	
-	var subViewport = $"LeftBottomDisplayBackground/TabContainer/Unit/SubViewportContainer/SubViewport"
-#	subViewport.set_use_own_world(true)
-
+	for child in selectUnitPanel.get_children():
+		if child.name == "Unit":
+			continue
+		
+		var buildingUIScene = preload("res://src/ui/buildingUI.tscn")
+		var order = [8,9,10,11,4,5,6,7,0,1,2,3]
+		for i in order:
+			var buildingUI = buildingUIScene.instantiate()
+			buildingUI.name = "Building" + str(i)
+			child.add_child(buildingUI)
+	
 func _process(_dt):
 	var energy = world.getEnergy()
 	var energyStorage = world.getEnergyStorage()
-	var energyDisplay = $"TopDisplayBackground/EnergyDisplay"
+	var energyDisplay = worldStatePanel.get_node("EnergyDisplay")
 	energyDisplay.text = "Energy: " + str(round(energy)) + " / " + str(round(energyStorage))
 	
 	var windSpeed = world.getWindSpeed()
-	var windSpeedDisplay = $"TopDisplayBackground/WindSpeedDisplay"
+	var windSpeedDisplay = worldStatePanel.get_node("WindSpeedDisplay")
 	windSpeedDisplay.text = "Wind Speed: " + str(round(windSpeed * 10.0) / 10.0)
 
-func updateBuildMenuPanel(state, building):
+func updateBuildMenuPanel(state):
 	var unit = player.getMainSelectedUnit()
-	var lbdisplay = $"LeftBottomDisplayBackground"
-	var tabContainer = $"LeftBottomDisplayBackground/TabContainer"
 	
 	if !unit:
 		lastUnit = null
-		lbdisplay.hide()
+		selectUnitPanel.get_parent().hide()
 		return
 		
-	lbdisplay.show()
+	selectUnitPanel.get_parent().show()
 	
 	var stateIndex = buildStateToTabIndex(state)
-	tabContainer.set_current_tab(stateIndex)
+	selectUnitPanel.set_current_tab(stateIndex)
 	
 	if unit == lastUnit:
 		return
 	
-	var unitGrid = $"LeftBottomDisplayBackground/TabContainer/Unit"
+	var unitGrid = selectUnitPanel.get_node("Unit")
 	unitGrid.get_node("Label").text = unit.name
 	
 	if unit is BuildUnit:
-		var ecoGrid = $"LeftBottomDisplayBackground/TabContainer/Economy"
-		var defGrid = $"LeftBottomDisplayBackground/TabContainer/Defense"
-		var utilGrid = $"LeftBottomDisplayBackground/TabContainer/Utility"
-		var facGrid = $"LeftBottomDisplayBackground/TabContainer/Factory"
-		var grids = [ecoGrid, defGrid, utilGrid, facGrid]
-		
 		var actionList = unit.buildActionList
+		var buildStr = ["Economy", "Defense", "Utility", "Factory"] 
 		var buildLists = [actionList.buildingsEconomy, actionList.buildingsDefense, \
 			actionList.buildingsUtility, actionList.buildingsFactory]
 		
-		for buildingType in range(4):
-			var grid = grids[buildingType]
-			var buildList = buildLists[buildingType]
-		
-			for i in range(buildList.size()):
-				var ecoBuildingScene: PackedScene = buildList[i]
-				var ecoBuilding: Building = ecoBuildingScene.instantiate()
-				var texture = ecoBuilding.get_node("Sprite2D").texture
-				var node = grid.get_node("TextureRect" + str(i))
-				node.texture = texture
-	
+		for i in range(4):
+			var buildList = buildLists[i]
+			var grid = selectUnitPanel.get_node(buildStr[i])
+			
+			for j in range(12):
+				var gridElement = grid.get_node("Building" + str(j))
+				if j >= buildList.size():
+					gridElement.hide()
+					continue
+					
+				gridElement.show()
+				var buildingScene: PackedScene = buildList[j]
+				var building: Building = buildingScene.instantiate()
+				
+				updateGridElementTexture(gridElement, building)
+				updateGridElementCost(gridElement, building)
+				
 	
 	print('updating unit panel')
+
+func updateGridElementTexture(gridElement, building):
+	var texture = building.get_node("Sprite2D").texture
+	var nodeTexture = gridElement.get_node("Texture")
+	nodeTexture.texture = texture
+
+func updateGridElementCost(gridElement, building):
+	gridElement.get_node("Cost/Energy/Value").text = str(building.energyCost)
 	
+	var resoureceCost = building.resourceCost
 	
 
 func buildStateToTabIndex(state):
@@ -81,16 +102,14 @@ func buildStateToTabIndex(state):
 	else:
 		return 0
 	
-#func buildStateToString(state):
-#	if state == player.BUILD_MENU.ECONOMY:
-#		return "Economy"
-#	elif state == player.BUILD_MENU.DEFENSE:
-#		return "Defense"
-#	elif state == player.BUILD_MENU.UTILITY:
-#		return "Utility"
-#	elif state == player.BUILD_MENU.FACTORY:
-#		return "Factory"
-#	else:
-#		return "Unit"
-		
-	
+func buildStateToString(state):
+	if state == player.BUILD_MENU.ECONOMY:
+		return "Economy"
+	elif state == player.BUILD_MENU.DEFENSE:
+		return "Defense"
+	elif state == player.BUILD_MENU.UTILITY:
+		return "Utility"
+	elif state == player.BUILD_MENU.FACTORY:
+		return "Factory"
+	else:
+		return "Unit"

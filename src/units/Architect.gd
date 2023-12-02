@@ -12,8 +12,9 @@ func _init():
 func on_ready():
 	buildActionList = BuildActionList.new()
 	var windmill = preload("res://src/buildings/windmill.tscn")
-	
 	buildActionList.buildingsEconomy.push_back(windmill)
+	var miningdrill = preload("res://src/buildings/MiningDrill.tscn")
+	buildActionList.buildingsEconomy.push_back(miningdrill)
 	
 func on_physics_process(_dt):
 	var characterBody = self

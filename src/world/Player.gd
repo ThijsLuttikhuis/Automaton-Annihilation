@@ -4,7 +4,9 @@ enum BUILD_MENU {NONE, ECONOMY, DEFENSE, UTILITY, FACTORY}
 
 const MIN_DIST_BETWEEN_MOVE_POINTS = 5
 
+var world: Node
 var hud: Node
+var tileMap: Node
 
 var buildmenuState: BUILD_MENU = BUILD_MENU.NONE
 var buildmenuBuilding: PackedScene = null
@@ -20,7 +22,9 @@ func _ready():
 	var selectBox = $"SelectBox"
 	selectBox.body_entered.connect(addSelectedUnit)
 	selectBox.body_exited.connect(removeSelectedUnit)
+	world = $".."
 	hud = $"../HUD"
+	tileMap = $"../WorldTileMap"
 	
 func _process(_dt):
 	mousePosition = get_viewport().get_camera_2d().get_global_mouse_position()
@@ -71,7 +75,7 @@ func updateSelectUnits():
 			
 			selectedUnits.sort_custom(sortBySelectedActionPriority)
 			var unit = getMainSelectedUnit()
-			hud.updateBuildMenuPanel(buildmenuState, buildmenuBuilding)
+			hud.updateBuildMenuPanel(buildmenuState)
 			#TODO set highest prio unit to show build queue in UI
 		
 		mouseClickPath.clear()
@@ -139,7 +143,7 @@ func updateActionQueue():
 		
 func updateGhosts():
 	var ghostBuildingsNode = $"../GhostBuildings"
-	var tileMapNode = $"../WorldTileMap"
+
 	
 	var ghostBuildings = ghostBuildingsNode.get_children()
 	if !buildmenuBuilding:
@@ -159,8 +163,8 @@ func updateGhosts():
 	else:
 		mouseStartPoint = mousePosition
 		
-	var startCellIndex = tileMapNode.local_to_map(mouseStartPoint)
-	var endCellIndex = tileMapNode.local_to_map(mouseEndPoint)
+	var startCellIndex = tileMap.local_to_map(mouseStartPoint)
+	var endCellIndex = tileMap.local_to_map(mouseEndPoint)
 	
 	# check number of ghosts to place
 	var dxCell: int = endCellIndex.x - startCellIndex.x
@@ -186,7 +190,7 @@ func updateGhosts():
 
 	# update ghost positions
 	if nGhosts == 1:
-		ghostBuildings[0].position = tileMapNode.map_to_local(endCellIndex)
+		ghostBuildings[0].position = tileMap.map_to_local(endCellIndex)
 	else:
 		for i in range(nGhosts):
 			var cellI: Vector2i
@@ -197,25 +201,25 @@ func updateGhosts():
 				cellI = Vector2i(startCellIndex.x + round(float(i) * dxCell / abs(dyCell)), \
 					startCellIndex.y + sign(dyCell) * i)
 			
-			ghostBuildings[i].position = tileMapNode.map_to_local(cellI)
+			ghostBuildings[i].position = tileMap.map_to_local(cellI)
 
 func addSelectedUnit(unit):
 	if Input.is_action_pressed("mouse_button_1"):
 		unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0.5)
 		selectedUnits.push_back(unit)
-	hud.updateBuildMenuPanel(buildmenuState, buildmenuBuilding)
+	hud.updateBuildMenuPanel(buildmenuState)
 	
 func removeSelectedUnit(unit):
 	if Input.is_action_pressed("mouse_button_1"):
 		unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0)
 		selectedUnits.erase(unit)
-	hud.updateBuildMenuPanel(buildmenuState, buildmenuBuilding)
+	hud.updateBuildMenuPanel(buildmenuState)
 
 func removeAllSelectedUnits():
 	for unit in selectedUnits:
 		unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0)
 	selectedUnits.clear();
-	hud.updateBuildMenuPanel(buildmenuState, buildmenuBuilding)
+	hud.updateBuildMenuPanel(buildmenuState)
 	
 func setCollisionBoxTransform(pos, size):
 	collisionBox.position = pos
@@ -277,6 +281,6 @@ func setBuildMenuState(state: BUILD_MENU):
 	buildmenuState = state
 	if state == BUILD_MENU.NONE:
 		buildmenuBuilding = null
-	hud.updateBuildMenuPanel(buildmenuState, buildmenuBuilding)
+	hud.updateBuildMenuPanel(buildmenuState)
 
 	

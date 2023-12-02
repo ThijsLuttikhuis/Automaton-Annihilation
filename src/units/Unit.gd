@@ -5,7 +5,8 @@ var actionQueue: ActionQueue
 
 var ghost = false
 
-var cost: Inventory = Inventory.new(999)
+var energyCost: float
+var resourceCost: Inventory = Inventory.new(999)
 
 var selectedActionPriority: int = 0
 

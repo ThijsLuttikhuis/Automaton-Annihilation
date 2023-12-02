@@ -17,7 +17,7 @@ func update(unit: Unit, dt):
 	else:
 		unit.velocity = Vector2(0,0)
 		var energy = unit.player.world.getEnergy()
-		var hasEnergy = energy > ghostBuilding.energyCost 
+		var hasEnergy = energy >= ghostBuilding.energyCost 
 		if hasEnergy:
 			var hasResources = unit.inventory.ifHasResourcesRemove(ghostBuilding.resourceCost)
 			if hasResources:

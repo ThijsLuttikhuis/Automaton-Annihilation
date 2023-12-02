@@ -73,7 +73,6 @@ sources/1 = SubResource("TileSetAtlasSource_ncca8")
 size = Vector2(0, 0)
 
 [node name="World" type="Node2D"]
-y_sort_enabled = true
 script = ExtResource("1_0slbg")
 metadata/_edit_horizontal_guides_ = []
 
@@ -226,17 +225,13 @@ layer_2/z_index = -8
 layer_2/tile_data = PackedInt32Array()
 script = ExtResource("5_ir102")
 
-[node name="Buildings" type="Node2D" parent="."]
-y_sort_enabled = true
+[node name="Buildings" type="Node" parent="."]
 
-[node name="GhostBuildings" type="Node2D" parent="."]
-y_sort_enabled = true
+[node name="GhostBuildings" type="Node" parent="."]
 
-[node name="ActionGhostBuildings" type="Node2D" parent="."]
-y_sort_enabled = true
+[node name="ActionGhostBuildings" type="Node" parent="."]
 
-[node name="Units" type="Node2D" parent="."]
-y_sort_enabled = true
+[node name="Units" type="Node" parent="."]
 
 [node name="Architect" parent="Units" instance=ExtResource("6_ixb8k")]
 z_index = 999

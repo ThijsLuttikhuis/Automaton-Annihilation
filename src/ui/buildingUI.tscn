@@ -2,47 +2,56 @@
 
 [ext_resource type="Texture2D" uid="uid://dgnelaqq34d32" path="res://assets/prototype/energy.png" id="1_j5ruq"]
 
-[node name="BuildingUI" type="HBoxContainer"]
-offset_right = 85.0
-offset_bottom = 62.0
+[node name="BuildingUI" type="MarginContainer"]
+custom_minimum_size = Vector2(96, 64)
+offset_right = 96.0
+offset_bottom = 64.0
 
-[node name="Cost" type="VBoxContainer" parent="."]
+[node name="BuildingUI" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Cost" type="VBoxContainer" parent="BuildingUI"]
 layout_mode = 2
 theme_override_constants/separation = -8
 
-[node name="Energy" type="HBoxContainer" parent="Cost"]
+[node name="Energy" type="HBoxContainer" parent="BuildingUI/Cost"]
 layout_mode = 2
 
-[node name="Texture" type="TextureRect" parent="Cost/Energy"]
+[node name="Texture" type="TextureRect" parent="BuildingUI/Cost/Energy"]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 texture = ExtResource("1_j5ruq")
 stretch_mode = 5
 
-[node name="Value" type="Label" parent="Cost/Energy"]
+[node name="Value" type="Label" parent="BuildingUI/Cost/Energy"]
 layout_mode = 2
 text = "1000"
 
-[node name="Resource1" type="HBoxContainer" parent="Cost"]
+[node name="Resource1" type="HBoxContainer" parent="BuildingUI/Cost"]
 layout_mode = 2
 
-[node name="Texture" type="TextureRect" parent="Cost/Resource1"]
+[node name="Texture" type="TextureRect" parent="BuildingUI/Cost/Resource1"]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
+stretch_mode = 5
 
-[node name="Value" type="Label" parent="Cost/Resource1"]
+[node name="Value" type="Label" parent="BuildingUI/Cost/Resource1"]
 layout_mode = 2
 text = "100"
 
-[node name="Resource2" type="HBoxContainer" parent="Cost"]
+[node name="Resource2" type="HBoxContainer" parent="BuildingUI/Cost"]
 layout_mode = 2
 
-[node name="Texture" type="TextureRect" parent="Cost/Resource2"]
+[node name="Texture" type="TextureRect" parent="BuildingUI/Cost/Resource2"]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
+stretch_mode = 5
 
-[node name="Value" type="Label" parent="Cost/Resource2"]
+[node name="Value" type="Label" parent="BuildingUI/Cost/Resource2"]
 layout_mode = 2
 text = "10"
 
-[node name="Texture" type="TextureRect" parent="."]
+[node name="Texture" type="TextureRect" parent="BuildingUI"]
 custom_minimum_size = Vector2(24, 48)
 layout_mode = 2
-stretch_mode = 6
+stretch_mode = 5

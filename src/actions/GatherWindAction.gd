@@ -15,4 +15,3 @@ func update(unit: Unit, dt):
 		var windSpeed = world.getWindSpeed()
 		var energyGain = windSpeed * gatherWindTime * efficiency
 		world.addEnergy(energyGain)
-		print("energy: ", world.getEnergy())

@@ -20,7 +20,7 @@ var windSpeed: float = 10.0
 var deltaWindSpeed: float = 0.75
 
 # resources
-var energy: float = 400
+var energy: float = 1000
 var energyStorage: float = 1000
 
 func _init():

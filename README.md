@@ -9,13 +9,14 @@
  - Build Cost Buildings / Units
  - Make physical resource object
  - Check if building on a resource tile + check for other build constraints
+ - Conveyor Belt Building
 
 	#### long term:
  - Store items in tilemap with Sprite, and reference the object
  - Show Sprites in the correct order (y-position)
  - Factory Building
  - More Units: 1 Builder, 1 Attacker, 1 Enemy Attacker
- - Conveyor Belt Building
+
  - Factory Building Cost / Input
  - Path Finding / Use TileMap to go around buildings
  - More offensive units

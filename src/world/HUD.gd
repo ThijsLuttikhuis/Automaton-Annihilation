@@ -64,7 +64,7 @@ func updateBuildMenuPanel(state):
 			var grid = selectUnitPanel.get_node(buildStr[i])
 			
 			for j in range(12):
-				var gridElement = grid.get_node("Building" + str(j))
+				var gridElement = grid.get_node("Building" + str(j) + "/BuildingUI")
 				if j >= buildList.size():
 					gridElement.hide()
 					continue
@@ -80,16 +80,47 @@ func updateBuildMenuPanel(state):
 	print('updating unit panel')
 
 func updateGridElementTexture(gridElement, building):
-	var texture = building.get_node("Sprite2D").texture
+	var sprite2D = building.get_node("Sprite2D")
 	var nodeTexture = gridElement.get_node("Texture")
-	nodeTexture.texture = texture
+	nodeTexture.texture = sprite2D.texture
 
 func updateGridElementCost(gridElement, building):
 	gridElement.get_node("Cost/Energy/Value").text = str(building.energyCost)
 	
-	var resoureceCost = building.resourceCost
+	var resourceCost = building.resourceCost.resources
 	
-
+	var resourceNames = resourceCost.keys()
+	assert(resourceNames.size() < 3, 'hud:updateResourceCost: cannot show more than two unique resources in the cost')
+	
+	var r1Value: int = 0
+	var r2Value: int = 0
+	var r1Name: String = ""
+	var r2Name: String = ""
+	
+	if resourceNames.size() > 1:
+		r1Value = resourceCost[resourceNames[0]]
+		r2Value = resourceCost[resourceNames[1]]
+		if r2Value > r1Value:
+			r1Value = resourceCost[resourceNames[1]]
+			r2Value = resourceCost[resourceNames[0]]
+			r1Name = resourceNames[1]
+			r2Name = resourceNames[0]
+		else:
+			r1Name = resourceNames[0]
+			r2Name = resourceNames[1]
+	
+	if resourceNames.size() == 1:
+		r1Value = resourceCost[resourceNames[0]]
+		r1Name = resourceNames[0]
+		
+	var resource1Node = gridElement.get_node("Cost/Resource1")
+	var resource2Node = gridElement.get_node("Cost/Resource2")
+	
+	resource1Node.get_node("Value").text = str(r1Value) if r1Value > 0 else ""
+	resource2Node.get_node("Value").text = str(r2Value) if r2Value > 0 else ""
+	resource1Node.get_node("Texture").texture = getResourceTexture(r1Name) if r1Value > 0 else null
+	resource2Node.get_node("Texture").texture = getResourceTexture(r2Name) if r2Value > 0 else null
+	
 func buildStateToTabIndex(state):
 	if state == player.BUILD_MENU.ECONOMY:
 		return 1
@@ -113,3 +144,11 @@ func buildStateToString(state):
 		return "Factory"
 	else:
 		return "Unit"
+
+func getResourceTexture(name):
+	var texture: Texture2D
+	if name == "Iron Ore":
+		texture = preload("res://assets/prototype/resources/iron_ore.png")
+	elif name == "Copper Ore":
+		pass # todo: copper ore png
+	return texture

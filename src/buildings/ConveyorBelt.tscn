@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://c6mt2qoaldo7d"]
+
+[ext_resource type="Script" path="res://src/buildings/ConveyorBelt.gd" id="1_depdo"]
+[ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_nyfa1"]
+[ext_resource type="Texture2D" uid="uid://esow724yur7c" path="res://assets/prototype/conveyorbelt4dir.png" id="3_0o2uy"]
+[ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_pap7n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
+resource_local_to_scene = true
+shader = ExtResource("2_nyfa1")
+shader_parameter/outline_width = 0.0
+shader_parameter/ghost_greyout = false
+shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ecc1"]
+size = Vector2(16, 16)
+
+[node name="ConveyorBelt" type="Area2D"]
+z_index = -5
+script = ExtResource("1_depdo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_n7ds3")
+texture = ExtResource("3_0o2uy")
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+y_sort_enabled = true
+shape = SubResource("RectangleShape2D_7ecc1")
+
+[node name="ActionQueue" type="Node" parent="."]
+script = ExtResource("4_pap7n")
+
+[node name="ActionPath" type="Line2D" parent="ActionQueue"]
+points = PackedVector2Array(59, 5)
+width = 1.5
+default_color = Color(0, 0.596078, 0.596078, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[connection signal="body_entered" from="." to="." method="addUnit"]
+[connection signal="body_exited" from="." to="." method="removeUnit"]
+[connection signal="frame_changed" from="Sprite2D" to="." method="updateDirection"]

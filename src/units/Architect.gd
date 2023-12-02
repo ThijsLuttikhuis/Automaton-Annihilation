@@ -15,7 +15,18 @@ func on_ready():
 	buildActionList.buildingsEconomy.push_back(windmill)
 	var miningdrill = preload("res://src/buildings/MiningDrill.tscn")
 	buildActionList.buildingsEconomy.push_back(miningdrill)
+	buildActionList.buildingsEconomy.push_back(miningdrill)
+	buildActionList.buildingsEconomy.push_back(miningdrill)
+	buildActionList.buildingsEconomy.push_back(miningdrill)
+	buildActionList.buildingsEconomy.push_back(miningdrill)
+	buildActionList.buildingsEconomy.push_back(miningdrill)
+	buildActionList.buildingsEconomy.push_back(miningdrill)
+	buildActionList.buildingsEconomy.push_back(miningdrill)
+	buildActionList.buildingsEconomy.push_back(miningdrill)
 	
-func on_physics_process(_dt):
-	var characterBody = self
-	characterBody.move_and_slide()
+	var conveyorbelt = preload("res://src/buildings/ConveyorBelt.tscn")
+	buildActionList.buildingsFactory.push_back(conveyorbelt)
+	
+func on_physics_process(_dt):	
+	move_and_slide_with_conveyors()
+	

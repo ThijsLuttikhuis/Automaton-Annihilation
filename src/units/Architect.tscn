@@ -15,16 +15,19 @@ shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
 size = Vector2(12, 12)
 
 [node name="Architect" type="CharacterBody2D"]
+y_sort_enabled = true
 motion_mode = 1
 wall_min_slide_angle = 0.0872665
 script = ExtResource("1_l6t7a")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
 material = SubResource("ShaderMaterial_tt46g")
 position = Vector2(0, -8)
 texture = ExtResource("2_ealhd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+y_sort_enabled = true
 shape = SubResource("RectangleShape2D_766fm")
 
 [node name="ActionQueue" type="Node" parent="."]

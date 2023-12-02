@@ -8,6 +8,7 @@ var world: Node
 var hud: Node
 var tileMap: Node
 
+var rotationState: int = 0 # 0,1,2,3 => up,right,down,left
 var buildmenuState: BUILD_MENU = BUILD_MENU.NONE
 var buildmenuBuilding: PackedScene = null
 
@@ -37,10 +38,18 @@ func _process(_dt):
 			setBuildMenuState(BUILD_MENU.NONE)
 			return
 	
+	updateRotation()
 	updateSelectUnits()
 	updateUIBuildmenu()
 	updateActionQueue()
 	updateGhosts()
+
+func updateRotation():
+	if Input.is_action_just_pressed("ui_rotate_right"):
+		rotationState = (rotationState + 1) % 4
+	
+	if Input.is_action_just_pressed("ui_rotate_left"):
+		rotationState = (rotationState + 3) % 4
 
 func updateSelectUnits():
 	if Input.is_action_just_pressed("mouse_button_1"):
@@ -68,6 +77,7 @@ func updateSelectUnits():
 		else:
 			# selected a box
 			if selectedUnits.is_empty():
+				setBuildMenuState(BUILD_MENU.NONE)
 				return
 				
 			for unit in selectedUnits:
@@ -144,7 +154,6 @@ func updateActionQueue():
 func updateGhosts():
 	var ghostBuildingsNode = $"../GhostBuildings"
 
-	
 	var ghostBuildings = ghostBuildingsNode.get_children()
 	if !buildmenuBuilding:
 		for ghostBuilding in ghostBuildings:
@@ -175,12 +184,23 @@ func updateGhosts():
 	else:
 		nGhosts = abs(dyCell) + 1
 		
-	# add or remove ghost buildings to equalize nGhosts
 	ghostBuildings = ghostBuildingsNode.get_children()
+	# check if we still have the same building, and update rotation
+	for i in range(ghostBuildings.size()):
+		if ghostBuildings[i].hasRotation:
+			ghostBuildings[i].get_node("Sprite2D").frame = rotationState
+		
+		var testBuilding = buildmenuBuilding.instantiate()
+		if testBuilding.name.length() <= ghostBuildings[i].name.length():
+			if testBuilding.name == ghostBuildings[i].name.substr(0, testBuilding.name.length()):
+				continue
+		ghostBuildings[i].queue_free()
+	
+	# add or remove ghost buildings to equalize nGhosts
 	if nGhosts > ghostBuildings.size():
 		for i in range(nGhosts - ghostBuildings.size()):
 			var newBuilding = buildmenuBuilding.instantiate()
-			ghostBuildingsNode.add_child(newBuilding)
+			ghostBuildingsNode.add_child(newBuilding, true)
 			newBuilding.setGhost()
 	else:
 		for i in range(ghostBuildings.size() - nGhosts):
@@ -252,8 +272,6 @@ func convertToBuildActions():
 			continue
 		
 		ghostBuilding.reparent(ghostBuildingsActionQueueNode)
-#		ghostBuildingsNode.remove_child(ghostBuilding)
-#		ghostBuildingsActionQueueNode.add_child(ghostBuilding)
 		var action = BuildAction.new(ghostBuilding.position, ghostBuilding)
 		newBuildActions.push_back(action)
 	return newBuildActions

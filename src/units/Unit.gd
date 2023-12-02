@@ -1,9 +1,10 @@
-class_name Unit extends PhysicsBody2D
+class_name Unit extends CollisionObject2D
 
 var player: Node
 var actionQueue: ActionQueue
 
 var ghost = false
+var hasRotation = false
 
 var energyCost: float
 var resourceCost: Inventory = Inventory.new(999)
@@ -18,6 +19,7 @@ var buildPower: float
 var buildRange: float
 var buildActionList: BuildActionList
 
+var conveyorPushSpeed: Array[ConveyorBelt] = []
 var moveSpeed: float = 0.0
 var viewRange: float = 100.0
 var radarRange: float = 100.0
@@ -39,7 +41,7 @@ func _physics_process(dt):
 	on_physics_process(dt)
 	
 func on_physics_process(_dt):
-	pass # can be overwritten	
+	pass # can be overwritten
 
 func setGhost(ghost_: bool = true):
 	ghost = ghost_

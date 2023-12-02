@@ -19,14 +19,17 @@ resource_local_to_scene = true
 radius = 7.0
 
 [node name="Windmill" type="StaticBody2D"]
+y_sort_enabled = true
 script = ExtResource("1_03rel")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
 material = SubResource("ShaderMaterial_n7ds3")
 position = Vector2(0, -8)
 texture = SubResource("CompressedTexture2D_pqj30")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+y_sort_enabled = true
 position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_dcdk1")
 

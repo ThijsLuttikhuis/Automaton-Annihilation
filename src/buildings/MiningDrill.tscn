@@ -17,6 +17,7 @@ resource_local_to_scene = true
 radius = 7.0
 
 [node name="MiningDrill" type="StaticBody2D"]
+y_sort_enabled = true
 script = ExtResource("1_rijuc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

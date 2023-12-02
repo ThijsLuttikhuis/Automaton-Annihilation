@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://co0cidvch2o7v"
-path="res://.godot/imported/shack.png-14854ee9b7cf0cad627a55d6f6c6092b.ctex"
+uid="uid://esow724yur7c"
+path="res://.godot/imported/conveyorbelt4dir.png-72451ac8c1569a3b7f9cd5fbd19326e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/prototype/shack.png"
-dest_files=["res://.godot/imported/shack.png-14854ee9b7cf0cad627a55d6f6c6092b.ctex"]
+source_file="res://assets/prototype/conveyorbelt4dir.png"
+dest_files=["res://.godot/imported/conveyorbelt4dir.png-72451ac8c1569a3b7f9cd5fbd19326e3.ctex"]
 
 [params]
 

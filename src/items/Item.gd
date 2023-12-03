@@ -1,12 +1,23 @@
-class_name Item extends Node
+class_name Item extends CharacterBody2D
 
 var resourceName: String
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+var conveyorPushSpeed: Array[ConveyorBelt] = []
+	
+func setResource(resourceName_):
+	resourceName = resourceName_
+	var texture = Utils.getResourceTexture(resourceName)
+	$"Sprite2D".texture = texture
+	
+func _physics_process(_dt):
+	move_and_slide_with_conveyors()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func move_and_slide_with_conveyors():
+	var characterBody = self
+	var conveyorSpeed = characterBody.conveyorPushSpeed
+	if !conveyorSpeed.is_empty():
+		characterBody.velocity += conveyorSpeed[0].getSpeed()
+		characterBody.move_and_slide()
+		characterBody.velocity -= conveyorSpeed[0].getSpeed()
+	else:
+		characterBody.move_and_slide()

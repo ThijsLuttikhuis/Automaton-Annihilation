@@ -1,7 +1,5 @@
 class_name Player extends Node
 
-enum BUILD_MENU {NONE, ECONOMY, DEFENSE, UTILITY, FACTORY}
-
 const MIN_DIST_BETWEEN_MOVE_POINTS = 5
 
 var world: Node
@@ -9,7 +7,7 @@ var hud: Node
 var tileMap: Node
 
 var rotationState: int = 0 # 0,1,2,3 => up,right,down,left
-var buildmenuState: BUILD_MENU = BUILD_MENU.NONE
+var buildmenuState: Utils.BUILD_MENU = Utils.BUILD_MENU.NONE
 var buildmenuBuilding: PackedScene = null
 
 var mousePosition: Vector2
@@ -35,7 +33,7 @@ func _process(_dt):
 		if Input.is_action_pressed("mouse_button_2"):
 			return
 		if Input.is_action_just_released("mouse_button_2"):
-			setBuildMenuState(BUILD_MENU.NONE)
+			setBuildMenuState(Utils.BUILD_MENU.NONE)
 			return
 	
 	updateRotation()
@@ -73,11 +71,11 @@ func updateSelectUnits():
 			if unit is BuildUnit:
 				var newBuildActions = convertToBuildActions()
 				pushToActionQueue(unit, newBuildActions)
-				setBuildMenuState(BUILD_MENU.NONE)
+				setBuildMenuState(Utils.BUILD_MENU.NONE)
 		else:
 			# selected a box
 			if selectedUnits.is_empty():
-				setBuildMenuState(BUILD_MENU.NONE)
+				setBuildMenuState(Utils.BUILD_MENU.NONE)
 				return
 				
 			for unit in selectedUnits:
@@ -95,27 +93,27 @@ func updateUIBuildmenu():
 		return
 		
 	if Input.is_action_just_pressed("ui_cancel"):
-		setBuildMenuState(BUILD_MENU.NONE)
+		setBuildMenuState(Utils.BUILD_MENU.NONE)
 		return
 	
-	if buildmenuState == BUILD_MENU.NONE:
+	if buildmenuState == Utils.BUILD_MENU.NONE:
 		if Input.is_action_just_pressed("ui_buildmenu_economy"):
-			setBuildMenuState(BUILD_MENU.ECONOMY)
+			setBuildMenuState(Utils.BUILD_MENU.ECONOMY)
 			print(buildmenuState)
 			return
 			
 		if Input.is_action_just_pressed("ui_buildmenu_defense"):
-			setBuildMenuState(BUILD_MENU.DEFENSE)
+			setBuildMenuState(Utils.BUILD_MENU.DEFENSE)
 			print(buildmenuState)
 			return
 			
 		if Input.is_action_just_pressed("ui_buildmenu_utility"):
-			setBuildMenuState(BUILD_MENU.UTILITY)
+			setBuildMenuState(Utils.BUILD_MENU.UTILITY)
 			print(buildmenuState)
 			return
 			
 		if Input.is_action_just_pressed("ui_buildmenu_factory"):
-			setBuildMenuState(BUILD_MENU.FACTORY)
+			setBuildMenuState(Utils.BUILD_MENU.FACTORY)
 			print(buildmenuState)
 			return
 	
@@ -128,6 +126,7 @@ func updateUIBuildmenu():
 				var buildings = unit.getBuildActionList(buildmenuState)
 				if i < buildings.size():
 					buildmenuBuilding = buildings[i];
+					hud.updateBuildMenuPanel(buildmenuState)
 					break
 
 func updateActionQueue():
@@ -137,7 +136,7 @@ func updateActionQueue():
 	if Input.is_action_just_pressed("mouse_button_2"):
 		mouseClickPath.clear()
 		mouseClickPath.push_back(mousePosition)
-		setBuildMenuState(BUILD_MENU.NONE)
+		setBuildMenuState(Utils.BUILD_MENU.NONE)
 		
 	if Input.is_action_pressed("mouse_button_2"):
 		mouseClickPath.push_back(mousePosition)
@@ -161,10 +160,9 @@ func updateGhosts():
 				ghostBuilding.queue_free()
 		return
 	
+	# use mouse path if dragging and shift / space
 	var mouseStartPoint: Vector2
 	var mouseEndPoint: Vector2
-	
-	# use mouse path if dragging and shift / space
 	mouseEndPoint = mousePosition
 	if mouseClickPath.size() >= 2 && Input.is_action_pressed("mouse_button_1") && \
 		(Input.is_action_pressed("ui_push_back_queue") || Input.is_action_pressed("ui_push_front_queue")):
@@ -183,8 +181,7 @@ func updateGhosts():
 		nGhosts = abs(dxCell) + 1
 	else:
 		nGhosts = abs(dyCell) + 1
-		
-	ghostBuildings = ghostBuildingsNode.get_children()
+	
 	# check if we still have the same building, and update rotation
 	for i in range(ghostBuildings.size()):
 		if ghostBuildings[i].hasRotation:
@@ -222,7 +219,14 @@ func updateGhosts():
 					startCellIndex.y + sign(dyCell) * i)
 			
 			ghostBuildings[i].position = tileMap.map_to_local(cellI)
-
+	
+	# check illegal ghost position
+	for ghostBuilding in ghostBuildings:
+		var cellI = tileMap.local_to_map(ghostBuilding.position)
+		if !ghostBuilding.canBuildOnTile(cellI):
+			ghostBuilding.queue_free()
+		
+	
 func addSelectedUnit(unit):
 	if Input.is_action_pressed("mouse_button_1"):
 		unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0.5)
@@ -295,10 +299,8 @@ func getMainSelectedUnit():
 	else:
 		return selectedUnits[0]
 
-func setBuildMenuState(state: BUILD_MENU):
+func setBuildMenuState(state: Utils.BUILD_MENU):
 	buildmenuState = state
-	if state == BUILD_MENU.NONE:
+	if state == Utils.BUILD_MENU.NONE:
 		buildmenuBuilding = null
 	hud.updateBuildMenuPanel(buildmenuState)
-
-	

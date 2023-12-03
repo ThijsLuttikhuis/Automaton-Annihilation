@@ -8,3 +8,6 @@ func on_ready():
 	var gatherWind = GatherWindAction.new(1)
 	actionQueue.push_back([gatherWind])
 
+func getDisplayName():
+	return "Windmill"
+	

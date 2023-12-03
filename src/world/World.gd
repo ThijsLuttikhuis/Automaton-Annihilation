@@ -8,7 +8,7 @@ var windSpeedUpdateTime: float = 0.5
 
 # wind
 const minWindSpeed: float = 3.0
-const maxWindSpeed: float = 17.0
+const maxWindSpeed: float = 170.0
 const windSpeedVariation: float = 1.5
 const windSpeedVariationMinMaxDelta: float = 3.0
 
@@ -16,7 +16,7 @@ const minDeltaWindSpeedDelta: float = 0.0
 const maxDeltaWindSpeedDelta: float = 5.0
 const deltaWindSpeedVariation: float = 0.5
 
-var windSpeed: float = 10.0
+var windSpeed: float = 150.0
 var deltaWindSpeed: float = 0.75
 
 # resources
@@ -51,6 +51,9 @@ func removeEnergy(energyCost):
 	
 func getEnergy():
 	return energy
+
+func hasEnergy(cost):
+	return energy >= cost
 
 func getEnergyStorage():
 	return energyStorage

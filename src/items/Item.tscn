@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://c03m1ricv1qj0"]
+
+[ext_resource type="Script" path="res://src/items/Item.gd" id="1_wba45"]
+[ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_oqsgc"]
+[ext_resource type="Texture2D" uid="uid://dkgfabb7qt0tg" path="res://assets/prototype/resources/iron_ore.png" id="3_h4og3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tt46g"]
+shader = ExtResource("2_oqsgc")
+shader_parameter/outline_width = 0.0
+shader_parameter/ghost_greyout = false
+shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_in85u"]
+radius = 7.0
+
+[node name="Item" type="CharacterBody2D"]
+y_sort_enabled = true
+motion_mode = 1
+wall_min_slide_angle = 0.0872665
+script = ExtResource("1_wba45")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_tt46g")
+texture = ExtResource("3_h4og3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+y_sort_enabled = true
+shape = SubResource("CircleShape2D_in85u")

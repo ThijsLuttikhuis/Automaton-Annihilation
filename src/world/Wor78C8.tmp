@@ -38,16 +38,16 @@ resource_name = "resources"
 texture = ExtResource("4_anb2f")
 0:0/0 = 0
 0:0/0/custom_data_0 = "Iron Ore"
-0:0/0/custom_data_1 = 0.5
+0:0/0/custom_data_1 = 2.34
 1:0/0 = 0
 1:0/0/custom_data_0 = "Copper Ore"
-1:0/0/custom_data_1 = 0.5
+1:0/0/custom_data_1 = 2.0
 2:0/0 = 0
 2:0/0/custom_data_0 = "Stone"
-2:0/0/custom_data_1 = 0.5
+2:0/0/custom_data_1 = 2.0
 3:0/0 = 0
 3:0/0/custom_data_0 = "Oil"
-3:0/0/custom_data_1 = 0.5
+3:0/0/custom_data_1 = 2.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k5yhj"]
 resource_name = "buildings"
@@ -55,11 +55,11 @@ texture = ExtResource("5_sdllp")
 0:0/0 = 0
 0:0/0/custom_data_2 = "Empty"
 1:0/0 = 0
-1:0/0/custom_data_2 = "Windmill"
+1:0/0/custom_data_2 = "Empty"
 2:0/0 = 0
-2:0/0/custom_data_2 = "Mining Drill"
+2:0/0/custom_data_2 = "Empty"
 3:0/0 = 0
-3:0/0/custom_data_2 = "Conveyor Belt"
+3:0/0/custom_data_2 = "Empty"
 4:0/0 = 0
 4:0/0/custom_data_2 = "Empty"
 5:0/0 = 0
@@ -363,8 +363,6 @@ y_sort_enabled = true
 
 [node name="ActionGhostBuildings" type="Node2D" parent="."]
 y_sort_enabled = true
-
-[node name="Items" type="Node2D" parent="."]
 
 [node name="Units" type="Node2D" parent="."]
 y_sort_enabled = true

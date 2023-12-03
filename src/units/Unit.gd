@@ -20,9 +20,10 @@ var buildRange: float
 var buildActionList: BuildActionList
 
 var conveyorPushSpeed: Array[ConveyorBelt] = []
-var moveSpeed: float = 0.0
-var viewRange: float = 100.0
-var radarRange: float = 100.0
+
+@export var moveSpeed: float = 0.0
+@export var viewRange: float = 100.0
+@export var radarRange: float = 100.0
 
 func _ready():
 	player = $"/root/World/Player"
@@ -55,14 +56,16 @@ func isGhost():
 	
 func getBuildActionList(buildmenuState):
 	var list: Array[PackedScene] = []
-	if buildmenuState == player.BUILD_MENU.ECONOMY:
+	if buildmenuState == Utils.BUILD_MENU.ECONOMY:
 		list = buildActionList.buildingsEconomy
-	elif buildmenuState == player.BUILD_MENU.DEFENSE:
+	elif buildmenuState == Utils.BUILD_MENU.DEFENSE:
 		list =  buildActionList.buildingsDefense
-	elif buildmenuState == player.BUILD_MENU.UTILITY:
+	elif buildmenuState == Utils.BUILD_MENU.UTILITY:
 		list =  buildActionList.buildingsUtility
-	elif buildmenuState == player.BUILD_MENU.FACTORY:
+	elif buildmenuState == Utils.BUILD_MENU.FACTORY:
 		list =  buildActionList.buildingsFactory
 	
 	return list
 
+func getDisplayName():
+	return "Unit name not set!"

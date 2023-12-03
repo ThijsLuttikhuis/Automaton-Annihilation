@@ -29,4 +29,6 @@ func on_ready():
 	
 func on_physics_process(_dt):	
 	move_and_slide_with_conveyors()
-	
+
+func getDisplayName():
+	return "Architect"

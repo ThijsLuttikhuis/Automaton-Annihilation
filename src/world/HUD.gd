@@ -44,14 +44,14 @@ func updateBuildMenuPanel(state):
 		
 	selectUnitPanel.get_parent().show()
 	
-	var stateIndex = buildStateToTabIndex(state)
+	var stateIndex = Utils.buildStateToTabIndex(state)
 	selectUnitPanel.set_current_tab(stateIndex)
 	
 	if unit == lastUnit:
 		return
 	
 	var unitGrid = selectUnitPanel.get_node("Unit")
-	unitGrid.get_node("Label").text = unit.name
+	unitGrid.get_node("Label").text = unit.getDisplayName()
 	
 	if unit is BuildUnit:
 		var actionList = unit.buildActionList
@@ -63,18 +63,24 @@ func updateBuildMenuPanel(state):
 			var buildList = buildLists[i]
 			var grid = selectUnitPanel.get_node(buildStr[i])
 			
+			var selectedBuildingScene = player.buildmenuBuilding
 			for j in range(12):
 				var gridElement = grid.get_node("Building" + str(j) + "/BuildingUI")
 				if j >= buildList.size():
 					gridElement.hide()
 					continue
-					
+				
 				gridElement.show()
 				var buildingScene: PackedScene = buildList[j]
 				var building: Building = buildingScene.instantiate()
 				
 				updateGridElementTexture(gridElement, building)
 				updateGridElementCost(gridElement, building)
+				
+				if !selectedBuildingScene || (selectedBuildingScene && buildingScene == selectedBuildingScene):
+					gridElement.modulate = Color(1.0, 1.0, 1.0, 1.0)
+				else:
+					gridElement.modulate = Color(0.8, 0.8, 0.8, 0.8)
 				
 	
 	print('updating unit panel')
@@ -87,6 +93,11 @@ func updateGridElementTexture(gridElement, building):
 func updateGridElementCost(gridElement, building):
 	gridElement.get_node("Cost/Energy/Value").text = str(building.energyCost)
 	
+	if world.hasEnergy(building.energyCost):
+		gridElement.get_node("Cost/Energy/Value").self_modulate = Color(1,1,1)
+	else:
+		gridElement.get_node("Cost/Energy/Value").self_modulate = Color(0.8,0.2,0.2)
+		
 	var resourceCost = building.resourceCost.resources
 	
 	var resourceNames = resourceCost.keys()
@@ -118,37 +129,6 @@ func updateGridElementCost(gridElement, building):
 	
 	resource1Node.get_node("Value").text = str(r1Value) if r1Value > 0 else ""
 	resource2Node.get_node("Value").text = str(r2Value) if r2Value > 0 else ""
-	resource1Node.get_node("Texture").texture = getResourceTexture(r1Name) if r1Value > 0 else null
-	resource2Node.get_node("Texture").texture = getResourceTexture(r2Name) if r2Value > 0 else null
+	resource1Node.get_node("Texture").texture = Utils.getResourceTexture(r1Name) if r1Value > 0 else null
+	resource2Node.get_node("Texture").texture = Utils.getResourceTexture(r2Name) if r2Value > 0 else null
 	
-func buildStateToTabIndex(state):
-	if state == player.BUILD_MENU.ECONOMY:
-		return 1
-	elif state == player.BUILD_MENU.DEFENSE:
-		return 2
-	elif state == player.BUILD_MENU.UTILITY:
-		return 3
-	elif state == player.BUILD_MENU.FACTORY:
-		return 4
-	else:
-		return 0
-	
-func buildStateToString(state):
-	if state == player.BUILD_MENU.ECONOMY:
-		return "Economy"
-	elif state == player.BUILD_MENU.DEFENSE:
-		return "Defense"
-	elif state == player.BUILD_MENU.UTILITY:
-		return "Utility"
-	elif state == player.BUILD_MENU.FACTORY:
-		return "Factory"
-	else:
-		return "Unit"
-
-func getResourceTexture(name):
-	var texture: Texture2D
-	if name == "Iron Ore":
-		texture = preload("res://assets/prototype/resources/iron_ore.png")
-	elif name == "Copper Ore":
-		pass # todo: copper ore png
-	return texture

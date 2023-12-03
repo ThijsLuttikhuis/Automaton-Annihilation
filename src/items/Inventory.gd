@@ -4,7 +4,7 @@ const name2StackSizeDict: Dictionary = {
 	'Iron Ingot': 50,
 	'Iron Ore': 50,
 	'Iron Gear': 100,
-	'Copper ingot': 50,
+	'Copper Ingot': 50,
 	'Copper Ore': 50,
 	'Copper Wire': 200,
 	'Stone': 50,

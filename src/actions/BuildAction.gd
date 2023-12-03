@@ -16,6 +16,12 @@ func update(unit: Unit, dt):
 			moveAction = MoveAction.new(actionPosition)
 	else:
 		unit.velocity = Vector2(0,0)
+		
+		var cellI = unit.player.tileMap.local_to_map(actionPosition)
+		if !ghostBuilding.canBuildOnTile(cellI):
+			ghostBuilding.queue_free() # cancel
+			return true
+		
 		var energy = unit.player.world.getEnergy()
 		var hasEnergy = energy >= ghostBuilding.energyCost 
 		if hasEnergy:
@@ -23,6 +29,7 @@ func update(unit: Unit, dt):
 			if hasResources:
 				unit.player.world.removeEnergy(ghostBuilding.energyCost)
 				ghostBuilding.setGhost(false)
+				unit.player.tileMap.set_cell(2, cellI, 2, ghostBuilding.toTileMapAtlasCoords())
 				return true
 	
 	return false

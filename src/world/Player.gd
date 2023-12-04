@@ -229,14 +229,16 @@ func updateGhosts():
 	
 func addSelectedUnit(unit):
 	if Input.is_action_pressed("mouse_button_1"):
-		unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0.5)
-		selectedUnits.push_back(unit)
+		if unit is Unit:
+			unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0.5)
+			selectedUnits.push_back(unit)
 	hud.updateBuildMenuPanel(buildmenuState)
 	
 func removeSelectedUnit(unit):
 	if Input.is_action_pressed("mouse_button_1"):
-		unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0)
-		selectedUnits.erase(unit)
+		if unit is Unit:
+			unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0)
+			selectedUnits.erase(unit)
 	hud.updateBuildMenuPanel(buildmenuState)
 
 func removeAllSelectedUnits():

@@ -26,29 +26,39 @@ func update(unit: Unit, dt):
 	if resourceGain > 1:
 		resourceGain -= 1
 		
-		var tileMap = unit.player.tileMap
-		var cellI = tileMap.local_to_map(actionPosition)
+		var placed = placeResource(unit, true) #check place on conveyor belts
+		if !placed:
+			placeResource(unit, false) #check place on ground
+		else:
+			pass #resource wasted
 		
-		var xDirs = [1, 1, 1, 0, -1, -1, -1, 0]
-		var yDirs = [-1, 0, 1, 1, 1, 0, -1, -1]
-		var dirs = range(8)
-		dirs.shuffle()
+func placeResource(unit: Unit, checkForConveyorBelts: bool):
+	
+	var tileMap = unit.player.tileMap
+	var cellI = tileMap.local_to_map(actionPosition)
+	
+	var xDirs = [1, 1, 1, 0, -1, -1, -1, 0]
+	var yDirs = [1, 0, -1, -1, -1, 0, 1, 1]
+	var dirs = range(8)
+	dirs.shuffle()
+	
+	for i in range(8):
+		if unit.spaceOccupied[dirs[i]]:
+			continue
 		
-		# first check if there are any conveyor belts
-		for i in range(8):
-			var dxI = xDirs[dirs[i]]
-			var dyI = yDirs[dirs[i]]
-			var neighborCellI = cellI + Vector2i(dxI, dyI)
-			var neighborTile = tileMap.get_cell_tile_data(2, neighborCellI)
-			if neighborTile && neighborTile.get_custom_data("buildingName") == "Conveyor Belt":
-				var itemScene = preload("res://src/items/Item.tscn") 
-				var item = itemScene.instantiate()
-				item.setResource(resourceName)
-				item.position = tileMap.map_to_local(neighborCellI)
-				var collisionInfo = item.move_and_collide(Vector2(0,0))
-				if collisionInfo:
-					item.queue_free()
-				else:
-					unit.player.get_node("../Items").add_child(item)
-					print("Gained 1 " + resourceName)
-					return
+		var dxI = xDirs[dirs[i]]
+		var dyI = yDirs[dirs[i]]
+		var neighborCellI = cellI + Vector2i(dxI, dyI)
+		var neighborTile = tileMap.get_cell_tile_data(2, neighborCellI)
+		if (!checkForConveyorBelts && !neighborTile) || \
+			(neighborTile && neighborTile.get_custom_data("buildingName") == "Conveyor Belt"):
+			
+			var itemScene = preload("res://src/items/Item.tscn") 
+			var item = itemScene.instantiate()
+			item.setResource(resourceName)
+			item.position = tileMap.map_to_local(neighborCellI)
+			unit.player.get_node("../Items").add_child(item)
+			print("Gained 1 " + resourceName)
+			return true
+	
+	return false

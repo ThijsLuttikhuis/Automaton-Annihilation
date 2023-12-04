@@ -6,8 +6,8 @@ func _init():
 	selectedActionPriority = 3
 	
 	# TODO: remove
-	inventory = Inventory.new(10)
-	inventory.add('Iron Ore', 500)
+	inventory = Inventory.new(999)
+	inventory.add('Iron Ore', 5000)
 	
 func on_ready():
 	buildActionList = BuildActionList.new()

@@ -1,5 +1,7 @@
 class_name MiningDrill extends Building
 
+var spaceOccupied: Array[int] = [0, 0, 0, 0, 0, 0, 0, 0]
+
 func _init():
 	nonBuilableResourceTiles.push_back("Empty")
 	
@@ -13,3 +15,14 @@ func on_ready():
 func getDisplayName():
 	return "Mining Drill"
 
+func addUnit(unit, pos: int):
+	if unit is BuildUnit || unit is Item:
+		spaceOccupied[pos] += 1
+	
+	print('mining drill entered')
+	
+func removeUnit(unit, pos: int):
+	if unit is BuildUnit || unit is Item:
+		spaceOccupied[pos] -= 1
+	
+	print('mining drill entered')

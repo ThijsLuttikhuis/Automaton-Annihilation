@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://baovv8dp6xw88"]
+[gd_scene load_steps=15 format=3 uid="uid://baovv8dp6xw88"]
 
 [ext_resource type="Script" path="res://src/buildings/MiningDrill.gd" id="1_rijuc"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_xtjmh"]
@@ -16,6 +16,30 @@ shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
 resource_local_to_scene = true
 radius = 7.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_mjx8v"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_76s7q"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jpvex"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bbbkj"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t6cb7"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y1ro6"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ymxu7"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7fojo"]
+radius = 7.0
+
 [node name="MiningDrill" type="StaticBody2D"]
 y_sort_enabled = true
 script = ExtResource("1_rijuc")
@@ -26,7 +50,6 @@ position = Vector2(0, -8)
 texture = ExtResource("3_av3t4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_dcdk1")
 
 [node name="ActionQueue" type="Node" parent="."]
@@ -39,3 +62,70 @@ default_color = Color(0, 0.596078, 0.596078, 1)
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
+
+[node name="ItemTestCollision" type="Node2D" parent="."]
+
+[node name="BottomRight" type="Area2D" parent="ItemTestCollision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollision/BottomRight"]
+position = Vector2(16, 16)
+shape = SubResource("CircleShape2D_mjx8v")
+
+[node name="Right" type="Area2D" parent="ItemTestCollision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollision/Right"]
+position = Vector2(16, 0)
+shape = SubResource("CircleShape2D_76s7q")
+
+[node name="TopRight" type="Area2D" parent="ItemTestCollision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollision/TopRight"]
+position = Vector2(16, -16)
+shape = SubResource("CircleShape2D_jpvex")
+
+[node name="Top" type="Area2D" parent="ItemTestCollision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollision/Top"]
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_bbbkj")
+
+[node name="TopLeft" type="Area2D" parent="ItemTestCollision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollision/TopLeft"]
+position = Vector2(-16, -16)
+shape = SubResource("CircleShape2D_t6cb7")
+
+[node name="Left" type="Area2D" parent="ItemTestCollision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollision/Left"]
+position = Vector2(-16, 0)
+shape = SubResource("CircleShape2D_y1ro6")
+
+[node name="BottomLeft" type="Area2D" parent="ItemTestCollision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollision/BottomLeft"]
+position = Vector2(-16, 16)
+shape = SubResource("CircleShape2D_ymxu7")
+
+[node name="Bottom" type="Area2D" parent="ItemTestCollision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollision/Bottom"]
+position = Vector2(0, 16)
+shape = SubResource("CircleShape2D_7fojo")
+
+[connection signal="body_entered" from="ItemTestCollision/BottomRight" to="." method="addUnit" binds= [0]]
+[connection signal="body_exited" from="ItemTestCollision/BottomRight" to="." method="removeUnit" binds= [0]]
+[connection signal="body_entered" from="ItemTestCollision/Right" to="." method="addUnit" binds= [1]]
+[connection signal="body_exited" from="ItemTestCollision/Right" to="." method="removeUnit" binds= [1]]
+[connection signal="body_entered" from="ItemTestCollision/TopRight" to="." method="addUnit" binds= [2]]
+[connection signal="body_exited" from="ItemTestCollision/TopRight" to="." method="removeUnit" binds= [2]]
+[connection signal="body_entered" from="ItemTestCollision/Top" to="." method="addUnit" binds= [3]]
+[connection signal="body_exited" from="ItemTestCollision/Top" to="." method="removeUnit" binds= [3]]
+[connection signal="body_entered" from="ItemTestCollision/TopLeft" to="." method="addUnit" binds= [4]]
+[connection signal="body_exited" from="ItemTestCollision/TopLeft" to="." method="removeUnit" binds= [4]]
+[connection signal="body_entered" from="ItemTestCollision/Left" to="." method="addUnit" binds= [5]]
+[connection signal="body_exited" from="ItemTestCollision/Left" to="." method="removeUnit" binds= [5]]
+[connection signal="body_entered" from="ItemTestCollision/BottomLeft" to="." method="addUnit" binds= [6]]
+[connection signal="body_exited" from="ItemTestCollision/BottomLeft" to="." method="removeUnit" binds= [6]]
+[connection signal="body_entered" from="ItemTestCollision/Bottom" to="." method="addUnit" binds= [7]]
+[connection signal="body_exited" from="ItemTestCollision/Bottom" to="." method="removeUnit" binds= [7]]

@@ -12,7 +12,6 @@ func on_ready():
 	var sprite = $"Sprite2D"
 	direction = -90 + (sprite.frame * 90)
 
-
 func updateDirection():
 	var sprite = $"Sprite2D"
 	direction = -90 + (sprite.frame * 90)
@@ -20,14 +19,12 @@ func updateDirection():
 func addUnit(unit):
 	if unit is BuildUnit || unit is Item:
 		unit.conveyorPushSpeed.push_back(self)
-
+	
 	print('conveyor entered')
 	
 func removeUnit(unit):
 	if unit is BuildUnit || unit is Item:
 		unit.conveyorPushSpeed.erase(self)
-	elif unit is Item:
-		pass
 	
 	print('conveyor exited')
 

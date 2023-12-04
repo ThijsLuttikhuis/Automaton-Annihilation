@@ -17,7 +17,7 @@ func _ready():
 		if child.name == "Unit":
 			continue
 		
-		var buildingUIScene = preload("res://src/ui/buildingUI.tscn")
+		var buildingUIScene = preload("res://src/ui/BuildingUI.tscn")
 		var order = [8,9,10,11,4,5,6,7,0,1,2,3]
 		for i in order:
 			var buildingUI = buildingUIScene.instantiate()
@@ -53,6 +53,32 @@ func updateBuildMenuPanel(state):
 	var unitGrid = selectUnitPanel.get_node("Unit")
 	unitGrid.get_node("Label").text = unit.getDisplayName()
 	
+
+	var unitResources = unit.inventory.resources
+	
+	var inventoryGrid = unitGrid.get_node("Unit/Inventory")
+	var gridSize = inventoryGrid.get_children().size()
+	
+	# equalize number of cells in grid
+	if unitResources.size() > gridSize:
+		var itemUIScene = preload("res://src/ui/ItemUI.tscn")
+		for i in range(unitResources.size() - gridSize):
+			var itemUI = itemUIScene.instantiate()
+			inventoryGrid.add_child(itemUI)
+	elif unitResources.size() < gridSize:
+		for i in range(-unitResources.size() + gridSize):
+			inventoryGrid.get_child(-1).queue_free()
+	
+	# set correct values per grid cell
+	for i in range(unitResources.size()):
+		var key = unitResources.keys()[i]
+		var itemUI = inventoryGrid.get_child(i)
+		itemUI.get_node("Value").text = str(unitResources[key])
+		itemUI.get_node("Texture").texture = Utils.getResourceTexture(key)
+
+	
+	
+	
 	if unit is BuildUnit:
 		var actionList = unit.buildActionList
 		var buildStr = ["Economy", "Defense", "Utility", "Factory"] 
@@ -75,7 +101,7 @@ func updateBuildMenuPanel(state):
 				var building: Building = buildingScene.instantiate()
 				
 				updateGridElementTexture(gridElement, building)
-				updateGridElementCost(gridElement, building)
+				updateGridElementCost(unit, gridElement, building)
 				
 				if !selectedBuildingScene || (selectedBuildingScene && buildingScene == selectedBuildingScene):
 					gridElement.modulate = Color(1.0, 1.0, 1.0, 1.0)
@@ -90,7 +116,7 @@ func updateGridElementTexture(gridElement, building):
 	var nodeTexture = gridElement.get_node("Texture")
 	nodeTexture.texture = sprite2D.texture
 
-func updateGridElementCost(gridElement, building):
+func updateGridElementCost(unit, gridElement, building):
 	gridElement.get_node("Cost/Energy/Value").text = str(building.energyCost)
 	
 	if world.hasEnergy(building.energyCost):
@@ -131,4 +157,11 @@ func updateGridElementCost(gridElement, building):
 	resource2Node.get_node("Value").text = str(r2Value) if r2Value > 0 else ""
 	resource1Node.get_node("Texture").texture = Utils.getResourceTexture(r1Name) if r1Value > 0 else null
 	resource2Node.get_node("Texture").texture = Utils.getResourceTexture(r2Name) if r2Value > 0 else null
-	
+	if unit.inventory.hasResources(r1Name, r1Value):
+		resource1Node.get_node("Value").self_modulate = Color(1,1,1)
+	else:
+		resource1Node.get_node("Value").self_modulate = Color(0.8,0.2,0.2)
+	if r2Name != "" && unit.inventory.hasResources(r2Name, r2Value):
+		resource2Node.get_node("Value").self_modulate = Color(1,1,1)
+	else:
+		resource2Node.get_node("Value").self_modulate = Color(0.8,0.2,0.2)

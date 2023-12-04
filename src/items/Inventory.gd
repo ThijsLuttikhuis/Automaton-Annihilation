@@ -47,7 +47,12 @@ func removeTillEmpty(resourcesToRemove, number: int = 0):
 			else:
 				resources[key] -= resourcesToRemove.resources[key]
 		else:
-			missingSlots[key] = resourcesToRemove.resources[key]
+			missingSlots.resources[key] = resourcesToRemove.resources[key]
+	
+	# remove dict keys for empty slots
+	for key in resources:
+		if resources[key] == 0:
+			resources.erase(key)
 	
 	return missingSlots
 
@@ -79,7 +84,7 @@ func hasResources(resourcesToCheck, number: int = 0):
 		var inv = Inventory.new(999)
 		inv.resources[resourcesToCheck] = number
 		resourcesToCheck = inv
-		
+	
 	var inventoryCopy = deepCopy(self)
 	var resourcesToCheckCopy = deepCopy(resourcesToCheck)
 	

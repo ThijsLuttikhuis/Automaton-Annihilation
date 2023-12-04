@@ -41,6 +41,7 @@ func _process(_dt):
 	updateUIBuildmenu()
 	updateActionQueue()
 	updateGhosts()
+	updatePickupItems()
 
 func updateRotation():
 	if Input.is_action_just_pressed("ui_rotate_right"):
@@ -226,7 +227,13 @@ func updateGhosts():
 		if !ghostBuilding.canBuildOnTile(cellI):
 			ghostBuilding.queue_free()
 		
-	
+func updatePickupItems():
+	if buildmenuState == Utils.BUILD_MENU.NONE:
+		if Input.is_action_pressed("ui_pickup_item"):
+			for unit in selectedUnits:
+				if unit is BuildUnit:
+					unit.pickupItemsInArea()
+
 func addSelectedUnit(unit):
 	if Input.is_action_pressed("mouse_button_1"):
 		if unit is Unit:

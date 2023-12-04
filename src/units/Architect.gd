@@ -7,7 +7,7 @@ func _init():
 	
 	# TODO: remove
 	inventory = Inventory.new(999)
-	inventory.add('Iron Ore', 5000)
+	inventory.add('Iron Ore', 50)
 	
 func on_ready():
 	buildActionList = BuildActionList.new()
@@ -27,7 +27,7 @@ func on_ready():
 	var conveyorbelt = preload("res://src/buildings/ConveyorBelt.tscn")
 	buildActionList.buildingsFactory.push_back(conveyorbelt)
 	
-func on_physics_process(_dt):	
+func on_physics_process(_dt):
 	move_and_slide_with_conveyors()
 
 func getDisplayName():

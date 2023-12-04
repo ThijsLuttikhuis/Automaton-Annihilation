@@ -13,7 +13,7 @@ var selectedActionPriority: int = 0
 
 var energyStorage: float
 
-var inventory: Inventory
+var inventory: Inventory = Inventory.new(1)
 
 var buildPower: float
 var buildRange: float

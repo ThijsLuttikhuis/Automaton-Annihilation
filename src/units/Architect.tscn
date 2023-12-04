@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ccds6drvg4py2"]
+[gd_scene load_steps=8 format=3 uid="uid://ccds6drvg4py2"]
 
 [ext_resource type="Script" path="res://src/units/Architect.gd" id="1_l6t7a"]
 [ext_resource type="Texture2D" uid="uid://cwew6rfuf01ay" path="res://assets/prototype/player.png" id="2_ealhd"]
@@ -13,6 +13,9 @@ shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_766fm"]
 size = Vector2(12, 12)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ujgbg"]
+radius = 16.0
 
 [node name="Architect" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -39,3 +42,11 @@ default_color = Color(0, 0.596078, 0.596078, 1)
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
+
+[node name="ItemTestCollision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollision"]
+shape = SubResource("CircleShape2D_ujgbg")
+
+[connection signal="body_entered" from="ItemTestCollision" to="." method="addUnit"]
+[connection signal="body_exited" from="ItemTestCollision" to="." method="removeUnit"]

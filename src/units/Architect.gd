@@ -15,9 +15,13 @@ func on_ready():
 	buildActionList.buildingsEconomy.push_back(windmill)
 	var miningdrill = preload("res://src/buildings/MiningDrill.tscn")
 	buildActionList.buildingsEconomy.push_back(miningdrill)
-	buildActionList.buildingsEconomy.push_back(miningdrill)
-	buildActionList.buildingsEconomy.push_back(miningdrill)
-	buildActionList.buildingsEconomy.push_back(miningdrill)
+	var solarpanel = preload("res://src/buildings/SolarPanel.tscn")
+	buildActionList.buildingsEconomy.push_back(solarpanel)
+	
+	var chest = preload("res://src/buildings/Chest.tscn")
+	buildActionList.buildingsEconomy.push_back(chest)
+	
+	
 	buildActionList.buildingsEconomy.push_back(miningdrill)
 	buildActionList.buildingsEconomy.push_back(miningdrill)
 	buildActionList.buildingsEconomy.push_back(miningdrill)

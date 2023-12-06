@@ -1,5 +1,7 @@
 class_name HUD extends CanvasLayer
 
+const updateTime = 0.5
+
 var world: World
 var player: Player
 var selectUnitPanel: Container
@@ -23,7 +25,7 @@ func _ready():
 			var buildingUI = buildingUIScene.instantiate()
 			buildingUI.name = "Building" + str(i)
 			child.add_child(buildingUI)
-	
+
 func _process(_dt):
 	var energy = world.getEnergy()
 	var energyStorage = world.getEnergyStorage()
@@ -33,8 +35,17 @@ func _process(_dt):
 	var windSpeed = world.getWindSpeed()
 	var windSpeedDisplay = worldStatePanel.get_node("WindSpeedDisplay")
 	windSpeedDisplay.text = "Wind Speed: " + str(round(windSpeed * 10.0) / 10.0)
+	
+	var solarPower = world.getSolarPower()
+	var solarPowerDisplay = worldStatePanel.get_node("SolarPowerDisplay")
+	solarPowerDisplay.text = "Solar Power: " + str(round(solarPower * 10.0) / 10.0)
 
-func updateBuildMenuPanel(state):
+func _physics_process(dt):
+	if fmod(world.getTime(), updateTime) < dt:
+		updateBuildMenuPanel()
+
+func updateBuildMenuPanel():
+	var buildMenuState = player.buildmenuState
 	var unit = player.getMainSelectedUnit()
 	
 	if !unit:
@@ -44,7 +55,7 @@ func updateBuildMenuPanel(state):
 		
 	selectUnitPanel.get_parent().show()
 	
-	var stateIndex = Utils.buildStateToTabIndex(state)
+	var stateIndex = Utils.buildStateToTabIndex(buildMenuState)
 	selectUnitPanel.set_current_tab(stateIndex)
 	
 	if unit == lastUnit:
@@ -53,7 +64,6 @@ func updateBuildMenuPanel(state):
 	var unitGrid = selectUnitPanel.get_node("Unit")
 	unitGrid.get_node("Label").text = unit.getDisplayName()
 	
-
 	var unitResources = unit.inventory.resources
 	
 	var inventoryGrid = unitGrid.get_node("Unit/Inventory")
@@ -75,9 +85,6 @@ func updateBuildMenuPanel(state):
 		var itemUI = inventoryGrid.get_child(i)
 		itemUI.get_node("Value").text = str(unitResources[key])
 		itemUI.get_node("Texture").texture = Utils.getResourceTexture(key)
-
-	
-	
 	
 	if unit is BuildUnit:
 		var actionList = unit.buildActionList
@@ -107,7 +114,6 @@ func updateBuildMenuPanel(state):
 					gridElement.modulate = Color(1.0, 1.0, 1.0, 1.0)
 				else:
 					gridElement.modulate = Color(0.8, 0.8, 0.8, 0.8)
-				
 	
 	print('updating unit panel')
 

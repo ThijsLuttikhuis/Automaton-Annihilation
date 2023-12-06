@@ -6,6 +6,13 @@ var rng: RandomNumberGenerator
 var time: float = 0.0
 var windSpeedUpdateTime: float = 0.5
 
+# solar
+const minSolarPower: float = 0.0
+const maxSolarPower: float = 20.0
+const solarPowerTimeCycle: float = 90.0
+
+var solarStartPhase: float
+
 # wind
 const minWindSpeed: float = 3.0
 const maxWindSpeed: float = 17.0
@@ -25,6 +32,7 @@ var energyStorage: float = 1000
 
 func _init():
 	rng = RandomNumberGenerator.new()
+	solarStartPhase = rng.randf()
 
 func _physics_process(dt):
 	time += dt
@@ -40,6 +48,9 @@ func _physics_process(dt):
 		windSpeed = min(max(windSpeed, \
 			minWindSpeed - windSpeedVariationMinMaxDelta), \
 			maxWindSpeed + windSpeedVariationMinMaxDelta)
+
+func getTime():
+	return time
 
 func addEnergy(energyGain):
 	energy += energyGain
@@ -60,3 +71,7 @@ func getEnergyStorage():
 
 func getWindSpeed():
 	return min(max(windSpeed, minWindSpeed), maxWindSpeed)
+
+func getSolarPower():
+	return minSolarPower + 0.5 * (maxSolarPower - minSolarPower) * \
+	 	(1 + sin(2 * PI * (time / solarPowerTimeCycle + solarStartPhase)))

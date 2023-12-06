@@ -10,4 +10,3 @@ func on_ready():
 
 func getDisplayName():
 	return "Windmill"
-	

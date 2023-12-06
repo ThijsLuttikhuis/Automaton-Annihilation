@@ -63,7 +63,7 @@ texture = ExtResource("5_sdllp")
 4:0/0 = 0
 4:0/0/custom_data_2 = "Solar Panel"
 5:0/0 = 0
-5:0/0/custom_data_2 = "Chest"
+5:0/0/custom_data_2 = "Empty"
 6:0/0 = 0
 6:0/0/custom_data_2 = "Empty"
 7:0/0 = 0
@@ -242,11 +242,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="SolarPowerLimits" type="VBoxContainer" parent="HUD/WorldStateColor/WorldStatePanel"]
+[node name="WindSpeedLimits" type="VBoxContainer" parent="HUD/WorldStateColor/WorldStatePanel"]
 layout_mode = 2
 theme_override_constants/separation = -4
 
-[node name="SolarPowerMax" type="Label" parent="HUD/WorldStateColor/WorldStatePanel/SolarPowerLimits"]
+[node name="WindSpeedMaxDisplay" type="Label" parent="HUD/WorldStateColor/WorldStatePanel/WindSpeedLimits"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "max: 17"
@@ -255,47 +255,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="WindSpeedMin" type="Label" parent="HUD/WorldStateColor/WorldStatePanel/SolarPowerLimits"]
+[node name="WindSpeedMinDisplay" type="Label" parent="HUD/WorldStateColor/WorldStatePanel/WindSpeedLimits"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "min:  3"
-label_settings = SubResource("LabelSettings_ftoi5")
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="SolarPowerDisplay" type="Label" parent="HUD/WorldStateColor/WorldStatePanel"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-text = "Solar Power: 0"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="TextureRect" type="TextureRect" parent="HUD/WorldStateColor/WorldStatePanel/SolarPowerDisplay"]
-layout_mode = 2
-offset_left = 204.0
-offset_top = -3.0
-offset_right = 204.0
-offset_bottom = 29.0
-
-[node name="WindSpeedLimits" type="VBoxContainer" parent="HUD/WorldStateColor/WorldStatePanel"]
-layout_mode = 2
-theme_override_constants/separation = -4
-
-[node name="WindSpeedMax" type="Label" parent="HUD/WorldStateColor/WorldStatePanel/WindSpeedLimits"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-text = "max: 20"
-label_settings = SubResource("LabelSettings_7w4um")
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="WindSpeedMin" type="Label" parent="HUD/WorldStateColor/WorldStatePanel/WindSpeedLimits"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-text = "min:  0"
 label_settings = SubResource("LabelSettings_ftoi5")
 horizontal_alignment = 1
 vertical_alignment = 1

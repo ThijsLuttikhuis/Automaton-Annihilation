@@ -1,7 +1,5 @@
 class_name GatherResourceAction extends UnitAction
 
-
-
 var efficiency: int = 1
 var time: float = 0.0
 var resourceGain: float = 0.0

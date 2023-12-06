@@ -84,7 +84,7 @@ func updateSelectUnits():
 			
 			selectedUnits.sort_custom(sortBySelectedActionPriority)
 			var unit = getMainSelectedUnit()
-			hud.updateBuildMenuPanel(buildmenuState)
+			hud.updateBuildMenuPanel()
 			#TODO set highest prio unit to show build queue in UI
 		
 		mouseClickPath.clear()
@@ -127,7 +127,7 @@ func updateUIBuildmenu():
 				var buildings = unit.getBuildActionList(buildmenuState)
 				if i < buildings.size():
 					buildmenuBuilding = buildings[i];
-					hud.updateBuildMenuPanel(buildmenuState)
+					hud.updateBuildMenuPanel()
 					break
 
 func updateActionQueue():
@@ -239,20 +239,20 @@ func addSelectedUnit(unit):
 		if unit is Unit:
 			unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0.5)
 			selectedUnits.push_back(unit)
-	hud.updateBuildMenuPanel(buildmenuState)
+	hud.updateBuildMenuPanel()
 	
 func removeSelectedUnit(unit):
 	if Input.is_action_pressed("mouse_button_1"):
 		if unit is Unit:
 			unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0)
 			selectedUnits.erase(unit)
-	hud.updateBuildMenuPanel(buildmenuState)
+	hud.updateBuildMenuPanel()
 
 func removeAllSelectedUnits():
 	for unit in selectedUnits:
 		unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0)
 	selectedUnits.clear();
-	hud.updateBuildMenuPanel(buildmenuState)
+	hud.updateBuildMenuPanel()
 	
 func setCollisionBoxTransform(pos, size):
 	collisionBox.position = pos
@@ -312,4 +312,4 @@ func setBuildMenuState(state: Utils.BUILD_MENU):
 	buildmenuState = state
 	if state == Utils.BUILD_MENU.NONE:
 		buildmenuBuilding = null
-	hud.updateBuildMenuPanel(buildmenuState)
+	hud.updateBuildMenuPanel()

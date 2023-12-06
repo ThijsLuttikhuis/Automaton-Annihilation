@@ -4,7 +4,9 @@ const NameToTileMapIndex: Dictionary = {
 	"Empty": Vector2(0,0),
 	"Windmill": Vector2(1,0),
 	"Mining Drill": Vector2(2,0),
-	"Conveyor Belt": Vector2(3,0)
+	"Conveyor Belt": Vector2(3,0),
+	"Solar Panel": Vector2(4,0),
+	"Chest": Vector2(5,0)
 }
 
 var nonBuilableResourceTiles: Array[String] = []

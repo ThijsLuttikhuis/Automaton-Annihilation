@@ -1,13 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://pe34k83gq1g1"]
+[gd_scene load_steps=7 format=3 uid="uid://c5sp085tpmn4l"]
 
-[ext_resource type="Script" path="res://src/buildings/Windmill.gd" id="1_woaf4"]
-[ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_uvfg3"]
-[ext_resource type="Texture2D" uid="uid://b6ful48ijko23" path="res://assets/prototype/windmill-4tile.png" id="3_ngyo3"]
-[ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="3_wxf3u"]
+[ext_resource type="Script" path="res://src/buildings/SolarPanel.gd" id="1_a6g4n"]
+[ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_wcvmq"]
+[ext_resource type="Texture2D" uid="uid://caf7hgvi34sq3" path="res://assets/prototype/solarpanel-4tile.png" id="3_1mcly"]
+[ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="3_ogbe1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
 resource_local_to_scene = true
-shader = ExtResource("2_uvfg3")
+shader = ExtResource("2_wcvmq")
 shader_parameter/outline_width = 0.0
 shader_parameter/ghost_greyout = false
 shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
@@ -16,23 +16,22 @@ shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
 resource_local_to_scene = true
 radius = 7.0
 
-[node name="Windmill" type="StaticBody2D"]
+[node name="SolarPanel" type="StaticBody2D"]
 y_sort_enabled = true
-script = ExtResource("1_woaf4")
+script = ExtResource("1_a6g4n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_n7ds3")
 position = Vector2(0, -8)
-texture = ExtResource("3_ngyo3")
-hframes = 4
+texture = ExtResource("3_1mcly")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
 shape = SubResource("CircleShape2D_dcdk1")
 
 [node name="ActionQueue" type="Node" parent="."]
-script = ExtResource("3_wxf3u")
+script = ExtResource("3_ogbe1")
 
 [node name="ActionPath" type="Line2D" parent="ActionQueue"]
 width = 1.5

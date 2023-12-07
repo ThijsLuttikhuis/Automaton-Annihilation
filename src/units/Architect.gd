@@ -11,13 +11,13 @@ func _init():
 	
 func on_ready():
 	buildActionList = BuildActionList.new()
-	var windmill = preload("res://src/buildings/windmill.tscn")
-	buildActionList.buildingsEconomy.push_back(windmill)
+
 	var miningdrill = preload("res://src/buildings/MiningDrill.tscn")
 	buildActionList.buildingsEconomy.push_back(miningdrill)
 	var solarpanel = preload("res://src/buildings/SolarPanel.tscn")
 	buildActionList.buildingsEconomy.push_back(solarpanel)
-	
+	var windmill = preload("res://src/buildings/Windmill.tscn")
+	buildActionList.buildingsEconomy.push_back(windmill)
 	var chest = preload("res://src/buildings/Chest.tscn")
 	buildActionList.buildingsEconomy.push_back(chest)
 	

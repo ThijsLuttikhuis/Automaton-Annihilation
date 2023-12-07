@@ -21,16 +21,24 @@ func update(unit: Unit, dt):
 	
 	time += dt
 	resourceGain += resourceRichness * efficiency * dt
+	
 	if resourceGain > 1:
-		resourceGain -= 1
 		
 		var placed = placeResource(unit, true) #check place on conveyor belts
 		if !placed:
-			placeResource(unit, false) #check place on ground
-		else:
-			pass #resource wasted
+			placed = placeResource(unit, false) #check place on ground
+		if placed: 
+			resourceGain = 0
+	else:
+		var animationSpriteI: int = floor(resourceGain * 10.0)
+		var frame = animationSpriteI if animationSpriteI < 3 else \
+			1 if animationSpriteI > 8 else \
+			2 + animationSpriteI % 2
 		
-func placeResource(unit: Unit, checkForConveyorBelts: bool):
+		var sprite = unit.get_node("Sprite2D")
+		sprite.set_frame(frame)
+		
+func placeResource(unit: Unit, checkForConveyorBeltsAndChests: bool):
 	
 	var tileMap = unit.player.tileMap
 	var cellI = tileMap.local_to_map(actionPosition)
@@ -48,10 +56,11 @@ func placeResource(unit: Unit, checkForConveyorBelts: bool):
 		var dyI = yDirs[dirs[i]]
 		var neighborCellI = cellI + Vector2i(dxI, dyI)
 		var neighborTile = tileMap.get_cell_tile_data(2, neighborCellI)
-		if (!checkForConveyorBelts && !neighborTile) || \
-			(neighborTile && neighborTile.get_custom_data("buildingName") == "Conveyor Belt"):
+		if (!checkForConveyorBeltsAndChests && !neighborTile) || \
+			(neighborTile && neighborTile.get_custom_data("buildingName") == "Conveyor Belt") || \
+			(neighborTile && neighborTile.get_custom_data("buildingName") == "Chest"):
 			
-			var itemScene = preload("res://src/items/Item.tscn") 
+			var itemScene = preload("res://src/items/Item.tscn")
 			var item = itemScene.instantiate()
 			item.setResource(resourceName)
 			item.position = tileMap.map_to_local(neighborCellI)

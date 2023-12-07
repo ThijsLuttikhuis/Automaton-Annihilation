@@ -1,6 +1,6 @@
 class_name HUD extends CanvasLayer
 
-const updateTime = 0.5
+const updateTime = 0.2
 
 var world: World
 var player: Player
@@ -26,7 +26,12 @@ func _ready():
 			buildingUI.name = "Building" + str(i)
 			child.add_child(buildingUI)
 
-func _process(_dt):
+func _physics_process(dt):
+	if fmod(world.getTime(), updateTime) < dt:
+		updateEnergyPanel()
+		updateBuildMenuPanel()
+
+func updateEnergyPanel():
 	var energy = world.getEnergy()
 	var energyStorage = world.getEnergyStorage()
 	var energyDisplay = worldStatePanel.get_node("EnergyDisplay")
@@ -39,11 +44,7 @@ func _process(_dt):
 	var solarPower = world.getSolarPower()
 	var solarPowerDisplay = worldStatePanel.get_node("SolarPowerDisplay")
 	solarPowerDisplay.text = "Solar Power: " + str(round(solarPower * 10.0) / 10.0)
-
-func _physics_process(dt):
-	if fmod(world.getTime(), updateTime) < dt:
-		updateBuildMenuPanel()
-
+	
 func updateBuildMenuPanel():
 	var buildMenuState = player.buildmenuState
 	var unit = player.getMainSelectedUnit()
@@ -119,7 +120,7 @@ func updateBuildMenuPanel():
 
 func updateGridElementTexture(gridElement, building):
 	var sprite2D = building.get_node("Sprite2D")
-	var nodeTexture = gridElement.get_node("Texture")
+	var nodeTexture = gridElement.get_node("ClipContentNode/Texture")
 	nodeTexture.texture = sprite2D.texture
 
 func updateGridElementCost(unit, gridElement, building):

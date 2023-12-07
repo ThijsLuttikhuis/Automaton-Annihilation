@@ -20,6 +20,7 @@ wall_min_slide_angle = 0.0872665
 script = ExtResource("1_wba45")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -5
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_tt46g")
 texture = ExtResource("3_h4og3")

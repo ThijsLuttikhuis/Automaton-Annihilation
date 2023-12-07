@@ -1,7 +1,7 @@
 class_name GatherWindAction extends UnitAction
 
 const gatherWindTime: float = 0.1
-const updateAnimationTime: float = 4.0
+const animationSpeed: float = 2.5
 
 var efficiency: int
 var time: float = 0.0
@@ -20,7 +20,8 @@ func update(unit: Unit, dt):
 		world.addEnergy(energyGain)
 		
 		var newTotalEnergyGain = totalEnergyGain + energyGain
-		if fmod(newTotalEnergyGain, updateAnimationTime) < fmod(totalEnergyGain, updateAnimationTime):
+		var animationTime = 10.0 / animationSpeed # scale with ~~averagewindspeed
+		if fmod(newTotalEnergyGain, animationTime) < fmod(totalEnergyGain, animationTime):
 			var sprite = unit.get_node("Sprite2D")
 			sprite.set_frame((sprite.frame + 1) % sprite.hframes)
 		

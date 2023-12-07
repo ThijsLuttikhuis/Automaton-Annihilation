@@ -49,11 +49,7 @@ func removeTillEmpty(resourcesToRemove, number: int = 0):
 		else:
 			missingSlots.resources[key] = resourcesToRemove.resources[key]
 	
-	# remove dict keys for empty slots
-	for key in resources:
-		if resources[key] == 0:
-			resources.erase(key)
-	
+	removeEmptyResourceSlots()
 	return missingSlots
 
 func add(resourcesToAdd, number: int = 0):
@@ -76,7 +72,8 @@ func addTillFull(resourcesToAdd, number: int = 0):
 			resources[key] += resourcesToAdd.resources[key]
 		else:
 			resources[key] = resourcesToAdd.resources[key]
-			
+	
+	removeEmptyResourceSlots()
 	return overflow
 
 func hasResources(resourcesToCheck, number: int = 0):
@@ -85,8 +82,8 @@ func hasResources(resourcesToCheck, number: int = 0):
 		inv.resources[resourcesToCheck] = number
 		resourcesToCheck = inv
 	
-	var inventoryCopy = deepCopy(self)
-	var resourcesToCheckCopy = deepCopy(resourcesToCheck)
+	var inventoryCopy = Inventory.deepCopy(self)
+	var resourcesToCheckCopy = Inventory.deepCopy(resourcesToCheck)
 	
 	var temp = resources
 	resources = inventoryCopy.resources
@@ -102,8 +99,16 @@ func ifHasResourcesRemove(resourcesToRemove, number: int = 0):
 	else:
 		return false
 	
-func deepCopy(inventoryToCopy: Inventory):
+static func deepCopy(inventoryToCopy: Inventory):
 	var copy: Inventory = Inventory.new(inventoryToCopy.nSlots)
 	copy.add(inventoryToCopy)
 		
 	return copy
+
+func removeEmptyResourceSlots():
+	for key in resources.keys():
+		if resources[key] == 0:
+			resources.erase(key)
+
+func is_empty():
+	return resources.is_empty()

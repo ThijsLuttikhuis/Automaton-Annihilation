@@ -1,21 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://kx0b3ymqpdfb"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_mfl3u"]
-line_spacing = 0.0
-font_size = 11
+[gd_scene format=3 uid="uid://kx0b3ymqpdfb"]
 
 [node name="ItemUI" type="MarginContainer"]
-custom_minimum_size = Vector2(20, 20)
+custom_minimum_size = Vector2(32, 32)
 offset_right = 16.0
 offset_bottom = 16.0
 
 [node name="Texture" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
+expand_mode = 3
 stretch_mode = 5
 
 [node name="Value" type="Label" parent="."]
 layout_mode = 2
 text = "50"
-label_settings = SubResource("LabelSettings_mfl3u")
 horizontal_alignment = 2

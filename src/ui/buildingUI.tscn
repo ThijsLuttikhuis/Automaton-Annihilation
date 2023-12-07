@@ -1,21 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://0vt7rxyvpncv"]
+[gd_scene load_steps=3 format=3 uid="uid://0vt7rxyvpncv"]
 
 [ext_resource type="Texture2D" uid="uid://dgnelaqq34d32" path="res://assets/prototype/energy.png" id="1_65iyc"]
+[ext_resource type="Texture2D" uid="uid://b6ful48ijko23" path="res://assets/prototype/windmill-4tile.png" id="2_28p67"]
 
 [node name="BuildingUI" type="MarginContainer"]
-custom_minimum_size = Vector2(96, 64)
-offset_right = 96.0
+custom_minimum_size = Vector2(92, 64)
+offset_right = 90.0
 offset_bottom = 64.0
 
 [node name="BuildingUI" type="HBoxContainer" parent="."]
 layout_mode = 2
+theme_override_constants/separation = -2
 
 [node name="Cost" type="VBoxContainer" parent="BuildingUI"]
+custom_minimum_size = Vector2(58, 0)
 layout_mode = 2
 theme_override_constants/separation = -8
 
 [node name="Energy" type="HBoxContainer" parent="BuildingUI/Cost"]
 layout_mode = 2
+theme_override_constants/separation = -2
 
 [node name="Texture" type="TextureRect" parent="BuildingUI/Cost/Energy"]
 custom_minimum_size = Vector2(16, 16)
@@ -29,6 +33,7 @@ text = "1000"
 
 [node name="Resource1" type="HBoxContainer" parent="BuildingUI/Cost"]
 layout_mode = 2
+theme_override_constants/separation = -2
 
 [node name="Texture" type="TextureRect" parent="BuildingUI/Cost/Resource1"]
 custom_minimum_size = Vector2(16, 16)
@@ -41,6 +46,7 @@ text = "100"
 
 [node name="Resource2" type="HBoxContainer" parent="BuildingUI/Cost"]
 layout_mode = 2
+theme_override_constants/separation = -2
 
 [node name="Texture" type="TextureRect" parent="BuildingUI/Cost/Resource2"]
 custom_minimum_size = Vector2(16, 16)
@@ -51,7 +57,15 @@ stretch_mode = 5
 layout_mode = 2
 text = "10"
 
-[node name="Texture" type="TextureRect" parent="BuildingUI"]
-custom_minimum_size = Vector2(24, 48)
+[node name="ClipContentNode" type="Control" parent="BuildingUI"]
+clip_contents = true
+custom_minimum_size = Vector2(32, 64)
 layout_mode = 2
-stretch_mode = 5
+
+[node name="Texture" type="TextureRect" parent="BuildingUI/ClipContentNode"]
+custom_minimum_size = Vector2(32, 64)
+layout_mode = 2
+offset_right = 1000.0
+offset_bottom = 64.0
+texture = ExtResource("2_28p67")
+stretch_mode = 4

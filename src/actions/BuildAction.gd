@@ -1,15 +1,20 @@
 class_name BuildAction extends UnitAction
 
+var pickupResourcesAction: PickupResourcesAction
 var moveAction: MoveAction
 var ghostBuilding: Unit
 
 func _init(targetPos, ghostBuilding_):
 	actionPosition = targetPos
 	ghostBuilding = ghostBuilding_
-	
+
 func update(unit: Unit, dt):
-	var distanceToTargetSquared = (unit.position - actionPosition).length_squared()
-	if unit.buildRange * unit.buildRange < distanceToTargetSquared:
+	if pickupResourcesAction:
+		var success = pickupResourcesAction.update(unit, dt)
+		if success:
+			pickupResourcesAction.clear()
+			pickupResourcesAction = null
+	elif unit.buildRange * unit.buildRange < (unit.position - actionPosition).length_squared():
 		if moveAction && moveAction.actionPosition == actionPosition:
 			moveAction.update(unit, dt)
 		else:
@@ -29,9 +34,12 @@ func update(unit: Unit, dt):
 			if hasResources:
 				unit.player.world.removeEnergy(ghostBuilding.energyCost)
 				ghostBuilding.setGhost(false)
+				ghostBuilding.reparent(ghostBuilding.get_node("../../Buildings"))
 				unit.player.tileMap.set_cell(2, cellI, 2, ghostBuilding.toTileMapAtlasCoords())
 				return true
-	
+			else:
+				pickupResourcesAction = PickupResourcesAction.new(ghostBuilding.resourceCost, false)
+				
 	return false
 
 func clear():

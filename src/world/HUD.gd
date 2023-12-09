@@ -15,22 +15,42 @@ func _ready():
 	worldStatePanel = $"WorldStateColor/WorldStatePanel"
 	selectUnitPanel = $"SelectUnitColor/SelectUnitPanel"
 	
-	for child in selectUnitPanel.get_children():
-		if child.name == "Unit":
-			continue
-		
-		var buildingUIScene = preload("res://src/ui/BuildingUI.tscn")
-		var order = [8,9,10,11,4,5,6,7,0,1,2,3]
-		for i in order:
-			var buildingUI = buildingUIScene.instantiate()
-			buildingUI.name = "Building" + str(i)
-			child.add_child(buildingUI)
+	createBuildingUITabs()
+	createBuildMenuTabLabels()
 
 func _physics_process(dt):
 	if fmod(world.getTime(), updateTime) < dt:
 		updateEnergyPanel()
 		updateBuildMenuPanel()
 
+func createBuildingUITabs():
+	for child in selectUnitPanel.get_children():
+		if child.name == "Unit":
+			continue
+		
+		var buildingUIScene = preload("res://src/ui/BuildingUI.tscn")
+		var order = [8,9,10,11,4,5,6,7,0,1,2,3]
+
+		for i in order:
+			var buildingUI = buildingUIScene.instantiate()
+			buildingUI.name = "Building" + str(i)
+			var labelKeyboardKey = buildingUI.get_node("BuildingUI/ClipContentNode/TextureRect/Label")
+			
+			labelKeyboardKey.text = getKeyboardKeyFromInputMap("ui_buildmenu_" + str(i))
+			child.add_child(buildingUI)
+
+func getKeyboardKeyFromInputMap(inputMapKey):
+	var keyIndex = InputMap.action_get_events(inputMapKey)
+	var physicalKeyCode = DisplayServer.keyboard_get_keycode_from_physical(keyIndex[0].physical_keycode)
+	var keycode = OS.get_keycode_string(physicalKeyCode)
+	if keycode is String && !keycode.is_empty():
+		return keycode
+	else:
+		if keyIndex[0].keycode == KEY_ESCAPE:
+			return "Esc"
+	
+	return "Unknown Key"
+	
 func updateEnergyPanel():
 	var energy = world.getEnergy()
 	var energyStorage = world.getEnergyStorage()
@@ -46,22 +66,60 @@ func updateEnergyPanel():
 	solarPowerDisplay.text = "Solar Power: " + str(round(solarPower * 10.0) / 10.0)
 	
 func updateBuildMenuPanel():
-	var buildMenuState = player.buildmenuState
 	var unit = player.getMainSelectedUnit()
-	
 	if !unit:
 		lastUnit = null
 		selectUnitPanel.get_parent().hide()
 		return
 		
 	selectUnitPanel.get_parent().show()
-	
+		
+	var buildMenuState = player.buildmenuState
 	var stateIndex = Utils.buildStateToTabIndex(buildMenuState)
 	selectUnitPanel.set_current_tab(stateIndex)
 	
-	if unit == lastUnit:
-		return
+	updateBuildMenuPanelKeyboardLabels(stateIndex)
+	updateBuildMenuSelectedTab(unit, stateIndex)
+
+func createBuildMenuTabLabels():
+	var unitLabel = $"SelectUnitColor/UnitTabLabel/Label"
+	unitLabel.text = getKeyboardKeyFromInputMap("ui_cancel")
 	
+	var economyLabel = $"SelectUnitColor/EconomyTabLabel/Label"
+	economyLabel.text = getKeyboardKeyFromInputMap("ui_buildmenu_economy")
+	
+	var defenseLabel = $"SelectUnitColor/DefenseTabLabel/Label"
+	defenseLabel.text = getKeyboardKeyFromInputMap("ui_buildmenu_defense")
+	
+	var utilityLabel = $"SelectUnitColor/UtilityTabLabel/Label"
+	utilityLabel.text = getKeyboardKeyFromInputMap("ui_buildmenu_utility")
+	
+	var factoryLabel = $"SelectUnitColor/FactoryTabLabel/Label"
+	factoryLabel.text = getKeyboardKeyFromInputMap("ui_buildmenu_factory")
+
+func updateBuildMenuPanelKeyboardLabels(stateIndex):
+	var unitLabel = $"SelectUnitColor/UnitTabLabel"
+	unitLabel.visible = stateIndex != 0
+	
+	var economyLabel = $"SelectUnitColor/EconomyTabLabel"
+	economyLabel.visible = stateIndex == 0
+	
+	var defenseLabel = $"SelectUnitColor/DefenseTabLabel"
+	defenseLabel.visible = stateIndex == 0
+	
+	var utilityLabel = $"SelectUnitColor/UtilityTabLabel"
+	utilityLabel.visible = stateIndex == 0
+	
+	var factoryLabel = $"SelectUnitColor/FactoryTabLabel"
+	factoryLabel.visible = stateIndex == 0
+
+func updateBuildMenuSelectedTab(unit, stateIndex):
+	if stateIndex == 0:
+		updateUnitInfoPanel(unit)
+	else:
+		updateUnitBuildMenu(unit, stateIndex)
+
+func updateUnitInfoPanel(unit):
 	var unitGrid = selectUnitPanel.get_node("Unit")
 	unitGrid.get_node("Label").text = unit.getDisplayName()
 	
@@ -86,37 +144,38 @@ func updateBuildMenuPanel():
 		var itemUI = inventoryGrid.get_child(i)
 		itemUI.get_node("Value").text = str(unitResources[key])
 		itemUI.get_node("Texture").texture = Utils.getResourceTexture(key)
+
+func updateUnitBuildMenu(unit, stateIndex):
+	if !(unit is BuildUnit):
+		return
 	
-	if unit is BuildUnit:
-		var actionList = unit.buildActionList
-		var buildStr = ["Economy", "Defense", "Utility", "Factory"] 
-		var buildLists = [actionList.buildingsEconomy, actionList.buildingsDefense, \
-			actionList.buildingsUtility, actionList.buildingsFactory]
+	var actionList = unit.buildActionList
+	var buildStr = ["Economy", "Defense", "Utility", "Factory"] 
+	var buildLists = [actionList.buildingsEconomy, actionList.buildingsDefense, \
+		actionList.buildingsUtility, actionList.buildingsFactory]
+	
+	var i = stateIndex - 1
+	var buildList = buildLists[i]
+	var grid = selectUnitPanel.get_node(buildStr[i])
+	
+	var selectedBuildingScene = player.buildmenuBuilding
+	for j in range(12):
+		var gridElement = grid.get_node("Building" + str(j) + "/BuildingUI")
+		if j >= buildList.size():
+			gridElement.hide()
+			continue
 		
-		for i in range(4):
-			var buildList = buildLists[i]
-			var grid = selectUnitPanel.get_node(buildStr[i])
-			
-			var selectedBuildingScene = player.buildmenuBuilding
-			for j in range(12):
-				var gridElement = grid.get_node("Building" + str(j) + "/BuildingUI")
-				if j >= buildList.size():
-					gridElement.hide()
-					continue
-				
-				gridElement.show()
-				var buildingScene: PackedScene = buildList[j]
-				var building: Building = buildingScene.instantiate()
-				
-				updateGridElementTexture(gridElement, building)
-				updateGridElementCost(unit, gridElement, building)
-				
-				if !selectedBuildingScene || (selectedBuildingScene && buildingScene == selectedBuildingScene):
-					gridElement.modulate = Color(1.0, 1.0, 1.0, 1.0)
-				else:
-					gridElement.modulate = Color(0.8, 0.8, 0.8, 0.8)
-	
-	print('updating unit panel')
+		gridElement.show()
+		var buildingScene: PackedScene = buildList[j]
+		var building: Building = buildingScene.instantiate()
+		
+		updateGridElementTexture(gridElement, building)
+		updateGridElementCost(unit, gridElement, building)
+		
+		if !selectedBuildingScene || (selectedBuildingScene && buildingScene == selectedBuildingScene):
+			gridElement.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		else:
+			gridElement.modulate = Color(0.8, 0.8, 0.8, 0.8)
 
 func updateGridElementTexture(gridElement, building):
 	var sprite2D = building.get_node("Sprite2D")

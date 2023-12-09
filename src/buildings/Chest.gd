@@ -5,7 +5,7 @@ const timeToClose: float = 0.4
 var timeLeftOpen: float = 0.0
 
 func _init():
-	energyCost = 250
+	energyCost = 100
 	resourceCost.add('Iron Ore', 5)
 	
 	inventory = Inventory.new(20)

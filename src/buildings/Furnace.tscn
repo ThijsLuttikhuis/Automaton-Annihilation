@@ -1,0 +1,141 @@
+[gd_scene load_steps=16 format=3 uid="uid://b4e5br67w1b2n"]
+
+[ext_resource type="Script" path="res://src/buildings/Furnace.gd" id="1_mmnib"]
+[ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_td6nu"]
+[ext_resource type="Texture2D" uid="uid://dp6atid0csnvv" path="res://assets/prototype/furnace-5tile.png" id="3_kv5al"]
+[ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_unl0t"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
+resource_local_to_scene = true
+shader = ExtResource("2_td6nu")
+shader_parameter/outline_width = 0.0
+shader_parameter/ghost_greyout = false
+shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dcdk1"]
+resource_local_to_scene = true
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mjx8v"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_76s7q"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jpvex"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bbbkj"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t6cb7"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y1ro6"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ymxu7"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7fojo"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d4lfq"]
+radius = 7.0
+
+[node name="Furnace" type="StaticBody2D"]
+y_sort_enabled = true
+script = ExtResource("1_mmnib")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_n7ds3")
+position = Vector2(0, -8)
+texture = ExtResource("3_kv5al")
+hframes = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dcdk1")
+
+[node name="ActionQueue" type="Node" parent="."]
+script = ExtResource("4_unl0t")
+
+[node name="ActionPath" type="Line2D" parent="ActionQueue"]
+visible = false
+width = 1.5
+default_color = Color(0, 0.596078, 0.596078, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="ItemTestCollisionOut" type="Node2D" parent="."]
+
+[node name="BottomRight" type="Area2D" parent="ItemTestCollisionOut"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollisionOut/BottomRight"]
+position = Vector2(16, 16)
+shape = SubResource("CircleShape2D_mjx8v")
+
+[node name="Right" type="Area2D" parent="ItemTestCollisionOut"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollisionOut/Right"]
+position = Vector2(16, 0)
+shape = SubResource("CircleShape2D_76s7q")
+
+[node name="TopRight" type="Area2D" parent="ItemTestCollisionOut"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollisionOut/TopRight"]
+position = Vector2(16, -16)
+shape = SubResource("CircleShape2D_jpvex")
+
+[node name="Top" type="Area2D" parent="ItemTestCollisionOut"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollisionOut/Top"]
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_bbbkj")
+
+[node name="TopLeft" type="Area2D" parent="ItemTestCollisionOut"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollisionOut/TopLeft"]
+position = Vector2(-16, -16)
+shape = SubResource("CircleShape2D_t6cb7")
+
+[node name="Left" type="Area2D" parent="ItemTestCollisionOut"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollisionOut/Left"]
+position = Vector2(-16, 0)
+shape = SubResource("CircleShape2D_y1ro6")
+
+[node name="BottomLeft" type="Area2D" parent="ItemTestCollisionOut"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollisionOut/BottomLeft"]
+position = Vector2(-16, 16)
+shape = SubResource("CircleShape2D_ymxu7")
+
+[node name="Bottom" type="Area2D" parent="ItemTestCollisionOut"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollisionOut/Bottom"]
+position = Vector2(0, 16)
+shape = SubResource("CircleShape2D_7fojo")
+
+[node name="ItemTestCollisionIn" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollisionIn"]
+shape = SubResource("CircleShape2D_d4lfq")
+
+[connection signal="body_entered" from="ItemTestCollisionOut/BottomRight" to="." method="addUnit" binds= [0]]
+[connection signal="body_exited" from="ItemTestCollisionOut/BottomRight" to="." method="removeUnit" binds= [0]]
+[connection signal="body_entered" from="ItemTestCollisionOut/Right" to="." method="addUnit" binds= [1]]
+[connection signal="body_exited" from="ItemTestCollisionOut/Right" to="." method="removeUnit" binds= [1]]
+[connection signal="body_entered" from="ItemTestCollisionOut/TopRight" to="." method="addUnit" binds= [2]]
+[connection signal="body_exited" from="ItemTestCollisionOut/TopRight" to="." method="removeUnit" binds= [2]]
+[connection signal="body_entered" from="ItemTestCollisionOut/Top" to="." method="addUnit" binds= [3]]
+[connection signal="body_exited" from="ItemTestCollisionOut/Top" to="." method="removeUnit" binds= [3]]
+[connection signal="body_entered" from="ItemTestCollisionOut/TopLeft" to="." method="addUnit" binds= [4]]
+[connection signal="body_exited" from="ItemTestCollisionOut/TopLeft" to="." method="removeUnit" binds= [4]]
+[connection signal="body_entered" from="ItemTestCollisionOut/Left" to="." method="addUnit" binds= [5]]
+[connection signal="body_exited" from="ItemTestCollisionOut/Left" to="." method="removeUnit" binds= [5]]
+[connection signal="body_entered" from="ItemTestCollisionOut/BottomLeft" to="." method="addUnit" binds= [6]]
+[connection signal="body_exited" from="ItemTestCollisionOut/BottomLeft" to="." method="removeUnit" binds= [6]]
+[connection signal="body_entered" from="ItemTestCollisionOut/Bottom" to="." method="addUnit" binds= [7]]
+[connection signal="body_exited" from="ItemTestCollisionOut/Bottom" to="." method="removeUnit" binds= [7]]
+[connection signal="body_entered" from="ItemTestCollisionIn" to="." method="pickupUnit"]

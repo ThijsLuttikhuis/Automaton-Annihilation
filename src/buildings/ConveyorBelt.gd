@@ -1,6 +1,5 @@
 class_name ConveyorBelt extends Building
 
-var direction: float
 var conveyorSpeed: float = 60
 
 func _init():
@@ -9,12 +8,10 @@ func _init():
 	resourceCost.add('Iron Ore', 3)
 
 func on_ready():
-	var sprite = $"Sprite2D"
-	direction = -90 + (sprite.frame * 90)
+	direction = -90 + ($"Sprite2D".frame * 90)
 
 func updateDirection():
-	var sprite = $"Sprite2D"
-	direction = -90 + (sprite.frame * 90)
+	direction = -90 + ($"Sprite2D".frame * 90)
 
 func addUnit(unit):
 	if unit is BuildUnit || unit is Item:

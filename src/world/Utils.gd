@@ -31,6 +31,8 @@ static func getResourceTexture(name):
 	var texture: Texture2D
 	if name == "Iron Ore":
 		texture = preload("res://assets/prototype/resources/iron_ore.png")
+	elif name == "Iron Plate":
+		texture = preload("res://assets/prototype/resources/iron_plate.png") 
 	elif name == "Copper Ore":
 		texture = preload("res://assets/prototype/resources/copper_ore.png")
 	elif name == "Stone":
@@ -38,3 +40,4 @@ static func getResourceTexture(name):
 	else:
 		texture = preload("res://assets/prototype/energy.png")
 	return texture
+

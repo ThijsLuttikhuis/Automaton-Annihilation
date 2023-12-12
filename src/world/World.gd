@@ -4,7 +4,7 @@ var rng: RandomNumberGenerator
 
 # time
 var time: float = 0.0
-var windSpeedUpdateTime: float = 0.5
+const tickTime: float = 0.5
 
 # solar
 const minSolarPower: float = 0.0
@@ -27,8 +27,9 @@ var windSpeed: float = 10.0
 var deltaWindSpeed: float = 0.75
 
 # resources
-var energy: float = 1000
-var energyStorage: float = 1000
+const defaultEnergyStorage: float = 1000.0
+var energy: float = 1000.0
+var energyStorage: float = defaultEnergyStorage
 
 func _init():
 	rng = RandomNumberGenerator.new()
@@ -36,18 +37,29 @@ func _init():
 
 func _physics_process(dt):
 	time += dt
-	if fmod(time, windSpeedUpdateTime) < dt:
-		var ddWind = rng.randfn(0.0, deltaWindSpeedVariation * windSpeedUpdateTime)
-		deltaWindSpeed += ddWind
-		deltaWindSpeed = min(max(deltaWindSpeed, \
-			minDeltaWindSpeedDelta), \
-			maxDeltaWindSpeedDelta)
+	if fmod(time, tickTime) < dt:
+		updateWindSpeed()
+		updateEnergyStorage()
 
-		var dWind = rng.randfn(0.0, windSpeedVariation * sqrt(deltaWindSpeed) * windSpeedUpdateTime)
-		windSpeed += dWind
-		windSpeed = min(max(windSpeed, \
-			minWindSpeed - windSpeedVariationMinMaxDelta), \
-			maxWindSpeed + windSpeedVariationMinMaxDelta)
+func updateWindSpeed():
+	var ddWind = rng.randfn(0.0, deltaWindSpeedVariation * tickTime)
+	deltaWindSpeed += ddWind
+	deltaWindSpeed = min(max(deltaWindSpeed, \
+		minDeltaWindSpeedDelta), \
+		maxDeltaWindSpeedDelta)
+
+	var dWind = rng.randfn(0.0, windSpeedVariation * sqrt(deltaWindSpeed) * tickTime)
+	windSpeed += dWind
+	windSpeed = min(max(windSpeed, \
+		minWindSpeed - windSpeedVariationMinMaxDelta), \
+		maxWindSpeed + windSpeedVariationMinMaxDelta)
+
+func updateEnergyStorage():
+	var buildings = $"Buildings".get_children()
+	var totalEnergy = defaultEnergyStorage
+	for building in buildings:
+		totalEnergy += building.energyStorage
+	energyStorage = totalEnergy
 
 func getTime():
 	return time
@@ -75,3 +87,15 @@ func getWindSpeed():
 func getSolarPower():
 	return minSolarPower + 0.5 * (maxSolarPower - minSolarPower) * \
 	 	(1 + sin(2 * PI * (time / solarPowerTimeCycle + solarStartPhase)))
+
+func getBuildings(buildingDisplayName: String = ""):
+	if buildingDisplayName == "":
+		return $"Buildings".get_children()
+	
+	var buildingsCorrectType: Array = []
+	for building in $"Buildings".get_children():
+		if building.getDisplayName() == buildingDisplayName:
+			buildingsCorrectType.push_back(building)
+	
+	return buildingsCorrectType
+

@@ -37,6 +37,7 @@ func update(unit: Unit, dt):
 				ghostBuilding.reparent(ghostBuilding.get_node("../../Buildings"))
 				unit.player.tileMap.set_cell(2, cellI, 2, ghostBuilding.toTileMapAtlasCoords())
 				return true
+				
 			else:
 				pickupResourcesAction = PickupResourcesAction.new(ghostBuilding.resourceCost, false)
 				

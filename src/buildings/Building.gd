@@ -1,13 +1,18 @@
 class_name Building extends Unit
 
-const NameToTileMapIndex: Dictionary = {
+const NAME_TO_TILEMAP_INDEX: Dictionary = {
 	"Empty": Vector2(0,0),
 	"Windmill": Vector2(1,0),
 	"Mining Drill": Vector2(2,0),
 	"Conveyor Belt": Vector2(3,0),
 	"Solar Panel": Vector2(4,0),
-	"Chest": Vector2(5,0)
+	"Chest": Vector2(5,0),
+	"Energy Storage": Vector2(6,0),
+	"Furnace": Vector2(7,0),
+	"Mech Lab": Vector2(8,0)
 }
+
+var direction: float
 
 var nonBuilableResourceTiles: Array[String] = []
 
@@ -26,7 +31,10 @@ func canBuildOnTile(cellI: Vector2i):
 	return !nonBuilableResourceTiles.has(tileName)
 
 func toTileMapAtlasCoords():
-	return NameToTileMapIndex[getDisplayName()]
+	var coords = NAME_TO_TILEMAP_INDEX[getDisplayName()]
+	if direction != null:
+		coords.y = $"Sprite2D".frame
+	return coords
 
 static func NameToTileMapAtlasCoords(buildingName):
-	return NameToTileMapIndex[buildingName]
+	return NAME_TO_TILEMAP_INDEX[buildingName]

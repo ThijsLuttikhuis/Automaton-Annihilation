@@ -70,3 +70,8 @@ func updateActions(unit, dt):
 	var completed = action.update(unit, dt)
 	if completed:
 		pop_front()
+
+func actionsEmpty():
+	return actions.is_empty()
+	
+

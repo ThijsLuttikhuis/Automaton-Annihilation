@@ -27,7 +27,7 @@ func _ready():
 	
 func _process(_dt):
 	mousePosition = get_viewport().get_camera_2d().get_global_mouse_position()
-	if buildmenuBuilding:
+	if buildmenuState != Utils.BUILD_MENU.NONE:
 		if Input.is_action_just_pressed("mouse_button_2"):
 			return
 		if Input.is_action_pressed("mouse_button_2"):
@@ -46,7 +46,7 @@ func _process(_dt):
 func updateRotation():
 	if Input.is_action_just_pressed("ui_rotate_right"):
 		rotationState = (rotationState + 1) % 4
-	
+
 	if Input.is_action_just_pressed("ui_rotate_left"):
 		rotationState = (rotationState + 3) % 4
 
@@ -88,7 +88,7 @@ func updateSelectUnits():
 			#TODO set highest prio unit to show build queue in UI
 		
 		mouseClickPath.clear()
-		
+
 func updateUIBuildmenu():
 	if selectedUnits.is_empty():
 		return
@@ -203,9 +203,9 @@ func updateGhosts():
 	else:
 		for i in range(ghostBuildings.size() - nGhosts):
 			ghostBuildings[-1].queue_free()
-			
+	
 	ghostBuildings = ghostBuildingsNode.get_children() #reload
-
+	
 	# update ghost positions
 	if nGhosts == 1:
 		ghostBuildings[0].position = tileMap.map_to_local(endCellIndex)
@@ -226,7 +226,7 @@ func updateGhosts():
 		var cellI = tileMap.local_to_map(ghostBuilding.position)
 		if !ghostBuilding.canBuildOnTile(cellI):
 			ghostBuilding.queue_free()
-		
+
 func updatePickupItems():
 	if buildmenuState == Utils.BUILD_MENU.NONE:
 		if Input.is_action_pressed("ui_pickup_item"):
@@ -239,21 +239,18 @@ func addSelectedUnit(unit):
 		if unit is Unit:
 			unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0.5)
 			selectedUnits.push_back(unit)
-	hud.updateBuildMenuPanel()
-	
+
 func removeSelectedUnit(unit):
 	if Input.is_action_pressed("mouse_button_1"):
 		if unit is Unit:
 			unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0)
 			selectedUnits.erase(unit)
-	hud.updateBuildMenuPanel()
 
 func removeAllSelectedUnits():
 	for unit in selectedUnits:
 		unit.get_node("Sprite2D").material.set_shader_parameter("outline_width", 0)
-	selectedUnits.clear();
-	hud.updateBuildMenuPanel()
-	
+	selectedUnits.clear()
+
 func setCollisionBoxTransform(pos, size):
 	collisionBox.position = pos
 	collisionBox.shape.size = size
@@ -288,7 +285,7 @@ func convertToBuildActions():
 		var action = BuildAction.new(ghostBuilding.position, ghostBuilding)
 		newBuildActions.push_back(action)
 	return newBuildActions
-		
+
 func pushToActionQueue(unit, newActions):
 	var actionQueue = unit.get_node("ActionQueue")
 	if Input.is_action_pressed("ui_push_back_queue"):

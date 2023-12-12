@@ -10,3 +10,4 @@ func on_ready():
 
 func getDisplayName():
 	return "Solar Panel"
+

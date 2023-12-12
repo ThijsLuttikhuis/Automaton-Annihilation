@@ -9,7 +9,7 @@ func _init():
 	resourceCost.add('Iron Ore', 12)
 
 func on_ready():
-	var gatherResource = GatherResourceAction.new(1)
+	var gatherResource = MineResourceAction.new(1)
 	actionQueue.push_back([gatherResource])
 
 func getDisplayName():

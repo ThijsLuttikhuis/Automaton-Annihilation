@@ -76,7 +76,7 @@ func addTillFull(resourcesToAdd, number: int = 0):
 	removeEmptyResourceSlots()
 	return overflow
 
-func hasResources(resourcesToCheck, number: int = 0):
+func getMissingResources(resourcesToCheck, number: int = 0):
 	if resourcesToCheck is String:
 		var inv = Inventory.new(999)
 		inv.resources[resourcesToCheck] = number
@@ -90,6 +90,10 @@ func hasResources(resourcesToCheck, number: int = 0):
 	var missingSlots = removeTillEmpty(resourcesToCheckCopy)
 	resources = temp
 	
+	return missingSlots
+
+func hasResources(resourcesToCheck, number: int = 0):
+	var missingSlots = getMissingResources(resourcesToCheck, number)
 	return missingSlots.resources.is_empty()
 
 func ifHasResourcesRemove(resourcesToRemove, number: int = 0):
@@ -109,6 +113,12 @@ func removeEmptyResourceSlots():
 	for key in resources.keys():
 		if resources[key] == 0:
 			resources.erase(key)
+
+func getFirstItem():
+	if is_empty():
+		return null
+	else:
+		return resources.keys()[0] 
 
 func is_empty():
 	return resources.is_empty()

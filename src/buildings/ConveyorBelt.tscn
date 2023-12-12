@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/buildings/ConveyorBelt.gd" id="1_depdo"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_nyfa1"]
-[ext_resource type="Texture2D" uid="uid://esow724yur7c" path="res://assets/prototype/conveyorbelt4dir.png" id="3_0o2uy"]
+[ext_resource type="Texture2D" uid="uid://db27fp005igl3" path="res://assets/prototype/conveytorbelt4dir.png" id="3_vjfuu"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_pap7n"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
@@ -18,11 +18,16 @@ size = Vector2(16, 16)
 [node name="ConveyorBelt" type="Area2D"]
 z_index = -5
 script = ExtResource("1_depdo")
+maxHealthPoints = null
+moveSpeed = null
+viewRange = null
+radarRange = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_n7ds3")
-texture = ExtResource("3_0o2uy")
+position = Vector2(0, -8)
+texture = ExtResource("3_vjfuu")
 hframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

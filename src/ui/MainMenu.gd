@@ -1,8 +1,8 @@
 class_name MainMenu extends Node2D
 
 func _ready():
-	var playButton = $"PlayButton"
-	var settingsButton = $"SettingsButton"
+	var playButton = $"HUD/ColorRect/PlayButton"
+	var settingsButton = $"HUD/ColorRect/SettingsButton"
 	playButton.button_down.connect(onClickPlay)
 	settingsButton.button_down.connect(onClickSettings)
 	

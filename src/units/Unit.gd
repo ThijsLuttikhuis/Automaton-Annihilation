@@ -6,12 +6,11 @@ var actionQueue: ActionQueue
 var ghost = false
 var hasRotation = false
 
-var energyCost: float
+var energyCost: float = 0
 var resourceCost: Inventory = Inventory.new(999)
 
 var selectedActionPriority: int = 0
-
-var energyStorage: float
+var energyStorage: float = 0
 
 var inventory: Inventory = Inventory.new(1)
 
@@ -20,6 +19,9 @@ var buildRange: float
 var buildActionList: BuildActionList
 
 var conveyorPushSpeed: Array[ConveyorBelt] = []
+
+@export var maxHealthPoints: float = 100.0
+@export var healthPoints: float = maxHealthPoints
 
 @export var moveSpeed: float = 0.0
 @export var viewRange: float = 100.0

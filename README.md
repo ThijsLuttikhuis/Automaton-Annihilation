@@ -4,8 +4,9 @@
 ## TODO:
 
 #### short term / fix bugs:
- - Add Copper Plate
- - Update Recipes
+ - Update Ore Patch texture
+ - Add RMB on Ore Patch -> mine resource
+ - Remove / Rotate Buildings
  - Add Assembly Building + add Copper Plate -> Copper Wire and Iron Plate -> Iron Gear
  - Add Enemy Unit
  - Add Factory -> Create Build Unit + Fight Unit
@@ -23,6 +24,8 @@
 
 
 ## DONE:
+ - Add Copper Plate
+ - Update Recipes
  - Take items from multiple chests when needed
  - Put build action in ActionQueue
  - Shift / Space + build action

@@ -6,7 +6,7 @@ func _init():
 	nonBuilableResourceTiles.push_back("Empty")
 	
 	energyCost = 500
-	resourceCost.add('Iron Ore', 12)
+	resourceCost.add('Iron Plate', 12)
 
 func on_ready():
 	var gatherResource = MineResourceAction.new(1)

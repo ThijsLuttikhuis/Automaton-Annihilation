@@ -6,7 +6,7 @@ var timeLeftOpen: float = 0.0
 
 func _init():
 	energyCost = 100
-	resourceCost.add('Iron Ore', 5)
+	resourceCost.add('Iron Plate', 4)
 	inventory = Inventory.new(20)
 	
 	selectedActionPriority = 3

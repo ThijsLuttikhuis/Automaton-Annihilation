@@ -7,8 +7,8 @@ func _init():
 	
 	# TODO: remove
 	inventory = Inventory.new(999)
-	inventory.add('Iron Ore', 150)
-	inventory.add('Stone', 50)
+	inventory.add('Iron Plate', 50)
+	inventory.add('Stone', 15)
 	
 func on_ready():
 	buildActionList = BuildActionList.new()

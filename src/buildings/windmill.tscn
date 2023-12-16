@@ -12,8 +12,7 @@ shader_parameter/outline_width = 0.0
 shader_parameter/ghost_greyout = false
 shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_dcdk1"]
-resource_local_to_scene = true
+[sub_resource type="CircleShape2D" id="CircleShape2D_mu50j"]
 radius = 7.0
 
 [node name="Windmill" type="StaticBody2D"]
@@ -29,7 +28,7 @@ hframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
-shape = SubResource("CircleShape2D_dcdk1")
+shape = SubResource("CircleShape2D_mu50j")
 
 [node name="ActionQueue" type="Node" parent="."]
 script = ExtResource("3_wxf3u")

@@ -584,6 +584,8 @@ y_sort_enabled = true
 script = ExtResource("1_0slbg")
 metadata/_edit_horizontal_guides_ = []
 
+[node name="HUD" parent="." instance=ExtResource("2_5drou")]
+
 [node name="WorldTileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_ipf82")
 format = 2
@@ -618,5 +620,3 @@ y_sort_enabled = true
 position = Vector2(-683, -384)
 
 [node name="Player" parent="." instance=ExtResource("11_2c86j")]
-
-[node name="HUD" parent="." instance=ExtResource("2_5drou")]

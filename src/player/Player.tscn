@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6bhdecusfje1"]
+
+[ext_resource type="Script" path="res://src/world/Player.gd" id="1_rbvvl"]
+[ext_resource type="Script" path="res://src/world/Camera2D.gd" id="2_02us8"]
+[ext_resource type="Texture2D" uid="uid://dgpggh1oxsyga" path="res://assets/prototype/pixel.png" id="3_jrqyi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cx40e"]
+size = Vector2(0, 0)
+
+[node name="Player" type="Node"]
+script = ExtResource("1_rbvvl")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-683, -384)
+position_smoothing_speed = 12.0
+script = ExtResource("2_02us8")
+
+[node name="SelectBox" type="Area2D" parent="."]
+
+[node name="CollisionRectangle" type="CollisionShape2D" parent="SelectBox"]
+shape = SubResource("RectangleShape2D_cx40e")
+
+[node name="Sprite2D" type="Sprite2D" parent="SelectBox/CollisionRectangle"]
+self_modulate = Color(0.572549, 0.811765, 0.843137, 0.454902)
+position = Vector2(1, 1)
+texture = ExtResource("3_jrqyi")
+
+[connection signal="body_entered" from="SelectBox" to="." method="addSelectedUnit"]
+[connection signal="body_exited" from="SelectBox" to="." method="removeSelectedUnit"]

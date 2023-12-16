@@ -1,11 +1,13 @@
 class_name HUD extends CanvasLayer
 
-const updateTime = 0.2
+const updateTime = 0.1
 
 var world: World
 var player: Player
+
 var selectUnitPanel: Container
 var worldStatePanel: Container
+var inputConfigPanel: Container
 
 var lastUnit: Unit
 
@@ -14,14 +16,48 @@ func _ready():
 	player = $"../Player"
 	worldStatePanel = $"WorldStateColor/WorldStatePanel"
 	selectUnitPanel = $"SelectUnitColor/SelectUnitPanel"
+	inputConfigPanel = $"SelectInputColor/InputConfiguration"
 	
 	createBuildingUITabs()
 	createBuildMenuTabLabels()
+	createConfigurationGrid()
+
+func _unhandled_input(event):
+	if event:
+		updateEnergyPanel()
+		updateSelectedUnitPanel()
 
 func _physics_process(dt):
 	if fmod(world.getTime(), updateTime) < dt:
 		updateEnergyPanel()
-		updateBuildMenuPanel()
+		updateSelectedUnitPanel()
+
+func updateSelectedUnitPanel():
+	var unit = player.getMainSelectedUnit()
+	if !unit:
+		lastUnit = null
+		selectUnitPanel.get_parent().hide()
+		inputConfigPanel.get_parent().hide()
+		return
+		
+	selectUnitPanel.get_parent().show()
+	inputConfigPanel.get_parent().show()
+	
+	updateBuildMenuPanel(unit)
+	updateConfigurationPanel(unit)
+	
+func createConfigurationGrid():
+	var children = [inputConfigPanel.get_node("InputBuild"), \
+		inputConfigPanel.get_node("InputCombat"), \
+		inputConfigPanel.get_node("InputGeneral")]
+		
+	for child in children:
+		var inputUIScene = preload("res://src/ui/ConfigurationUI.tscn")
+		
+		for i in range(5):
+			var inputUI = inputUIScene.instantiate()
+			inputUI.name = "InputUI" + str(i)
+			child.add_child(inputUI)
 
 func createBuildingUITabs():
 	for child in selectUnitPanel.get_children():
@@ -36,20 +72,10 @@ func createBuildingUITabs():
 			buildingUI.name = "Building" + str(i)
 			var labelKeyboardKey = buildingUI.get_node("BuildingUI/ClipContentNode/TextureRect/Label")
 			
-			labelKeyboardKey.text = getKeyboardKeyFromInputMap("ui_buildmenu_" + str(i))
+			labelKeyboardKey.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_" + str(i))
 			child.add_child(buildingUI)
 
-func getKeyboardKeyFromInputMap(inputMapKey):
-	var keyIndex = InputMap.action_get_events(inputMapKey)
-	var physicalKeyCode = DisplayServer.keyboard_get_keycode_from_physical(keyIndex[0].physical_keycode)
-	var keycode = OS.get_keycode_string(physicalKeyCode)
-	if keycode is String && !keycode.is_empty():
-		return keycode
-	else:
-		if keyIndex[0].keycode == KEY_ESCAPE:
-			return "Esc"
-	
-	return "Unknown Key"
+
 	
 func updateEnergyPanel():
 	var energy = world.getEnergy()
@@ -65,37 +91,64 @@ func updateEnergyPanel():
 	var solarPowerDisplay = worldStatePanel.get_node("SolarPowerDisplay")
 	solarPowerDisplay.text = "Solar Power: " + str(round(solarPower * 10.0) / 10.0)
 	
-func updateBuildMenuPanel():
-	var unit = player.getMainSelectedUnit()
-	if !unit:
-		lastUnit = null
-		selectUnitPanel.get_parent().hide()
-		return
-		
-	selectUnitPanel.get_parent().show()
-		
-	var buildMenuState = player.buildmenuState
+func updateBuildMenuPanel(unit):
+	var buildMenuState = player.getBuildmenuState()
 	var stateIndex = Utils.buildStateToTabIndex(buildMenuState)
 	selectUnitPanel.set_current_tab(stateIndex)
 	
 	updateBuildMenuPanelKeyboardLabels(stateIndex)
 	updateBuildMenuSelectedTab(unit, stateIndex)
 
+func updateConfigurationPanel(unit):
+	if !(unit is BuildUnit):
+		pass
+	
+	var inputConfigs = [inputConfigPanel.get_node("InputBuild"), \
+		inputConfigPanel.get_node("InputCombat"), \
+		inputConfigPanel.get_node("InputGeneral")]
+		
+	var inputConfigurationList = unit.inputConfigurationList
+	var configLists = [inputConfigurationList.inputBuild, \
+		inputConfigurationList.inputCombat, \
+		inputConfigurationList.inputGeneral]
+	
+	for i in range(3):
+		var children = inputConfigs[i].get_children()
+		var configList = configLists[i]
+		for j in range(5):
+			var uiChild = children[j]
+			if configList.size() <= j:
+				uiChild.hide()
+				continue
+			
+			uiChild.show()
+
+			var config = configList[j]
+			uiChild.get_node("Button").inputConfig = config
+			uiChild.get_node("Configuration/Name").text = config.getNametag()
+			uiChild.get_node("Configuration/SliderColor").self_modulate = config.getColor()
+			uiChild.get_node("Configuration/SliderColor/Slider").value = config.getIndex()
+			uiChild.get_node("Configuration/SliderColor/Slider").max_value = config.getNItems() - 1
+			uiChild.get_node("Configuration/Spacer/KeyColor").visible = \
+				config.canPressWhileBuilding() || (player.getBuildmenuState() == Utils.BUILD_MENU.NONE)
+			uiChild.get_node("Configuration/Spacer/KeyColor/KeyboardKey").text = \
+				Utils.getKeyboardKeyFromInputMap(config.getInputMap())
+
 func createBuildMenuTabLabels():
 	var unitLabel = $"SelectUnitColor/UnitTabLabel/Label"
-	unitLabel.text = getKeyboardKeyFromInputMap("ui_cancel")
+	unitLabel.text = Utils.getKeyboardKeyFromInputMap("ui_cancel")
 	
 	var economyLabel = $"SelectUnitColor/EconomyTabLabel/Label"
-	economyLabel.text = getKeyboardKeyFromInputMap("ui_buildmenu_economy")
+	economyLabel.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_economy")
 	
 	var defenseLabel = $"SelectUnitColor/DefenseTabLabel/Label"
-	defenseLabel.text = getKeyboardKeyFromInputMap("ui_buildmenu_defense")
+	defenseLabel.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_defense")
 	
 	var utilityLabel = $"SelectUnitColor/UtilityTabLabel/Label"
-	utilityLabel.text = getKeyboardKeyFromInputMap("ui_buildmenu_utility")
+	utilityLabel.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_utility")
 	
 	var factoryLabel = $"SelectUnitColor/FactoryTabLabel/Label"
-	factoryLabel.text = getKeyboardKeyFromInputMap("ui_buildmenu_factory")
+	factoryLabel.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_factory")
 
 func updateBuildMenuPanelKeyboardLabels(stateIndex):
 	var unitLabel = $"SelectUnitColor/UnitTabLabel"
@@ -150,7 +203,7 @@ func updateUnitBuildMenu(unit, stateIndex):
 		return
 	
 	var actionList = unit.buildActionList
-	var buildStr = ["Economy", "Defense", "Utility", "Factory"] 
+	var buildStr = ["Economy", "Defense", "Utility", "Factory"]
 	var buildLists = [actionList.buildingsEconomy, actionList.buildingsDefense, \
 		actionList.buildingsUtility, actionList.buildingsFactory]
 	
@@ -158,7 +211,7 @@ func updateUnitBuildMenu(unit, stateIndex):
 	var buildList = buildLists[i]
 	var grid = selectUnitPanel.get_node(buildStr[i])
 	
-	var selectedBuildingScene = player.buildmenuBuilding
+	var selectedBuildingScene = player.getBuildmenuBuilding()
 	for j in range(12):
 		var gridElement = grid.get_node("Building" + str(j) + "/BuildingUI")
 		if j >= buildList.size():

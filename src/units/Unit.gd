@@ -1,7 +1,10 @@
 class_name Unit extends CollisionObject2D
 
-var player: Node
-var actionQueue: ActionQueue
+@onready var player: Node = $"/root/World/Player"
+@onready var actionQueue: ActionQueue = $"ActionQueue"
+
+@onready var buildActionList: BuildActionList = BuildActionList.new()
+@onready var inputConfigurationList: InputConfigurationList = InputConfigurationList.new()
 
 var ghost = false
 var hasRotation = false
@@ -16,25 +19,20 @@ var inventory: Inventory = Inventory.new(1)
 
 var buildPower: float
 var buildRange: float
-var buildActionList: BuildActionList
 
 var conveyorPushSpeed: Array[ConveyorBelt] = []
 
 @export var maxHealthPoints: float = 100.0
 @export var healthPoints: float = maxHealthPoints
 
-@export var moveSpeed: float = 0.0
 @export var viewRange: float = 100.0
 @export var radarRange: float = 100.0
 
 func _ready():
-	player = $"/root/World/Player"
-	actionQueue = $"ActionQueue"
-	
 	on_ready()
 
 func on_ready():
-	pass # can be overwritten
+	pass
 	
 func _physics_process(dt):
 	if !actionQueue:
@@ -61,11 +59,11 @@ func getBuildActionList(buildmenuState):
 	if buildmenuState == Utils.BUILD_MENU.ECONOMY:
 		list = buildActionList.buildingsEconomy
 	elif buildmenuState == Utils.BUILD_MENU.DEFENSE:
-		list =  buildActionList.buildingsDefense
+		list = buildActionList.buildingsDefense
 	elif buildmenuState == Utils.BUILD_MENU.UTILITY:
-		list =  buildActionList.buildingsUtility
+		list = buildActionList.buildingsUtility
 	elif buildmenuState == Utils.BUILD_MENU.FACTORY:
-		list =  buildActionList.buildingsFactory
+		list = buildActionList.buildingsFactory
 	
 	return list
 

@@ -21,6 +21,7 @@ func update(unit: Unit, dt):
 			moveAction = MoveAction.new(actionPosition)
 	else:
 		unit.velocity = Vector2(0,0)
+		unit.targetPosition = Vector2(9e9, 9e9)
 		
 		var cellI = unit.player.tileMap.local_to_map(actionPosition)
 		if !ghostBuilding.canBuildOnTile(cellI):

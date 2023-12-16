@@ -34,7 +34,6 @@ shape = SubResource("RectangleShape2D_7ecc1")
 script = ExtResource("4_pap7n")
 
 [node name="ActionPath" type="Line2D" parent="ActionQueue"]
-points = PackedVector2Array(59, 5)
 width = 1.5
 default_color = Color(0, 0.596078, 0.596078, 1)
 joint_mode = 2

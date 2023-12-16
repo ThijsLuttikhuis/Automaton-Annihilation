@@ -99,3 +99,7 @@ func getBuildings(buildingDisplayName: String = ""):
 	
 	return buildingsCorrectType
 
+
+
+func on_tile_map_changed():
+	$"NavigationRegion2D".bake_navigation_polygon()

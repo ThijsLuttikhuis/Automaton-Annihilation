@@ -7,7 +7,9 @@ const MIN_DIST_BETWEEN_MOVE_POINTS = 5
 @onready var tileMap: Node = $"../WorldTileMap"
 @onready var collisionBox: CollisionShape2D = $"SelectBox/CollisionRectangle"
 
-var inputState: InputState = InputState.new()
+
+var buildmenuState: Utils.BUILD_MENU = Utils.BUILD_MENU.NONE
+var buildmenuBuilding: PackedScene = null
 #var UIMenuManager: UIMenuManager
 #var buildMenuManager: BuildMenuManager
 #var inputConfigurationManager: InputConfigurationManager
@@ -301,16 +303,16 @@ func getMainSelectedUnit():
 		return selectedUnits[0]
 
 func setBuildmenuState(state: Utils.BUILD_MENU):
-	inputState.buildmenuState = state
+	buildmenuState = state
 	if state == Utils.BUILD_MENU.NONE:
-		inputState.buildmenuBuilding = null
+		buildmenuBuilding = null
 
 func setBuildmenuBuilding(value: PackedScene):
-	inputState.buildmenuBuilding = value
+	buildmenuBuilding = value
 	
 func getBuildmenuState():
-	return inputState.buildmenuState
+	return buildmenuState
 
 func getBuildmenuBuilding():
-	return inputState.buildmenuBuilding
+	return buildmenuBuilding
 

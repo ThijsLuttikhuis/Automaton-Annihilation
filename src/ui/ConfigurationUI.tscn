@@ -84,6 +84,7 @@ text = "z"
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 2
+tooltip_text = "tooltip"
 mouse_force_pass_scroll_events = false
 mouse_default_cursor_shape = 2
 action_mode = 0

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0ynjlesphfg4"
-path="res://.godot/imported/iron_oreblue.png-80f7cd3779d8e3b18bd74767ed3cabc1.ctex"
+uid="uid://bjia2580077xb"
+path="res://.godot/imported/coal_patch.png-c718193e1fbf8e4effcf55885b34342d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/prototype/resources/iron_oreblue.png"
-dest_files=["res://.godot/imported/iron_oreblue.png-80f7cd3779d8e3b18bd74767ed3cabc1.ctex"]
+source_file="res://assets/tilemap/coal_patch.png"
+dest_files=["res://.godot/imported/coal_patch.png-c718193e1fbf8e4effcf55885b34342d.ctex"]
 
 [params]
 

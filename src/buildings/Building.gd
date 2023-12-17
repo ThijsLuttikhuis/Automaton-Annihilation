@@ -9,7 +9,8 @@ const NAME_TO_TILEMAP_INDEX: Dictionary = {
 	"Chest": Vector2(5,0),
 	"Energy Storage": Vector2(6,0),
 	"Furnace": Vector2(7,0),
-	"Mech Lab": Vector2(8,0)
+	"Mech Lab": Vector2(8,0),
+	"Assembler": Vector2(9,0)
 }
 
 var direction: float

@@ -1,4 +1,4 @@
-extends Button
+class_name ConfigurationUIButton extends Button
 
 var inputConfig: InputConfiguration
 

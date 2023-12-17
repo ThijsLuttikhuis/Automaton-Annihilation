@@ -11,7 +11,7 @@ func _ready():
 	line = get_node("ActionPath")
 	line.clear_points()
 	line.add_point(get_parent().position)
-	
+
 func push_back(values: Array[UnitAction]):
 	for value in values:
 		if value.isPassive:
@@ -73,5 +73,3 @@ func updateActions(unit, dt):
 
 func actionsEmpty():
 	return actions.is_empty()
-	
-

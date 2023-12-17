@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5bw0q208se2s"
-path="res://.godot/imported/iron_brownore.png-30f94df5be57a3ff11b608836c5cc2cc.ctex"
+uid="uid://m83pw3ssa1u7"
+path="res://.godot/imported/woodchest.png-ab54d8826d25c91509f4c7cca405743a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/prototype/resources/iron_brownore.png"
-dest_files=["res://.godot/imported/iron_brownore.png-30f94df5be57a3ff11b608836c5cc2cc.ctex"]
+source_file="res://assets/buildings/woodchest.png"
+dest_files=["res://.godot/imported/woodchest.png-ab54d8826d25c91509f4c7cca405743a.ctex"]
 
 [params]
 

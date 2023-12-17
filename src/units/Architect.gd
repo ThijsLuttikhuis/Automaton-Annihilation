@@ -1,18 +1,18 @@
 class_name Architect extends BuildUnit
 
 func _init():
-	buildRange = 30
+	buildRange = 50
 	moveSpeed = 150
 	selectedActionPriority = 9
 	
 	inventory = Inventory.new(999)
 	inventory.add('Iron Plate', 50)
 	inventory.add('Stone', 15)
-	
+
 func _ready():
 	initBuildActionList()
 	initInputConfiguration()
-	
+
 func initBuildActionList():
 	var miningdrill = preload("res://src/buildings/MiningDrill.tscn")
 	buildActionList.buildingsEconomy.push_back(miningdrill)
@@ -39,14 +39,24 @@ func initBuildActionList():
 	var furnace = preload("res://src/buildings/Furnace.tscn")
 	buildActionList.buildingsFactory.push_back(furnace)
 	
-func initInputConfiguration():
-	var inputPickupItems = InputConfiguration.new("Pickup Items")
-	inputConfigurationList.inputBuild.push_back(inputPickupItems)
+	buildActionList.buildingsFactory.push_back(furnace)
+	buildActionList.buildingsFactory.push_back(furnace)
 	
-	var inputRotation = InputConfiguration.new("Rotation")
-	inputConfigurationList.inputBuild.push_back(inputRotation)
-	pass
+	var assembler = preload("res://src/buildings/Assembler.tscn")
+	buildActionList.buildingsFactory.push_back(assembler)
+
+	var mechlab = preload("res://src/buildings/MechLab.tscn")
+	buildActionList.buildingsFactory.push_back(mechlab)
+
+func initInputConfiguration():
+	var pickupitems = InputConfiguration.new("Pickup Items")
+	inputConfigurationList.inputBuild.push_back(pickupitems)
+	
+	var rotation = InputConfiguration.new("Rotation")
+	inputConfigurationList.inputBuild.push_back(rotation)
+	
+	var chestpickup = InputConfiguration.new("Chest Pickup")
+	inputConfigurationList.inputBuild.push_back(chestpickup)
 
 func getDisplayName():
 	return "Architect"
-

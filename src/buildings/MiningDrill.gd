@@ -18,11 +18,7 @@ func getDisplayName():
 func addUnit(unit, pos: int):
 	if unit is BuildUnit || unit is Item:
 		spaceOccupied[pos] += 1
-	
-	print('mining drill entered')
-	
+
 func removeUnit(unit, pos: int):
 	if unit is BuildUnit || unit is Item:
 		spaceOccupied[pos] -= 1
-	
-	print('mining drill exited')

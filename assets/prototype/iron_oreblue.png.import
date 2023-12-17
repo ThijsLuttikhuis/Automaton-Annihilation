@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tmtfyww7gko0"
-path="res://.godot/imported/iron_plate.png-f53141e27527c13cfba280c794d11a4d.ctex"
+uid="uid://da7nhoue6dvvl"
+path="res://.godot/imported/iron_oreblue.png-91758aebe475ed483c8221a03699ebb2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/prototype/resources/iron_plate.png"
-dest_files=["res://.godot/imported/iron_plate.png-f53141e27527c13cfba280c794d11a4d.ctex"]
+source_file="res://assets/prototype/iron_oreblue.png"
+dest_files=["res://.godot/imported/iron_oreblue.png-91758aebe475ed483c8221a03699ebb2.ctex"]
 
 [params]
 

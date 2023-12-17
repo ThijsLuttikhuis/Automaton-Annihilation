@@ -33,15 +33,19 @@ static func buildStateToString(state):
 static func getResourceTexture(name):
 	var texture: Texture2D
 	if name == "Iron Ore":
-		texture = preload("res://assets/prototype/resources/iron_ore.png")
+		texture = preload("res://assets/resources/iron_ore.png")
 	elif name == "Iron Plate":
-		texture = preload("res://assets/prototype/resources/iron_plate.png") 
+		texture = preload("res://assets/resources/iron_plate.png") 
+	elif name == "Iron Gear":
+		texture = preload("res://assets/resources/iron_gear.png") 
 	elif name == "Copper Ore":
-		texture = preload("res://assets/prototype/resources/copper_ore.png")
+		texture = preload("res://assets/resources/copper_ore.png")
 	elif name == "Copper Plate":
-		texture = preload("res://assets/prototype/resources/copper_plate.png")
+		texture = preload("res://assets/resources/copper_plate.png")
 	elif name == "Stone":
-		texture = preload("res://assets/prototype/resources/stone.png")
+		texture = preload("res://assets/resources/stone.png")
+	elif name == "Coal":
+		texture = preload("res://assets/resources/coal.png")
 	else:
 		texture = preload("res://assets/prototype/energy.png")
 	return texture

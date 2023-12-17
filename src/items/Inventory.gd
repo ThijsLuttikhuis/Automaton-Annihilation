@@ -1,15 +1,15 @@
 class_name Inventory
 
 const name2StackSizeDict: Dictionary = {
-	'Iron Ingot': 50,
+	'Iron Plate': 50,
 	'Iron Ore': 50,
 	'Iron Gear': 100,
-	'Copper Ingot': 50,
+	'Copper Plate': 50,
 	'Copper Ore': 50,
 	'Copper Wire': 200,
 	'Stone': 50,
 	'LimeStone': 50,
-	'Wood Log': 50,
+	'Coal': 50,
 	'Wood Plank': 50,
 	'Electronic Circuit': 100,
 	'Sand': 200,
@@ -21,7 +21,7 @@ const name2StackSizeDict: Dictionary = {
 var nSlots: int
 var resources: Dictionary
 
-func _init(nSlots_: int = 5):
+func _init(nSlots_: int = 999):
 	nSlots = nSlots_
 
 func remove(resourcesToRemove, number: int = 0):
@@ -106,7 +106,7 @@ func ifHasResourcesRemove(resourcesToRemove, number: int = 0):
 static func deepCopy(inventoryToCopy: Inventory):
 	var copy: Inventory = Inventory.new(inventoryToCopy.nSlots)
 	copy.add(inventoryToCopy)
-		
+	
 	return copy
 
 func removeEmptyResourceSlots():
@@ -114,11 +114,32 @@ func removeEmptyResourceSlots():
 		if resources[key] == 0:
 			resources.erase(key)
 
-func getFirstItem():
+func getFirstItemName():
 	if is_empty():
 		return null
 	else:
-		return resources.keys()[0] 
+		return resources.keys()[0]
+
+func getUniqueItemNames():
+	var items: Array[String] = []
+	for key in resources.keys():
+		items.push_back(key)
 
 func is_empty():
 	return resources.is_empty()
+
+func clearResources():
+	resources = Dictionary()
+
+func getNumberOfResources(name: String):
+	if resources.has(name):
+		return resources[name]
+	else:
+		return 0
+
+func getStackSize(name: String):
+	if name2StackSizeDict.has(name):
+		return name2StackSizeDict[name]
+	else:
+		print("Inventory.getStackSize: unknown resource name: " + name)
+		return 0

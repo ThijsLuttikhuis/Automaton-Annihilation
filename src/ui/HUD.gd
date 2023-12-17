@@ -66,7 +66,7 @@ func createBuildingUITabs():
 		
 		var buildingUIScene = preload("res://src/ui/BuildingUI.tscn")
 		var order = [8,9,10,11,4,5,6,7,0,1,2,3]
-
+		
 		for i in order:
 			var buildingUI = buildingUIScene.instantiate()
 			buildingUI.name = "Building" + str(i)
@@ -75,8 +75,6 @@ func createBuildingUITabs():
 			labelKeyboardKey.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_" + str(i))
 			child.add_child(buildingUI)
 
-
-	
 func updateEnergyPanel():
 	var energy = world.getEnergy()
 	var energyStorage = world.getEnergyStorage()
@@ -122,9 +120,10 @@ func updateConfigurationPanel(unit):
 				continue
 			
 			uiChild.show()
-
+			
 			var config = configList[j]
 			uiChild.get_node("Button").inputConfig = config
+			uiChild.get_node("Button").tooltip_text = config.getValue()
 			uiChild.get_node("Configuration/Name").text = config.getNametag()
 			uiChild.get_node("Configuration/SliderColor").self_modulate = config.getColor()
 			uiChild.get_node("Configuration/SliderColor/Slider").value = config.getIndex()
@@ -197,7 +196,8 @@ func updateUnitInfoPanel(unit):
 		var itemUI = inventoryGrid.get_child(i)
 		itemUI.get_node("Value").text = str(unitResources[key])
 		itemUI.get_node("Texture").texture = Utils.getResourceTexture(key)
-
+		itemUI.get_node("Texture").tooltip_text = key
+		
 func updateUnitBuildMenu(unit, stateIndex):
 	if !(unit is BuildUnit):
 		return
@@ -219,9 +219,11 @@ func updateUnitBuildMenu(unit, stateIndex):
 			continue
 		
 		gridElement.show()
+
 		var buildingScene: PackedScene = buildList[j]
 		var building: Building = buildingScene.instantiate()
 		
+		grid.get_node("Building" + str(j) + "/Button").tooltip_text = building.getDisplayName()
 		updateGridElementTexture(gridElement, building)
 		updateGridElementCost(unit, gridElement, building)
 		

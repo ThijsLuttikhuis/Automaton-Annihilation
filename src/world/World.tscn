@@ -1,20 +1,18 @@
-[gd_scene load_steps=22 format=3 uid="uid://b8csqra5xruy6"]
+[gd_scene load_steps=18 format=3 uid="uid://b8csqra5xruy6"]
 
 [ext_resource type="Script" path="res://src/world/World.gd" id="1_0slbg"]
 [ext_resource type="PackedScene" uid="uid://iq0r750pgfmi" path="res://src/ui/HUD.tscn" id="2_5drou"]
-[ext_resource type="Texture2D" uid="uid://bsj2bfyn7pldx" path="res://assets/prototype/tilesgrass.png" id="2_fnams"]
-[ext_resource type="Texture2D" uid="uid://bxgytyvis418g" path="res://assets/prototype/miningdrill.png" id="3_f21x6"]
-[ext_resource type="Texture2D" uid="uid://d37tsh0ml2oji" path="res://assets/prototype/resources.png" id="4_anb2f"]
-[ext_resource type="Texture2D" uid="uid://co0cidvch2o7v" path="res://assets/prototype/shack.png" id="5_bi2ty"]
+[ext_resource type="Texture2D" uid="uid://dq714srnvgsq8" path="res://assets/tilemap/grass_tiles.png" id="2_8xwbi"]
+[ext_resource type="Texture2D" uid="uid://c60rul0ywxsm5" path="res://assets/tilemap/ore_patches.png" id="3_umeew"]
+[ext_resource type="Texture2D" uid="uid://cqf2tf74b3gyb" path="res://assets/tilemap/building_tags.png" id="4_yxao6"]
+[ext_resource type="Texture2D" uid="uid://pb6y10f0p1lc" path="res://assets/tilemap/tileswater.png" id="5_4ptvx"]
 [ext_resource type="Script" path="res://src/world/TileMap.gd" id="5_ir102"]
-[ext_resource type="Texture2D" uid="uid://dgh0uu7xr7vwy" path="res://assets/prototype/buildings.png" id="5_sdllp"]
 [ext_resource type="PackedScene" uid="uid://ccds6drvg4py2" path="res://src/units/Architect.tscn" id="6_ixb8k"]
-[ext_resource type="Texture2D" uid="uid://bb3dnuh7i112j" path="res://assets/prototype/tileswater.png" id="8_mlm0b"]
 [ext_resource type="PackedScene" uid="uid://b6bhdecusfje1" path="res://src/player/Player.tscn" id="11_2c86j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p2iv7"]
 resource_name = "background"
-texture = ExtResource("2_fnams")
+texture = ExtResource("2_8xwbi")
 0:0/0 = 0
 1:0/0 = 0
 0:1/0 = 0
@@ -26,7 +24,7 @@ texture = ExtResource("2_fnams")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ncca8"]
 resource_name = "resources"
-texture = ExtResource("4_anb2f")
+texture = ExtResource("3_umeew")
 0:0/0 = 0
 0:0/0/custom_data_0 = "Iron Ore"
 0:0/0/custom_data_1 = 0.5
@@ -37,7 +35,7 @@ texture = ExtResource("4_anb2f")
 2:0/0/custom_data_0 = "Stone"
 2:0/0/custom_data_1 = 0.5
 3:0/0 = 0
-3:0/0/custom_data_0 = "Oil"
+3:0/0/custom_data_0 = "Coal"
 3:0/0/custom_data_1 = 0.5
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_u31f8"]
@@ -59,7 +57,7 @@ source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k5yhj"]
 resource_name = "buildings"
-texture = ExtResource("5_sdllp")
+texture = ExtResource("4_yxao6")
 0:0/0 = 0
 0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_u31f8")
 0:0/0/custom_data_2 = "Empty"
@@ -90,7 +88,7 @@ texture = ExtResource("5_sdllp")
 8:0/0/custom_data_2 = "Mech Lab"
 9:0/0 = 0
 9:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_5d8uy")
-9:0/0/custom_data_2 = "Empty"
+9:0/0/custom_data_2 = "Assembly Building"
 10:0/0 = 0
 10:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_5d8uy")
 10:0/0/custom_data_2 = "Empty"
@@ -543,20 +541,8 @@ texture = ExtResource("5_sdllp")
 97:3/0 = 0
 99:3/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mek4v"]
-texture = ExtResource("5_bi2ty")
-0:0/0 = 0
-1:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j7o0o"]
-resource_name = "drill"
-texture = ExtResource("3_f21x6")
-0:0/0 = 0
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_it51t"]
-texture = ExtResource("8_mlm0b")
+texture = ExtResource("5_4ptvx")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -573,11 +559,9 @@ custom_data_layer_2/type = 4
 custom_data_layer_3/name = "rotation"
 custom_data_layer_3/type = 3
 sources/0 = SubResource("TileSetAtlasSource_p2iv7")
-sources/3 = SubResource("TileSetAtlasSource_mek4v")
-sources/4 = SubResource("TileSetAtlasSource_j7o0o")
-sources/1 = SubResource("TileSetAtlasSource_ncca8")
 sources/2 = SubResource("TileSetAtlasSource_k5yhj")
 sources/6 = SubResource("TileSetAtlasSource_it51t")
+sources/1 = SubResource("TileSetAtlasSource_ncca8")
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true

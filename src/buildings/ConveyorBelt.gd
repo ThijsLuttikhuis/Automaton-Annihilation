@@ -16,17 +16,13 @@ func updateDirection():
 func addUnit(unit):
 	if unit is BuildUnit || unit is Item:
 		unit.conveyorPushSpeed.push_back(self)
-	
-	print('conveyor entered')
-	
+
 func removeUnit(unit):
 	if unit is BuildUnit || unit is Item:
 		unit.conveyorPushSpeed.erase(self)
-	
-	print('conveyor exited')
 
 func getSpeed():
 	return Vector2(conveyorSpeed, 0).rotated(deg_to_rad(direction))
-	
+
 func getDisplayName():
 	return "Conveyor Belt"

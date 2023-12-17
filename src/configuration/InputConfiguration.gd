@@ -11,7 +11,7 @@ var pressWhileBuilding: bool = false
 func _init(name_: String):
 	name = name_
 	if name == "Pickup Items":
-		values = ["on", "off"]
+		values = ["off", "on"]
 		index = 1
 		useValuesAsName = false
 		inputMap = "ui_pickup_item"
@@ -24,6 +24,13 @@ func _init(name_: String):
 		inputMapPrev = "ui_rotate_left"
 		pressWhileBuilding = true
 	
+	if name == "Chest Pickup":
+		values = ["Needed Only", "Get Stack", "Get All"]
+		index = 0
+		useValuesAsName = false
+		inputMap = "ui_pickup_chest"
+		pressWhileBuilding = true
+	
 func next():
 	index = (index + 1) % values.size()
 
@@ -33,6 +40,9 @@ func prev():
 func getName():
 	return name
 	
+func getValue():
+	return values[index]
+
 func getNItems():
 	return values.size()
 

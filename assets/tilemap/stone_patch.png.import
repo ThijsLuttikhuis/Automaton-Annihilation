@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yib2agelxfr5"
-path="res://.godot/imported/copper_ore.png-3f465d6505cf1691b96aeaf09adb004a.ctex"
+uid="uid://dv0a2htrg0axa"
+path="res://.godot/imported/stone_patch.png-6f1f2890a37a9d69a9ddde21540c3b5a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/prototype/resources/copper_ore.png"
-dest_files=["res://.godot/imported/copper_ore.png-3f465d6505cf1691b96aeaf09adb004a.ctex"]
+source_file="res://assets/tilemap/stone_patch.png"
+dest_files=["res://.godot/imported/stone_patch.png-6f1f2890a37a9d69a9ddde21540c3b5a.ctex"]
 
 [params]
 

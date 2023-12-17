@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2rmvwt1vfb55"
-path="res://.godot/imported/iron_ore_16.png-661fd8068ea8be387f35e5977d378ab0.ctex"
+uid="uid://cuxuyasnc3ic7"
+path="res://.godot/imported/assemby_building.png-7c3013f8211d375a37324ed4b625bb30.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/prototype/resources/iron_ore_16.png"
-dest_files=["res://.godot/imported/iron_ore_16.png-661fd8068ea8be387f35e5977d378ab0.ctex"]
+source_file="res://assets/prototype/assemby_building.png"
+dest_files=["res://.godot/imported/assemby_building.png-7c3013f8211d375a37324ed4b625bb30.ctex"]
 
 [params]
 

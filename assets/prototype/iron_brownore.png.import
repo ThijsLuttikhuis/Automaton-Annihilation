@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2143ii76hauw"
-path="res://.godot/imported/stone.png-df89d21aed676287ea666d8da5e3e549.ctex"
+uid="uid://by4yhi1fgcipl"
+path="res://.godot/imported/iron_brownore.png-0a6db3790ae25cec8dafadcad58cb5eb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/prototype/resources/stone.png"
-dest_files=["res://.godot/imported/stone.png-df89d21aed676287ea666d8da5e3e549.ctex"]
+source_file="res://assets/prototype/iron_brownore.png"
+dest_files=["res://.godot/imported/iron_brownore.png-0a6db3790ae25cec8dafadcad58cb5eb.ctex"]
 
 [params]
 

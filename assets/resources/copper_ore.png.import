@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8ka8bqogfpuo"
-path="res://.godot/imported/copper_plate.png-075df3859768be8d2de306f656838d85.ctex"
+uid="uid://yib2agelxfr5"
+path="res://.godot/imported/copper_ore.png-269a763a58c15530e041d86cc1cb32cf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/prototype/resources/copper_plate.png"
-dest_files=["res://.godot/imported/copper_plate.png-075df3859768be8d2de306f656838d85.ctex"]
+source_file="res://assets/resources/copper_ore.png"
+dest_files=["res://.godot/imported/copper_ore.png-269a763a58c15530e041d86cc1cb32cf.ctex"]
 
 [params]
 

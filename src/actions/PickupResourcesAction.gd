@@ -36,6 +36,7 @@ func update(unit: Unit, dt):
 			moveAction = MoveAction.new(actionPosition)
 	else:
 		unit.velocity = Vector2(0,0)
+		unit.targetPosition = Vector2(9e9, 9e9)
 		if chest.is_queued_for_deletion():
 			return true
 		
@@ -50,6 +51,8 @@ func update(unit: Unit, dt):
 			if !overflow.is_empty():
 				# unit inventory full, put the excess back in the chest
 				chest.inventory.add(overflow)
+			
+			updateExtraChestPickup(unit)
 			chest.openChest()
 			
 			return true
@@ -92,3 +95,29 @@ func splitResourcePickup(unit: Unit):
 			missingResources.remove(stillMissing)
 			partialPickupAction = PickupResourcesAction.new(missingResources, building)
 			return
+
+func updateExtraChestPickup(unit: Unit):
+	var chestPickupConfig = unit.inputConfigurationList.find("Chest Pickup")
+	if chestPickupConfig:
+		match chestPickupConfig.getValue():
+			"Needed Only":
+				pass #do nothing :)
+			"Get Stack":
+				for key in resourcesToPickup.resources.keys():
+					var stackSize = unit.inventory.getStackSize(key)
+					var nInUnitInventory = unit.inventory.getNumberOfResources(key)
+					if nInUnitInventory < stackSize:
+						var notRemovedItems = chest.inventory.removeTillEmpty(key, stackSize - nInUnitInventory)
+						var nNotRemoved = 0
+						if !notRemovedItems.resources.is_empty():
+							nNotRemoved = notRemovedItems.resources.values()[0]
+						var toAdd = stackSize - nInUnitInventory - nNotRemoved
+						if toAdd > 0:
+							unit.inventory.add(key, toAdd)
+			"Get All":
+				var overflow = unit.inventory.addTillFull(chest.inventory)
+				chest.inventory.clearResources()
+				if !overflow.is_empty():
+					# unit inventory full, put the excess back in the chest
+					chest.inventory.add(overflow)
+					

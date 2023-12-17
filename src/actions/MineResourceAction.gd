@@ -36,4 +36,3 @@ func update(unit: Unit, dt):
 		
 		var sprite = unit.get_node("Sprite2D")
 		sprite.set_frame(frame)
-		

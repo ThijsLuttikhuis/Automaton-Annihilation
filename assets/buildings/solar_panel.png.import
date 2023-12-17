@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkgfabb7qt0tg"
-path="res://.godot/imported/iron_ore.png-a095d73633663c2b824661567dc2811d.ctex"
+uid="uid://dbp2171qncbrv"
+path="res://.godot/imported/solar_panel.png-8c0f409d0b7960922a8a2461efa63a0b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/prototype/resources/iron_ore.png"
-dest_files=["res://.godot/imported/iron_ore.png-a095d73633663c2b824661567dc2811d.ctex"]
+source_file="res://assets/buildings/solar_panel.png"
+dest_files=["res://.godot/imported/solar_panel.png-8c0f409d0b7960922a8a2461efa63a0b.ctex"]
 
 [params]
 

@@ -31,8 +31,6 @@ func pickupUnit(unit):
 		if problemAddingItem.resources.is_empty():
 			unit.queue_free()
 			openChest()
-			
-	print('chest entered')
 
 func openChest():
 	timeLeftOpen = timeToClose

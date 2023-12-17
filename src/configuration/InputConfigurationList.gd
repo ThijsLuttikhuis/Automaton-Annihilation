@@ -19,7 +19,7 @@ func getInputMapActionsPressed(isBuilding: bool):
 	
 	return actions
 
-func find(name):
+func find(name) -> InputConfiguration:
 	if name is InputConfiguration:
 		name = name.getName()
 	assert(name is String, 'name should be a string or an InputConfiguration')

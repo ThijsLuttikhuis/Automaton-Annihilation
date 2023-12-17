@@ -38,7 +38,6 @@ func placeResource(unit: Unit, checkForConveyorBeltsAndChests: bool, onlyBeltsFa
 			item.setResource(resourceName)
 			item.position = tileMap.map_to_local(neighborCellI)
 			unit.player.get_node("../Items").add_child(item)
-			print("Gained 1 " + resourceName)
 			return true
 	
 	return false

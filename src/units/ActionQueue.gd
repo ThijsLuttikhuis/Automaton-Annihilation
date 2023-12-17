@@ -3,12 +3,14 @@ class_name ActionQueue extends Node
 var paused: bool = false
 
 var line: Line2D
+var lineTestCollisionCount: int = 0
+var lineTestCollisionUnits: Array[Unit] = []
 
 var actions: Array[UnitAction]
 var passives: Array[UnitAction]
 
 func _ready():
-	line = get_node("ActionPath")
+	line = $"ActionPath"
 	line.clear_points()
 	line.add_point(get_parent().position)
 
@@ -73,3 +75,13 @@ func updateActions(unit, dt):
 
 func actionsEmpty():
 	return actions.is_empty()
+
+func addLineTestCollision(unit):
+	if unit is Unit: # || unit is Item:
+		lineTestCollisionCount += 1
+		lineTestCollisionUnits.push_back(unit)
+
+func removeLineTestCollision(unit):
+	if unit is Unit: # || unit is Item:
+		lineTestCollisionCount -= 1
+		lineTestCollisionUnits.erase(unit)

@@ -1,9 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://cdagfelgcfijh"]
+[gd_scene load_steps=16 format=3 uid="uid://k2v17fp0y7el"]
 
-[ext_resource type="Script" path="res://src/buildings/MechLab.gd" id="1_csshi"]
+[ext_resource type="Script" path="res://src/buildings/MechLab.gd" id="1_set0y"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_pxbmu"]
-[ext_resource type="Texture2D" uid="uid://b8hc1nxcsk2uo" path="res://assets/buildings/mech_lab.png" id="3_bipl3"]
-[ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_ytkv3"]
+[ext_resource type="Texture2D" uid="uid://b8hc1nxcsk2uo" path="res://assets/buildings/mech_lab.png" id="3_1dsfg"]
+[ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_1v3av"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
 resource_local_to_scene = true
@@ -45,22 +45,19 @@ radius = 7.0
 
 [node name="MechLab" type="StaticBody2D"]
 y_sort_enabled = true
-script = ExtResource("1_csshi")
-maxHealthPoints = null
-viewRange = null
-radarRange = null
+script = ExtResource("1_set0y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_n7ds3")
 position = Vector2(0, -8)
-texture = ExtResource("3_bipl3")
+texture = ExtResource("3_1dsfg")
 hframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_dcdk1")
 
 [node name="ActionQueue" type="Node" parent="."]
-script = ExtResource("4_ytkv3")
+script = ExtResource("4_1v3av")
 
 [node name="ActionPath" type="Line2D" parent="ActionQueue"]
 visible = false
@@ -125,20 +122,4 @@ shape = SubResource("CircleShape2D_7fojo")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollisionIn"]
 shape = SubResource("CircleShape2D_d4lfq")
 
-[connection signal="body_entered" from="ItemTestCollisionOut/BottomRight" to="." method="addUnit" binds= [0]]
-[connection signal="body_exited" from="ItemTestCollisionOut/BottomRight" to="." method="removeUnit" binds= [0]]
-[connection signal="body_entered" from="ItemTestCollisionOut/Right" to="." method="addUnit" binds= [1]]
-[connection signal="body_exited" from="ItemTestCollisionOut/Right" to="." method="removeUnit" binds= [1]]
-[connection signal="body_entered" from="ItemTestCollisionOut/TopRight" to="." method="addUnit" binds= [2]]
-[connection signal="body_exited" from="ItemTestCollisionOut/TopRight" to="." method="removeUnit" binds= [2]]
-[connection signal="body_entered" from="ItemTestCollisionOut/Top" to="." method="addUnit" binds= [3]]
-[connection signal="body_exited" from="ItemTestCollisionOut/Top" to="." method="removeUnit" binds= [3]]
-[connection signal="body_entered" from="ItemTestCollisionOut/TopLeft" to="." method="addUnit" binds= [4]]
-[connection signal="body_exited" from="ItemTestCollisionOut/TopLeft" to="." method="removeUnit" binds= [4]]
-[connection signal="body_entered" from="ItemTestCollisionOut/Left" to="." method="addUnit" binds= [5]]
-[connection signal="body_exited" from="ItemTestCollisionOut/Left" to="." method="removeUnit" binds= [5]]
-[connection signal="body_entered" from="ItemTestCollisionOut/BottomLeft" to="." method="addUnit" binds= [6]]
-[connection signal="body_exited" from="ItemTestCollisionOut/BottomLeft" to="." method="removeUnit" binds= [6]]
-[connection signal="body_entered" from="ItemTestCollisionOut/Bottom" to="." method="addUnit" binds= [7]]
-[connection signal="body_exited" from="ItemTestCollisionOut/Bottom" to="." method="removeUnit" binds= [7]]
 [connection signal="body_entered" from="ItemTestCollisionIn" to="." method="pickupUnit"]

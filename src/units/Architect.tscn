@@ -1,18 +1,23 @@
-[gd_scene load_steps=8 format=3 uid="uid://ccds6drvg4py2"]
+[gd_scene load_steps=9 format=3 uid="uid://ccds6drvg4py2"]
 
 [ext_resource type="Script" path="res://src/units/Architect.gd" id="1_l6t7a"]
-[ext_resource type="Texture2D" uid="uid://cwew6rfuf01ay" path="res://assets/prototype/player.png" id="2_ealhd"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_utb4v"]
+[ext_resource type="Texture2D" uid="uid://ldf533k7btxm" path="res://assets/units/architect.png" id="3_efd6f"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_o0oi2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tt46g"]
+resource_local_to_scene = true
 shader = ExtResource("2_utb4v")
 shader_parameter/outline_width = 0.0
 shader_parameter/ghost_greyout = false
 shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_766fm"]
-size = Vector2(12, 12)
+[sub_resource type="CircleShape2D" id="CircleShape2D_c14tu"]
+radius = 7.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s4q3x"]
+resource_local_to_scene = true
+radius = 7.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ujgbg"]
 radius = 16.0
@@ -27,11 +32,11 @@ script = ExtResource("1_l6t7a")
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_tt46g")
 position = Vector2(0, -8)
-texture = ExtResource("2_ealhd")
+texture = ExtResource("3_efd6f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
-shape = SubResource("RectangleShape2D_766fm")
+shape = SubResource("CircleShape2D_c14tu")
 
 [node name="ActionQueue" type="Node" parent="."]
 script = ExtResource("4_o0oi2")
@@ -43,10 +48,17 @@ joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
 
+[node name="LineTestCollision" type="Area2D" parent="ActionQueue"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActionQueue/LineTestCollision"]
+shape = SubResource("CapsuleShape2D_s4q3x")
+
 [node name="ItemTestCollision" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollision"]
 shape = SubResource("CircleShape2D_ujgbg")
 
+[connection signal="body_entered" from="ActionQueue/LineTestCollision" to="ActionQueue" method="addLineTestCollision"]
+[connection signal="body_exited" from="ActionQueue/LineTestCollision" to="ActionQueue" method="removeLineTestCollision"]
 [connection signal="body_entered" from="ItemTestCollision" to="." method="addUnit"]
 [connection signal="body_exited" from="ItemTestCollision" to="." method="removeUnit"]

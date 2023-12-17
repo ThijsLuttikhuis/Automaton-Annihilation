@@ -143,3 +143,6 @@ func getStackSize(name: String):
 	else:
 		print("Inventory.getStackSize: unknown resource name: " + name)
 		return 0
+
+func setNumberOfSlots(slots: int):
+	nSlots = slots

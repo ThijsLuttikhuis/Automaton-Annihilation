@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/items/Item.gd" id="1_wba45"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_oqsgc"]
-[ext_resource type="Texture2D" uid="uid://dkgfabb7qt0tg" path="res://assets/prototype/resources/iron_ore.png" id="3_h4og3"]
+[ext_resource type="Texture2D" uid="uid://dkgfabb7qt0tg" path="res://assets/resources/iron_ore.png" id="3_h4og3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tt46g"]
 shader = ExtResource("2_oqsgc")

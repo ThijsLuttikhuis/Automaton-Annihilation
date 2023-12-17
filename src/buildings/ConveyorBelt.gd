@@ -4,11 +4,11 @@ var conveyorSpeed: float = 60
 
 func _init():
 	hasRotation = true
-	energyCost = 100
-	resourceCost.add('Iron Plate', 3)
+	energyCost = 50
+	resourceCost.add('Iron Plate', 2)
 
 func on_ready():
-	direction = -90 + ($"Sprite2D".frame * 90)
+	updateDirection()
 
 func updateDirection():
 	direction = -90 + ($"Sprite2D".frame * 90)

@@ -1,6 +1,6 @@
 class_name Unit extends CollisionObject2D
 
-@onready var player: Node = $"/root/World/Player"
+@onready var player: Player = $"/root/World/Player"
 @onready var actionQueue: ActionQueue = $"ActionQueue"
 
 @onready var buildActionList: BuildActionList = BuildActionList.new()

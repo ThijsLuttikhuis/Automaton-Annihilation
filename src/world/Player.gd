@@ -2,11 +2,10 @@ class_name Player extends Node
 
 const MIN_DIST_BETWEEN_MOVE_POINTS = 5
 
-@onready var world: Node = $".."
-@onready var hud: Node = $"../HUD"
-@onready var tileMap: Node = $"../WorldTileMap"
+@onready var world: World = $".."
+@onready var hud: CanvasLayer = $"../HUD"
+@onready var tileMap: WorldTileMap = $"../WorldTileMap"
 @onready var collisionBox: CollisionShape2D = $"SelectBox/CollisionRectangle"
-
 
 var buildmenuState: Utils.BUILD_MENU = Utils.BUILD_MENU.NONE
 var buildmenuBuilding: PackedScene = null

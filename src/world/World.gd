@@ -27,8 +27,8 @@ var windSpeed: float = 10.0
 var deltaWindSpeed: float = 0.75
 
 # resources
-const defaultEnergyStorage: float = 1000.0
-var energy: float = 1000.0
+var defaultEnergyStorage: float = 1000.0
+var energy: float = 0.0
 var energyStorage: float = defaultEnergyStorage
 
 func _init():
@@ -98,8 +98,3 @@ func getBuildings(buildingDisplayName: String = ""):
 			buildingsCorrectType.push_back(building)
 	
 	return buildingsCorrectType
-
-
-
-func on_tile_map_changed():
-	$"NavigationRegion2D".bake_navigation_polygon()

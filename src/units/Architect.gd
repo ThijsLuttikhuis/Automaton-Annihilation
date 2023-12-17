@@ -5,9 +5,7 @@ func _init():
 	moveSpeed = 150
 	selectedActionPriority = 9
 	
-	inventory = Inventory.new(999)
-	inventory.add('Iron Plate', 50)
-	inventory.add('Stone', 15)
+	inventory.setNumberOfSlots(5)
 
 func _ready():
 	initBuildActionList()
@@ -52,8 +50,8 @@ func initInputConfiguration():
 	var pickupitems = InputConfiguration.new("Pickup Items")
 	inputConfigurationList.inputBuild.push_back(pickupitems)
 	
-	var rotation = InputConfiguration.new("Rotation")
-	inputConfigurationList.inputBuild.push_back(rotation)
+	var rotationconf = InputConfiguration.new("Rotation")
+	inputConfigurationList.inputBuild.push_back(rotationconf)
 	
 	var chestpickup = InputConfiguration.new("Chest Pickup")
 	inputConfigurationList.inputBuild.push_back(chestpickup)

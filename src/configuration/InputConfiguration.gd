@@ -26,7 +26,7 @@ func _init(name_: String):
 	
 	if name == "Chest Pickup":
 		values = ["Needed Only", "Get Stack", "Get All"]
-		index = 0
+		index = 1
 		useValuesAsName = false
 		inputMap = "ui_pickup_chest"
 		pressWhileBuilding = true

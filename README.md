@@ -4,19 +4,14 @@
 ## TODO:
 
 #### short term / fix bugs:
- - Update Ore Patch texture
  - Add RMB on Ore Patch -> mine resource
  - Remove / Rotate Buildings
- - Add Assembly Building + add Copper Plate -> Copper Wire and Iron Plate -> Iron Gear
  - Add Enemy Unit
  - Add Factory -> Create Build Unit + Fight Unit
- - Add panel with settings per unit: auto pickup items + fill inventory when pickup resources + ... + ...
- - F-click = select box pickup items + pickup from chest if chest in region
  - Catch input UI panels and prioritize over normal script
 
 
 #### long term:
- - Path Finding / Use TileMap to go around buildings
  - More offensive units
  - Vision system / Radar / ...
  - Buildings bigger than 1x1
@@ -24,6 +19,11 @@
 
 
 ## DONE:
+ - Path Finding / Use TileMap to go around buildings
+ - F-click = select box pickup items + pickup from chest if chest in region
+ - Add panel with settings per unit: auto pickup items + fill inventory when pickup resources + ... + ...
+ - Update Ore Patch texture
+ - Add Assembly Building + add Copper Plate -> Copper Wire and Iron Plate -> Iron Gear
  - Add Copper Plate
  - Update Recipes
  - Take items from multiple chests when needed

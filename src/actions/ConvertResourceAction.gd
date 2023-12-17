@@ -29,24 +29,23 @@ func update(unit: Unit, dt):
 			return true # skip cause no resource available
 		
 	time += dt
-	
 	if time > duration:
 		if product is Inventory:
-			return placeResourceProduct(unit)
+			return placeResourceProduct(unit, product)
 		else:
-			return placeResourceUnit(unit)
+			return placeUnitProduct(unit, product)
 	else:
 		var sprite = unit.get_node("Sprite2D")
 		sprite.set_frame(ceil(time / duration * (sprite.hframes-1.1)))
 	
 	return false
 
-func placeResourceProduct(unit):
+func placeResourceProduct(unit: Unit, resourceProduct: Inventory):
 	if waitTicks > 0:
 		waitTicks -= 1
 		return false
 		
-	resourceName = product.getFirstItemName()
+	resourceName = resourceProduct.getFirstItemName()
 	if !resourceName:
 		return true
 		
@@ -54,10 +53,12 @@ func placeResourceProduct(unit):
 	if !placed:
 		placed = placeResource(unit, false) #check place on ground
 	if placed: 
-		product.removeTillEmpty(resourceName, 1)
+		resourceProduct.removeTillEmpty(resourceName, 1)
 		waitTicks = setWaitTicks
-		return product.is_empty()
+		return resourceProduct.is_empty()
 
-func placeResourceUnit(unit):
-	# todo
-	pass
+func placeUnitProduct(unit: Unit, unitProductScene: PackedScene):
+	var unitProduct = unitProductScene.instantiate()
+	unitProduct.position = actionPosition
+	unit.player.world.get_node("Units").add_child(unitProduct)
+	return true

@@ -1,4 +1,8 @@
-[gd_scene format=3 uid="uid://kx0b3ymqpdfb"]
+[gd_scene load_steps=2 format=3 uid="uid://kx0b3ymqpdfb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2orlp"]
+outline_size = 6
+outline_color = Color(0, 0.219608, 0.0431373, 1)
 
 [node name="ItemUI" type="MarginContainer"]
 custom_minimum_size = Vector2(32, 32)
@@ -14,4 +18,5 @@ stretch_mode = 5
 [node name="Value" type="Label" parent="."]
 layout_mode = 2
 text = "50"
+label_settings = SubResource("LabelSettings_2orlp")
 horizontal_alignment = 2

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/buildings/Furnace.gd" id="1_mmnib"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_td6nu"]
-[ext_resource type="Texture2D" uid="uid://dp6atid0csnvv" path="res://assets/prototype/furnace-5tile.png" id="3_kv5al"]
+[ext_resource type="Texture2D" uid="uid://bdbrf8ec23me2" path="res://assets/buildings/furnace.png" id="3_kv5al"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_unl0t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
@@ -122,20 +122,4 @@ shape = SubResource("CircleShape2D_7fojo")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollisionIn"]
 shape = SubResource("CircleShape2D_d4lfq")
 
-[connection signal="body_entered" from="ItemTestCollisionOut/BottomRight" to="." method="addUnit" binds= [0]]
-[connection signal="body_exited" from="ItemTestCollisionOut/BottomRight" to="." method="removeUnit" binds= [0]]
-[connection signal="body_entered" from="ItemTestCollisionOut/Right" to="." method="addUnit" binds= [1]]
-[connection signal="body_exited" from="ItemTestCollisionOut/Right" to="." method="removeUnit" binds= [1]]
-[connection signal="body_entered" from="ItemTestCollisionOut/TopRight" to="." method="addUnit" binds= [2]]
-[connection signal="body_exited" from="ItemTestCollisionOut/TopRight" to="." method="removeUnit" binds= [2]]
-[connection signal="body_entered" from="ItemTestCollisionOut/Top" to="." method="addUnit" binds= [3]]
-[connection signal="body_exited" from="ItemTestCollisionOut/Top" to="." method="removeUnit" binds= [3]]
-[connection signal="body_entered" from="ItemTestCollisionOut/TopLeft" to="." method="addUnit" binds= [4]]
-[connection signal="body_exited" from="ItemTestCollisionOut/TopLeft" to="." method="removeUnit" binds= [4]]
-[connection signal="body_entered" from="ItemTestCollisionOut/Left" to="." method="addUnit" binds= [5]]
-[connection signal="body_exited" from="ItemTestCollisionOut/Left" to="." method="removeUnit" binds= [5]]
-[connection signal="body_entered" from="ItemTestCollisionOut/BottomLeft" to="." method="addUnit" binds= [6]]
-[connection signal="body_exited" from="ItemTestCollisionOut/BottomLeft" to="." method="removeUnit" binds= [6]]
-[connection signal="body_entered" from="ItemTestCollisionOut/Bottom" to="." method="addUnit" binds= [7]]
-[connection signal="body_exited" from="ItemTestCollisionOut/Bottom" to="." method="removeUnit" binds= [7]]
 [connection signal="body_entered" from="ItemTestCollisionIn" to="." method="pickupUnit"]

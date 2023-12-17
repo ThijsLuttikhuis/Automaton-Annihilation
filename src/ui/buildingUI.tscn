@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://0vt7rxyvpncv"]
 
 [ext_resource type="Texture2D" uid="uid://dgnelaqq34d32" path="res://assets/prototype/energy.png" id="1_65iyc"]
-[ext_resource type="Texture2D" uid="uid://b6ful48ijko23" path="res://assets/prototype/windmill-4tile.png" id="2_28p67"]
+[ext_resource type="Texture2D" uid="uid://bv3jpqvwl8d3c" path="res://assets/buildings/windmill.png" id="2_28p67"]
 [ext_resource type="Script" path="res://src/ui/ConfigurationUIButton.gd" id="3_m4pmq"]
 
 [node name="BuildingUI" type="MarginContainer"]

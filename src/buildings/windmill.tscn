@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/buildings/Windmill.gd" id="1_woaf4"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_uvfg3"]
-[ext_resource type="Texture2D" uid="uid://b6ful48ijko23" path="res://assets/prototype/windmill-4tile.png" id="3_ngyo3"]
+[ext_resource type="Texture2D" uid="uid://bv3jpqvwl8d3c" path="res://assets/buildings/windmill.png" id="3_ngyo3"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="3_wxf3u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]

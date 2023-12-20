@@ -1,12 +1,17 @@
 class_name WorldTileMap extends TileMap
 
+const MAX_IMPOSSIBLE_PATHS_STORED: int = 50
+
 var aStarGrid: AStarGrid2D
 var aStarUpdateTime: float = 0.0
+
+var impossiblePaths: Dictionary = {}
 
 func _init():
 	aStarGrid = AStarGrid2D.new()
 	aStarGrid.region = Rect2i(-200, -200, 400, 400)
 	aStarGrid.cell_size = Vector2(16, 16)
+	aStarGrid.offset = aStarGrid.cell_size * 0.5
 	aStarGrid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_AT_LEAST_ONE_WALKABLE
 	aStarGrid.jumping_enabled = false
 	aStarGrid.update()
@@ -16,6 +21,7 @@ func updatePathfinder(cellI, solid):
 	if aStarGrid.is_dirty():
 		aStarGrid.update()
 		aStarUpdateTime = $"..".getTime()
+		impossiblePaths = {}
 
 func isPointSolid(location: Vector2i):
 	return aStarGrid.is_point_solid(location)
@@ -23,7 +29,10 @@ func isPointSolid(location: Vector2i):
 func getLastUpdateTime():
 	return aStarUpdateTime
 
-func getPath(from: Vector2i, to: Vector2i):
+func getPath(unit: Unit, from: Vector2i, to: Vector2i):
+	if isImpossiblePath(unit, to):
+		return []
+	
 	if isPointSolid(to):
 		var dPoints = getNeighbourPointsToTry(to)
 		for point in dPoints:
@@ -32,8 +41,8 @@ func getPath(from: Vector2i, to: Vector2i):
 				break
 				
 	var pathFound = aStarGrid.get_point_path(from, to)
-	for i in range(pathFound.size()):
-		pathFound[i] += Vector2(8,8)
+	if pathFound.is_empty():
+		addImpossiblePath(unit, to)
 	
 	return pathFound
 
@@ -45,3 +54,21 @@ func getNeighbourPointsToTry(cell: Vector2i):
 		cell + Vector2i(0, 1)
 		]
 	return dPoints
+
+func addImpossiblePath(unit: Unit, to: Vector2i):
+	if impossiblePaths.has(unit):
+		impossiblePaths[unit].push_back(to)
+	else:
+		impossiblePaths[unit] = [to]
+
+func isImpossiblePath(unit: Unit, to: Vector2i):
+	if impossiblePaths.has(unit):
+		var unitPaths = impossiblePaths[unit]
+		if unitPaths.size() > MAX_IMPOSSIBLE_PATHS_STORED:
+			unitPaths.erase(impossiblePaths[0])
+		
+		for path in unitPaths:
+			if path == to:
+				return true
+	
+	return false

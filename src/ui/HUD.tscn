@@ -161,31 +161,32 @@ custom_minimum_size = Vector2(196, 0)
 layout_mode = 2
 columns = 5
 
-[node name="Economy" type="GridContainer" parent="SelectUnitColor/SelectUnitPanel"]
+[node name="TabLbl0" type="GridContainer" parent="SelectUnitColor/SelectUnitPanel"]
+visible = false
+layout_mode = 2
+theme_override_constants/h_separation = 0
+columns = 4
+
+[node name="TabLbl1" type="GridContainer" parent="SelectUnitColor/SelectUnitPanel"]
 visible = false
 layout_mode = 2
 columns = 4
 
-[node name="Defense" type="GridContainer" parent="SelectUnitColor/SelectUnitPanel"]
+[node name="TabLbl2" type="GridContainer" parent="SelectUnitColor/SelectUnitPanel"]
 visible = false
 layout_mode = 2
 columns = 4
 
-[node name="Utility" type="GridContainer" parent="SelectUnitColor/SelectUnitPanel"]
-visible = false
-layout_mode = 2
-columns = 4
-
-[node name="Factory" type="GridContainer" parent="SelectUnitColor/SelectUnitPanel"]
+[node name="TabLbl3" type="GridContainer" parent="SelectUnitColor/SelectUnitPanel"]
 visible = false
 layout_mode = 2
 columns = 4
 
 [node name="UnitTabLabel" type="ColorRect" parent="SelectUnitColor"]
 layout_mode = 0
-offset_left = 25.0
+offset_left = 27.0
 offset_top = 27.0
-offset_right = 57.0
+offset_right = 59.0
 offset_bottom = 41.0
 color = Color(0.533333, 0.533333, 0.533333, 0.713726)
 
@@ -199,9 +200,9 @@ horizontal_alignment = 1
 
 [node name="EconomyTabLabel" type="ColorRect" parent="SelectUnitColor"]
 layout_mode = 0
-offset_left = 94.0
+offset_left = 100.0
 offset_top = 27.0
-offset_right = 126.0
+offset_right = 132.0
 offset_bottom = 41.0
 color = Color(0.533333, 0.533333, 0.533333, 0.713726)
 
@@ -215,9 +216,9 @@ horizontal_alignment = 1
 
 [node name="DefenseTabLabel" type="ColorRect" parent="SelectUnitColor"]
 layout_mode = 0
-offset_left = 184.0
+offset_left = 180.0
 offset_top = 27.0
-offset_right = 216.0
+offset_right = 212.0
 offset_bottom = 41.0
 color = Color(0.533333, 0.533333, 0.533333, 0.713726)
 
@@ -231,9 +232,9 @@ horizontal_alignment = 1
 
 [node name="UtilityTabLabel" type="ColorRect" parent="SelectUnitColor"]
 layout_mode = 0
-offset_left = 258.0
+offset_left = 262.0
 offset_top = 27.0
-offset_right = 290.0
+offset_right = 294.0
 offset_bottom = 41.0
 color = Color(0.533333, 0.533333, 0.533333, 0.713726)
 
@@ -247,9 +248,9 @@ horizontal_alignment = 1
 
 [node name="FactoryTabLabel" type="ColorRect" parent="SelectUnitColor"]
 layout_mode = 0
-offset_left = 331.0
+offset_left = 343.0
 offset_top = 27.0
-offset_right = 363.0
+offset_right = 375.0
 offset_bottom = 41.0
 color = Color(0.533333, 0.533333, 0.533333, 0.713726)
 

@@ -1,10 +1,10 @@
 extends Camera2D
 
 const PAN_SPEED = 2.4
-const ZOOM_FACTOR = 1.6
-const ZOOM_LEVELS = 8.0
-const MIN_ZOOM = pow(1.6, ZOOM_LEVELS/2.0)
-const MAX_ZOOM = pow(1.6, -ZOOM_LEVELS/2.0)
+const ZOOM_FACTOR = 1.2
+const ZOOM_LEVELS = 20
+const MIN_ZOOM = pow(ZOOM_FACTOR, ZOOM_LEVELS/2.0)
+const MAX_ZOOM = pow(ZOOM_FACTOR, -ZOOM_LEVELS/2.0)
 
 var panStartMousePosition
 var panStartCameraPosition

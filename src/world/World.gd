@@ -14,8 +14,8 @@ const solarPowerTimeCycle: float = 90.0
 var solarStartPhase: float
 
 # wind
-const minWindSpeed: float = 3.0
-const maxWindSpeed: float = 17.0
+var minWindSpeed: float = 3.0
+var maxWindSpeed: float = 17.0
 const windSpeedVariation: float = 1.5
 const windSpeedVariationMinMaxDelta: float = 3.0
 

@@ -7,5 +7,5 @@ func setInputConfiguration(inputConfig_: InputConfiguration):
 
 func on_press():
 	print('pressed button')
-	if inputConfig.canPressWhileBuilding() || $"/root/World/Player".getBuildmenuState() == Utils.BUILD_MENU.NONE:
+	if inputConfig.canPressWhileBuilding() || $"/root/World/Player".getBuildmenuTab() == 0:
 		inputConfig.next()

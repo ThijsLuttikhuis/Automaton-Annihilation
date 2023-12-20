@@ -20,5 +20,6 @@ func setResource(resourceName_):
 	resourceName = resourceName_
 	var texture = Utils.getResourceTexture(resourceName)
 	$"Sprite2D".texture = texture
+	$"Tooltip".tooltip_text = resourceName
 
 

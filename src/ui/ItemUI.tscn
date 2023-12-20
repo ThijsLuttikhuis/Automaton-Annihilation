@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://kx0b3ymqpdfb"]
+[gd_scene load_steps=3 format=3 uid="uid://kx0b3ymqpdfb"]
+
+[ext_resource type="Texture2D" uid="uid://rp8qmgf3550j" path="res://assets/resources/unknown_item.png" id="1_k8aa4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2orlp"]
 outline_size = 6
@@ -12,11 +14,12 @@ offset_bottom = 16.0
 [node name="Texture" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
+texture = ExtResource("1_k8aa4")
 expand_mode = 3
 stretch_mode = 5
 
 [node name="Value" type="Label" parent="."]
 layout_mode = 2
-text = "50"
+text = "0"
 label_settings = SubResource("LabelSettings_2orlp")
 horizontal_alignment = 2

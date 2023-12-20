@@ -37,10 +37,10 @@ func on_ready():
 func _physics_process(dt):
 	if !actionQueue:
 		return
-		
+	
 	actionQueue.update(self, dt)
 	on_physics_process(dt)
-	
+
 func on_physics_process(_dt):
 	pass # can be overwritten
 
@@ -54,16 +54,16 @@ func setGhost(ghost_: bool = true):
 func isGhost():
 	return ghost
 	
-func getBuildActionList(buildmenuState):
-	var list: Array[PackedScene] = []
-	if buildmenuState == Utils.BUILD_MENU.ECONOMY:
-		list = buildActionList.buildingsEconomy
-	elif buildmenuState == Utils.BUILD_MENU.DEFENSE:
-		list = buildActionList.buildingsDefense
-	elif buildmenuState == Utils.BUILD_MENU.UTILITY:
-		list = buildActionList.buildingsUtility
-	elif buildmenuState == Utils.BUILD_MENU.FACTORY:
-		list = buildActionList.buildingsFactory
+func getBuildActionList(buildmenuTab):
+	var list: Array = []
+	if buildmenuTab == 1:
+		list = buildActionList.units0
+	elif buildmenuTab == 2:
+		list = buildActionList.units1
+	elif buildmenuTab == 3:
+		list = buildActionList.units2
+	elif buildmenuTab == 4:
+		list = buildActionList.units3
 	
 	return list
 

@@ -12,39 +12,41 @@ func _ready():
 	initInputConfiguration()
 
 func initBuildActionList():
-	var miningdrill = preload("res://src/buildings/MiningDrill.tscn")
-	buildActionList.buildingsEconomy.push_back(miningdrill)
-	var solarpanel = preload("res://src/buildings/SolarPanel.tscn")
-	buildActionList.buildingsEconomy.push_back(solarpanel)
-	var windmill = preload("res://src/buildings/Windmill.tscn")
-	buildActionList.buildingsEconomy.push_back(windmill)
+	buildActionList.tabNames = ["Economy", "Defense", "Utility", "Factory"]
 	
-	buildActionList.buildingsEconomy.push_back(miningdrill)
-	buildActionList.buildingsEconomy.push_back(miningdrill)
-	buildActionList.buildingsEconomy.push_back(miningdrill)
-	buildActionList.buildingsEconomy.push_back(miningdrill)
-	buildActionList.buildingsEconomy.push_back(miningdrill)
+	var miningdrill = preload("res://src/buildings/MiningDrill.tscn")
+	buildActionList.units0.push_back(miningdrill)
+	var solarpanel = preload("res://src/buildings/SolarPanel.tscn")
+	buildActionList.units0.push_back(solarpanel)
+	var windmill = preload("res://src/buildings/Windmill.tscn")
+	buildActionList.units0.push_back(windmill)
+	
+	buildActionList.units0.push_back(miningdrill)
+	buildActionList.units0.push_back(miningdrill)
+	buildActionList.units0.push_back(miningdrill)
+	buildActionList.units0.push_back(miningdrill)
+	buildActionList.units0.push_back(miningdrill)
 	
 	var chest = preload("res://src/buildings/Chest.tscn")
-	buildActionList.buildingsEconomy.push_back(chest)
+	buildActionList.units0.push_back(chest)
 	
 	var energystorage = preload("res://src/buildings/EnergyStorage.tscn")
-	buildActionList.buildingsEconomy.push_back(energystorage)
+	buildActionList.units0.push_back(energystorage)
 	
 	var conveyorbelt = preload("res://src/buildings/ConveyorBelt.tscn")
-	buildActionList.buildingsFactory.push_back(conveyorbelt)
+	buildActionList.units3.push_back(conveyorbelt)
 	
 	var furnace = preload("res://src/buildings/Furnace.tscn")
-	buildActionList.buildingsFactory.push_back(furnace)
+	buildActionList.units3.push_back(furnace)
 	
-	buildActionList.buildingsFactory.push_back(furnace)
-	buildActionList.buildingsFactory.push_back(furnace)
+	buildActionList.units3.push_back(furnace)
+	buildActionList.units3.push_back(furnace)
 	
 	var assembler = preload("res://src/buildings/Assembler.tscn")
-	buildActionList.buildingsFactory.push_back(assembler)
+	buildActionList.units3.push_back(assembler)
 
 	var mechlab = preload("res://src/buildings/MechLab.tscn")
-	buildActionList.buildingsFactory.push_back(mechlab)
+	buildActionList.units3.push_back(mechlab)
 
 func initInputConfiguration():
 	var pickupitems = InputConfiguration.new("Pickup Items")

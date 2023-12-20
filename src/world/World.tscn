@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://pb6y10f0p1lc" path="res://assets/tilemap/tileswater.png" id="5_4ptvx"]
 [ext_resource type="Script" path="res://src/world/WorldTileMap.gd" id="6_ghel7"]
 [ext_resource type="PackedScene" uid="uid://ccds6drvg4py2" path="res://src/units/Architect.tscn" id="6_ixb8k"]
-[ext_resource type="PackedScene" uid="uid://b6bhdecusfje1" path="res://src/player/Player.tscn" id="11_2c86j"]
+[ext_resource type="PackedScene" uid="uid://b6bhdecusfje1" path="res://src/world/Player.tscn" id="11_2c86j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p2iv7"]
 resource_name = "background"
@@ -43,14 +43,12 @@ vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
 source_geometry_group_name = &"navigation_polygon_source_group"
-agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_5d8uy"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
 source_geometry_group_name = &"navigation_polygon_source_group"
-agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_g8vtj"]
 source_geometry_group_name = &"navigation_polygon_source_group"

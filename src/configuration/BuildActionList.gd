@@ -1,6 +1,8 @@
 class_name BuildActionList
 
-var buildingsEconomy: Array[PackedScene] = []
-var buildingsDefense: Array[PackedScene] = []
-var buildingsUtility: Array[PackedScene] = []
-var buildingsFactory: Array[PackedScene] = []
+var tabNames: Array[String] = ["           1", "           2", "           3", "           4"]
+
+var units0: Array = []
+var units1: Array = []
+var units2: Array = []
+var units3: Array = []

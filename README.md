@@ -5,6 +5,7 @@
 
 #### short term / fix bugs:
  - Add RMB on Ore Patch -> mine resource
+ - E + Click -> queue remove building
  - Remove / Rotate Buildings
  - Add Enemy Unit
  - Add Factory -> Create Build Unit + Fight Unit

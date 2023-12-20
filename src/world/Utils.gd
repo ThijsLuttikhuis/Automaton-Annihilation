@@ -1,35 +1,6 @@
 
 class_name Utils
 
-
-enum BUILD_MENU {NONE, ECONOMY, DEFENSE, UTILITY, FACTORY}
-
-static func buildStateToTabIndex(state):
-	if state == BUILD_MENU.NONE:
-		return 0
-	elif state == BUILD_MENU.ECONOMY:
-		return 1
-	elif state == BUILD_MENU.DEFENSE:
-		return 2
-	elif state == BUILD_MENU.UTILITY:
-		return 3
-	elif state == BUILD_MENU.FACTORY:
-		return 4
-	else:
-		assert(false, "invalid build menu state")
-	
-static func buildStateToString(state):
-	if state == BUILD_MENU.ECONOMY:
-		return "Economy"
-	elif state == BUILD_MENU.DEFENSE:
-		return "Defense"
-	elif state == BUILD_MENU.UTILITY:
-		return "Utility"
-	elif state == BUILD_MENU.FACTORY:
-		return "Factory"
-	else:
-		return "Unit"
-
 static func getResourceTexture(name):
 	var texture: Texture2D
 	if name == "Iron Ore":
@@ -47,7 +18,7 @@ static func getResourceTexture(name):
 	elif name == "Coal":
 		texture = preload("res://assets/resources/coal.png")
 	else:
-		texture = preload("res://assets/prototype/energy.png")
+		texture = preload("res://assets/resources/unknown_item.png")
 	return texture
 
 static func getKeyboardKeyFromInputMap(inputMapKey):

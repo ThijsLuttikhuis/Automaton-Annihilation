@@ -57,25 +57,23 @@ func updatePathfinder(unit: Unit):
 		tileMap.local_to_map(pathFound[-1]) != targetCellPos || \
 		tileMap.getLastUpdateTime() >= pathUpdateTime:
 		
-		pathFound = tileMap.getPath(unitCellPos, targetCellPos)
+		pathFound = tileMap.getPath(unit, unitCellPos, targetCellPos)
 		pathIndex = 1
 		pathUpdateTime = unit.player.world.getTime()
 	
-	print(str(pathIndex) + ' / ' + str(pathFound.size()))
-	if pathIndex < pathFound.size():
-		
-		#hack actionQueue line to show pathFound
-		#unit.actionQueue.line.clear_points()
-		#for point in pathFound:
-			#unit.actionQueue.line.add_point(point)
-		
-		unit.targetPosition = pathFound[pathIndex]
-		if unit.isNavigationFinished():
-			print(pathFound)
-			pathIndex += 1
-
-	else:
+	if pathIndex >= pathFound.size():
 		unit.targetPosition = actionPosition
+		return
+		
+	# hack actionQueue line to show pathFound
+	unit.actionQueue.line.clear_points()
+	for point in pathFound:
+		unit.actionQueue.line.add_point(point)
+	
+	unit.targetPosition = pathFound[pathIndex]
+	if unit.isNavigationFinished():
+		print(str(pathIndex) + ' / ' + str(pathFound.size()))
+		pathIndex += 1
 
 func getCellOccupied(tileMap: TileMap, cellPos: Vector2i):
 	var tile = tileMap.get_cell_tile_data(2, cellPos)

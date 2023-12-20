@@ -19,7 +19,7 @@ func _ready():
 	inputConfigPanel = $"SelectInputColor/InputConfiguration"
 	
 	createBuildingUITabs()
-	createBuildMenuTabLabels()
+	createBuildmenuTabLabels()
 	createConfigurationGrid()
 
 func _unhandled_input(event):
@@ -43,7 +43,7 @@ func updateSelectedUnitPanel():
 	selectUnitPanel.get_parent().show()
 	inputConfigPanel.get_parent().show()
 	
-	updateBuildMenuPanel(unit)
+	updateBuildmenuPanel(unit)
 	updateConfigurationPanel(unit)
 	
 func createConfigurationGrid():
@@ -65,15 +65,21 @@ func createBuildingUITabs():
 			continue
 		
 		var buildingUIScene = preload("res://src/ui/BuildingUI.tscn")
+		var craftItemUIScene = preload("res://src/ui/CraftItemUI.tscn")
 		var order = [8,9,10,11,4,5,6,7,0,1,2,3]
 		
 		for i in order:
 			var buildingUI = buildingUIScene.instantiate()
 			buildingUI.name = "Building" + str(i)
-			var labelKeyboardKey = buildingUI.get_node("BuildingUI/ClipContentNode/TextureRect/Label")
-			
-			labelKeyboardKey.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_" + str(i))
+			var buildinglabelKeyboardKey = buildingUI.get_node("BuildingUI/ClipContentNode/TextureRect/Label")
+			buildinglabelKeyboardKey.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_" + str(i))
 			child.add_child(buildingUI)
+			
+			var craftItemUI = craftItemUIScene.instantiate()
+			craftItemUI.name = "CraftItem" + str(i)
+			var craftItemLabelKeyboardKey = craftItemUI.get_node("CraftItemUI/EnergyCost/TextureRect/TextureRect/Label")
+			craftItemLabelKeyboardKey.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_" + str(i))
+			child.add_child(craftItemUI)
 
 func updateEnergyPanel():
 	var energy = world.getEnergy()
@@ -89,13 +95,12 @@ func updateEnergyPanel():
 	var solarPowerDisplay = worldStatePanel.get_node("SolarPowerDisplay")
 	solarPowerDisplay.text = "Solar Power: " + str(round(solarPower * 10.0) / 10.0)
 	
-func updateBuildMenuPanel(unit):
-	var buildMenuState = player.getBuildmenuState()
-	var stateIndex = Utils.buildStateToTabIndex(buildMenuState)
-	selectUnitPanel.set_current_tab(stateIndex)
+func updateBuildmenuPanel(unit):
+	var buildMenuTab = player.getBuildmenuTab()
+	selectUnitPanel.set_current_tab(buildMenuTab)
 	
-	updateBuildMenuPanelKeyboardLabels(stateIndex)
-	updateBuildMenuSelectedTab(unit, stateIndex)
+	updateBuildmenuPanelKeyboardLabels(unit, buildMenuTab)
+	updateBuildmenuSelectedTab(unit, buildMenuTab)
 
 func updateConfigurationPanel(unit):
 	if !(unit is BuildUnit):
@@ -129,27 +134,36 @@ func updateConfigurationPanel(unit):
 			uiChild.get_node("Configuration/SliderColor/Slider").value = config.getIndex()
 			uiChild.get_node("Configuration/SliderColor/Slider").max_value = config.getNItems() - 1
 			uiChild.get_node("Configuration/Spacer/KeyColor").visible = \
-				config.canPressWhileBuilding() || (player.getBuildmenuState() == Utils.BUILD_MENU.NONE)
+				config.canPressWhileBuilding() || (player.getBuildmenuTab() == 0)
 			uiChild.get_node("Configuration/Spacer/KeyColor/KeyboardKey").text = \
 				Utils.getKeyboardKeyFromInputMap(config.getInputMap())
 
-func createBuildMenuTabLabels():
+func createBuildmenuTabLabels():
 	var unitLabel = $"SelectUnitColor/UnitTabLabel/Label"
 	unitLabel.text = Utils.getKeyboardKeyFromInputMap("ui_cancel")
 	
 	var economyLabel = $"SelectUnitColor/EconomyTabLabel/Label"
-	economyLabel.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_economy")
+	economyLabel.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenutab_1")
 	
 	var defenseLabel = $"SelectUnitColor/DefenseTabLabel/Label"
-	defenseLabel.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_defense")
+	defenseLabel.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenutab_2")
 	
 	var utilityLabel = $"SelectUnitColor/UtilityTabLabel/Label"
-	utilityLabel.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_utility")
+	utilityLabel.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenutab_3")
 	
 	var factoryLabel = $"SelectUnitColor/FactoryTabLabel/Label"
-	factoryLabel.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_factory")
+	factoryLabel.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenutab_4")
 
-func updateBuildMenuPanelKeyboardLabels(stateIndex):
+func updateBuildmenuPanelKeyboardLabels(unit, stateIndex):
+	var tabNames = unit.buildActionList.tabNames
+	for i in range(4):
+		var tab = $"SelectUnitColor/SelectUnitPanel".get_child(i+1)
+		if tabNames.size() <= i:
+			tab.name = "             " + str(i)
+		else:
+			tab.name = tabNames[i]
+
+	
 	var unitLabel = $"SelectUnitColor/UnitTabLabel"
 	unitLabel.visible = stateIndex != 0
 	
@@ -165,11 +179,11 @@ func updateBuildMenuPanelKeyboardLabels(stateIndex):
 	var factoryLabel = $"SelectUnitColor/FactoryTabLabel"
 	factoryLabel.visible = stateIndex == 0
 
-func updateBuildMenuSelectedTab(unit, stateIndex):
-	if stateIndex == 0:
+func updateBuildmenuSelectedTab(unit, buildMenuTab):
+	if buildMenuTab == 0:
 		updateUnitInfoPanel(unit)
 	else:
-		updateUnitBuildMenu(unit, stateIndex)
+		updateUnitBuildmenu(unit, buildMenuTab)
 
 func updateUnitInfoPanel(unit):
 	var unitGrid = selectUnitPanel.get_node("Unit")
@@ -198,91 +212,124 @@ func updateUnitInfoPanel(unit):
 		itemUI.get_node("Texture").texture = Utils.getResourceTexture(key)
 		itemUI.get_node("Texture").tooltip_text = key
 		
-func updateUnitBuildMenu(unit, stateIndex):
-	if !(unit is BuildUnit):
-		return
-	
+func updateUnitBuildmenu(unit, buildMenuTab):
 	var actionList = unit.buildActionList
-	var buildStr = ["Economy", "Defense", "Utility", "Factory"]
-	var buildLists = [actionList.buildingsEconomy, actionList.buildingsDefense, \
-		actionList.buildingsUtility, actionList.buildingsFactory]
+
+	var buildLists = [actionList.units0, actionList.units1, \
+		actionList.units2, actionList.units3]
 	
-	var i = stateIndex - 1
+	var i = buildMenuTab - 1
 	var buildList = buildLists[i]
-	var grid = selectUnitPanel.get_node(buildStr[i])
+	var grid = selectUnitPanel.get_child(buildMenuTab)
+	
+	var isPackedScene = false
+	if !buildList.is_empty():
+		assert(buildList[0] is PackedScene || buildList[0][0] is Inventory, \
+			'buildList should contain either a PackedScene or an Array[Inventory]')
+		
+		isPackedScene = (buildList[0] is PackedScene)
 	
 	var selectedBuildingScene = player.getBuildmenuBuilding()
 	for j in range(12):
-		var gridElement = grid.get_node("Building" + str(j) + "/BuildingUI")
+		var gridElementBuildingUI = grid.get_node("Building" + str(j) + "/BuildingUI")
+		var gridElementCraftItemUI = grid.get_node("CraftItem" + str(j) + "/CraftItemUI")
 		if j >= buildList.size():
-			gridElement.hide()
+			gridElementBuildingUI.hide()
+			gridElementCraftItemUI.hide()
+			if isPackedScene:
+				gridElementBuildingUI.get_parent().show() 
+				gridElementCraftItemUI.get_parent().hide() 
+			else:
+				gridElementBuildingUI.get_parent().hide() 
+				gridElementCraftItemUI.get_parent().show() 
 			continue
+			
+		gridElementBuildingUI.show()
+		gridElementCraftItemUI.show()
 		
-		gridElement.show()
+		if isPackedScene:
+			gridElementBuildingUI.get_parent().show() 
+			gridElementCraftItemUI.get_parent().hide() 
+			
+			var buildingScene: PackedScene = buildList[j]
+			var building: Unit = buildingScene.instantiate()
+			grid.get_node("Building" + str(j) + "/Button").tooltip_text = building.getDisplayName()
 
-		var buildingScene: PackedScene = buildList[j]
-		var building: Building = buildingScene.instantiate()
-		
-		grid.get_node("Building" + str(j) + "/Button").tooltip_text = building.getDisplayName()
-		updateGridElementTexture(gridElement, building)
-		updateGridElementCost(unit, gridElement, building)
-		
-		if !selectedBuildingScene || (selectedBuildingScene && buildingScene == selectedBuildingScene):
-			gridElement.modulate = Color(1.0, 1.0, 1.0, 1.0)
+			updateGridElementBuilding(unit, gridElementBuildingUI, building)
+			if !selectedBuildingScene || (selectedBuildingScene && buildingScene == selectedBuildingScene):
+				gridElementBuildingUI.modulate = Color(1.0, 1.0, 1.0, 1.0)
+			else:
+				gridElementBuildingUI.modulate = Color(0.8, 0.8, 0.8, 0.8)
+				
 		else:
-			gridElement.modulate = Color(0.8, 0.8, 0.8, 0.8)
-
-func updateGridElementTexture(gridElement, building):
+			gridElementCraftItemUI.get_parent().show() 
+			gridElementBuildingUI.get_parent().hide()
+			
+			var craftItemInventory = buildList[j]
+			var recipe = craftItemInventory[0]
+			var product = craftItemInventory[1]
+			updateGridElementCraftItem(unit, gridElementCraftItemUI, recipe, product)
+			
+func updateGridElementBuilding(unit: Unit, gridElement: Control, building: Unit):
 	var sprite2D = building.get_node("Sprite2D")
 	var nodeTexture = gridElement.get_node("ClipContentNode/Texture")
 	nodeTexture.texture = sprite2D.texture
-
-func updateGridElementCost(unit, gridElement, building):
+	
 	gridElement.get_node("Cost/Energy/Value").text = str(building.energyCost)
 	
 	if world.hasEnergy(building.energyCost):
 		gridElement.get_node("Cost/Energy/Value").self_modulate = Color(1,1,1)
 	else:
 		gridElement.get_node("Cost/Energy/Value").self_modulate = Color(0.8,0.2,0.2)
+	
+	var nResources = building.resourceCost.resources.size()
+	assert(nResources < 4, 'hud:updateResourceCost: cannot show more than three unique resources in the cost')
+	var resourceNames = building.resourceCost.resources.keys()
+	var resourceValues = building.resourceCost.resources.values()
+	
+	for i in range(3):
+		var rName: String = ""
+		var rValue: int = 0
+		var hasResources = false
+		if nResources > i:
+			rName = resourceNames[i]
+			rValue = resourceValues[i]
+			hasResources = unit.inventory.hasResources(rName, rValue)
 		
-	var resourceCost = building.resourceCost.resources
-	
-	var resourceNames = resourceCost.keys()
-	assert(resourceNames.size() < 3, 'hud:updateResourceCost: cannot show more than two unique resources in the cost')
-	
-	var r1Value: int = 0
-	var r2Value: int = 0
-	var r1Name: String = ""
-	var r2Name: String = ""
-	
-	if resourceNames.size() > 1:
-		r1Value = resourceCost[resourceNames[0]]
-		r2Value = resourceCost[resourceNames[1]]
-		if r2Value > r1Value:
-			r1Value = resourceCost[resourceNames[1]]
-			r2Value = resourceCost[resourceNames[0]]
-			r1Name = resourceNames[1]
-			r2Name = resourceNames[0]
+		var resourceNode = gridElement.get_node("Cost/Resource" + str(i))
+		resourceNode.get_node("Value").text = str(rValue) if rValue > 0 else ""
+		resourceNode.get_node("Texture").texture = Utils.getResourceTexture(rName) if rValue > 0 else null
+		if hasResources:
+			resourceNode.get_node("Value").self_modulate = Color(1,1,1)
 		else:
-			r1Name = resourceNames[0]
-			r2Name = resourceNames[1]
-	
-	if resourceNames.size() == 1:
-		r1Value = resourceCost[resourceNames[0]]
-		r1Name = resourceNames[0]
+			resourceNode.get_node("Value").self_modulate = Color(0.8,0.2,0.2)
 		
-	var resource1Node = gridElement.get_node("Cost/Resource1")
-	var resource2Node = gridElement.get_node("Cost/Resource2")
+func updateGridElementCraftItem(unit: Unit, gridElement: Control, recipe: Inventory, product: Inventory):
+	var nodeNames = ["Recipe", "Product"]
+	var resources = [recipe, product]
 	
-	resource1Node.get_node("Value").text = str(r1Value) if r1Value > 0 else ""
-	resource2Node.get_node("Value").text = str(r2Value) if r2Value > 0 else ""
-	resource1Node.get_node("Texture").texture = Utils.getResourceTexture(r1Name) if r1Value > 0 else null
-	resource2Node.get_node("Texture").texture = Utils.getResourceTexture(r2Name) if r2Value > 0 else null
-	if unit.inventory.hasResources(r1Name, r1Value):
-		resource1Node.get_node("Value").self_modulate = Color(1,1,1)
-	else:
-		resource1Node.get_node("Value").self_modulate = Color(0.8,0.2,0.2)
-	if r2Name != "" && unit.inventory.hasResources(r2Name, r2Value):
-		resource2Node.get_node("Value").self_modulate = Color(1,1,1)
-	else:
-		resource2Node.get_node("Value").self_modulate = Color(0.8,0.2,0.2)
+	for i in range(2):
+		var resourceNames = resources[i].resources.keys()
+		var resourceValues = resources[i].resources.values()
+		
+		for j in range(3):
+			var rName: String = ""
+			var rValue: int = 0
+			var hasResources = false
+			if resourceValues.size() > j:
+				rName = resourceNames[j]
+				rValue = resourceValues[j]
+				hasResources = unit.inventory.hasResources(rName, rValue)
+
+			var resourceNode = gridElement.get_node(nodeNames[i] + "/Resource" + str(j))
+			resourceNode.get_node("Value").text = str(rValue) if rValue > 0 else ""
+			resourceNode.get_node("Texture").texture = Utils.getResourceTexture(rName) if rValue > 0 else null
+			if hasResources:
+				resourceNode.get_node("Value").self_modulate = Color(1,1,1)
+			else:
+				resourceNode.get_node("Value").self_modulate = Color(0.8,0.2,0.2)
+
+		
+
+func isMouseOnHUD():
+	return false

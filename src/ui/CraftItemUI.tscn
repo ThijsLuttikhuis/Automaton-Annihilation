@@ -1,0 +1,179 @@
+[gd_scene load_steps=5 format=3 uid="uid://dp1fw17xfwq0h"]
+
+[ext_resource type="Texture2D" uid="uid://dgnelaqq34d32" path="res://assets/prototype/energy.png" id="1_omi2h"]
+[ext_resource type="Texture2D" uid="uid://rp8qmgf3550j" path="res://assets/resources/unknown_item.png" id="2_j1ure"]
+[ext_resource type="Texture2D" uid="uid://y1otl871vajp" path="res://assets/general/arrow_32x32.png" id="3_8837p"]
+[ext_resource type="Script" path="res://src/ui/ConfigurationUIButton.gd" id="4_rd7ls"]
+
+[node name="CraftItemUI" type="MarginContainer"]
+custom_minimum_size = Vector2(96, 68)
+offset_right = 96.0
+offset_bottom = 68.0
+
+[node name="CraftItemUI" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = -12
+
+[node name="Recipe" type="VBoxContainer" parent="CraftItemUI"]
+custom_minimum_size = Vector2(32, 68)
+layout_mode = 2
+theme_override_constants/separation = -8
+
+[node name="Spacer" type="AspectRatioContainer" parent="CraftItemUI/Recipe"]
+layout_mode = 2
+
+[node name="OneTextHeight" type="Label" parent="CraftItemUI/Recipe/Spacer"]
+layout_mode = 2
+
+[node name="Resource0" type="HBoxContainer" parent="CraftItemUI/Recipe"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Texture" type="TextureRect" parent="CraftItemUI/Recipe/Resource0"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("2_j1ure")
+stretch_mode = 5
+
+[node name="Value" type="Label" parent="CraftItemUI/Recipe/Resource0"]
+layout_mode = 2
+text = "10"
+
+[node name="Resource1" type="HBoxContainer" parent="CraftItemUI/Recipe"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Texture" type="TextureRect" parent="CraftItemUI/Recipe/Resource1"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("2_j1ure")
+stretch_mode = 5
+
+[node name="Value" type="Label" parent="CraftItemUI/Recipe/Resource1"]
+layout_mode = 2
+text = "5"
+
+[node name="Resource2" type="HBoxContainer" parent="CraftItemUI/Recipe"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Texture" type="TextureRect" parent="CraftItemUI/Recipe/Resource2"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("2_j1ure")
+stretch_mode = 5
+
+[node name="Value" type="Label" parent="CraftItemUI/Recipe/Resource2"]
+layout_mode = 2
+text = "1"
+
+[node name="EnergyCost" type="VBoxContainer" parent="CraftItemUI"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="Energy" type="HBoxContainer" parent="CraftItemUI/EnergyCost"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Texture" type="TextureRect" parent="CraftItemUI/EnergyCost/Energy"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("1_omi2h")
+stretch_mode = 5
+
+[node name="Value" type="Label" parent="CraftItemUI/EnergyCost/Energy"]
+custom_minimum_size = Vector2(38, 0)
+layout_mode = 2
+text = "1000"
+
+[node name="TextureRect" type="TextureRect" parent="CraftItemUI/EnergyCost"]
+self_modulate = Color(0.188235, 0.188235, 0.188235, 1)
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+texture = ExtResource("3_8837p")
+stretch_mode = 3
+
+[node name="TextureRect" type="ColorRect" parent="CraftItemUI/EnergyCost/TextureRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -14.0
+offset_right = 12.9999
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.533333, 0.533333, 0.533333, 0.713726)
+
+[node name="Label" type="Label" parent="CraftItemUI/EnergyCost/TextureRect/TextureRect"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -6.0
+offset_right = 13.0
+offset_bottom = 20.0
+text = "z"
+
+[node name="Product" type="VBoxContainer" parent="CraftItemUI"]
+custom_minimum_size = Vector2(32, 68)
+layout_mode = 2
+theme_override_constants/separation = -8
+
+[node name="Spacer" type="AspectRatioContainer" parent="CraftItemUI/Product"]
+layout_mode = 2
+
+[node name="OneTextHeight" type="Label" parent="CraftItemUI/Product/Spacer"]
+layout_mode = 2
+
+[node name="Resource0" type="HBoxContainer" parent="CraftItemUI/Product"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Texture" type="TextureRect" parent="CraftItemUI/Product/Resource0"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("2_j1ure")
+stretch_mode = 5
+
+[node name="Value" type="Label" parent="CraftItemUI/Product/Resource0"]
+layout_mode = 2
+text = "10"
+
+[node name="Resource1" type="HBoxContainer" parent="CraftItemUI/Product"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Texture" type="TextureRect" parent="CraftItemUI/Product/Resource1"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("2_j1ure")
+stretch_mode = 5
+
+[node name="Value" type="Label" parent="CraftItemUI/Product/Resource1"]
+layout_mode = 2
+text = "5"
+
+[node name="Resource2" type="HBoxContainer" parent="CraftItemUI/Product"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Texture" type="TextureRect" parent="CraftItemUI/Product/Resource2"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("2_j1ure")
+stretch_mode = 5
+
+[node name="Value" type="Label" parent="CraftItemUI/Product/Resource2"]
+layout_mode = 2
+text = "1"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+tooltip_text = "tooltip"
+mouse_force_pass_scroll_events = false
+mouse_default_cursor_shape = 2
+action_mode = 0
+flat = true
+script = ExtResource("4_rd7ls")

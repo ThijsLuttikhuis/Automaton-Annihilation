@@ -10,7 +10,7 @@ const MIN_DIST_BETWEEN_MOVE_POINTS: float = 5.0
 var buildmenuTab: int = 0
 var buildmenuBuilding: PackedScene = null
 
-var mouseOnHUD: bool = false
+var mouseOnHUDatJustPressed: bool = false
 var mousePosition: Vector2
 var mouseClickPath: Array[Vector2]
 var selectedUnits: Array[Unit]
@@ -19,7 +19,6 @@ var selectedUnits: Array[Unit]
 func _process(_dt):
 	updateInputConfiguration()
 	updateUIBuildmenu()
-	
 	updateMouseAction()
 	updateGhosts()
 
@@ -60,18 +59,26 @@ func updateUIBuildmenu():
 		return
 	
 	var unit = getMainSelectedUnit()
-	if unit is BuildUnit:
-		for i in range(12):
-			var uibmstr = "ui_buildmenu_" + str(i)
-			if Input.is_action_just_pressed(uibmstr):
-				print(tab, str(i))
-				var buildings = unit.getBuildActionList(tab)
-				if i < buildings.size():
+
+	for i in range(12):
+		var uibmstr = "ui_buildmenu_" + str(i)
+		if Input.is_action_just_pressed(uibmstr):
+			print(tab, str(i))
+			var buildings = unit.getBuildActionList(tab)
+			if i < buildings.size():
+				assert(buildings[i] is PackedScene || buildings[i] is Recipe, \
+					'buildList should contain either a PackedScene or an Array[Inventory]')
+				if buildings[i] is PackedScene:
 					setBuildmenuBuilding(buildings[i]);
+					break
+				if buildings[i] is Recipe:
+					setRecipe(unit, buildings[i])
 					break
 
 func updateMouseAction():
 	mousePosition = get_viewport().get_camera_2d().get_global_mouse_position()
+	
+	
 	
 	if getBuildmenuTab() != 0:
 		if Input.is_action_just_pressed("mouse_button_2"):
@@ -84,14 +91,18 @@ func updateMouseAction():
 	
 	if Input.is_action_just_pressed("mouse_button_1"):
 		if hud.isMouseOnHUD():
-			mouseOnHUD = true
+			mouseOnHUDatJustPressed = true
 			return
-			
+		
+		mouseOnHUDatJustPressed = false
 		mouseClickPath.clear()
 		mouseClickPath.push_back(mousePosition)
 		if !getBuildmenuBuilding():
 			removeAllSelectedUnits()
 			setCollisionBoxTransform(mousePosition, Vector2(0,0))
+	
+	if mouseOnHUDatJustPressed:
+		return
 	
 	if Input.is_action_pressed("mouse_button_1"):
 		var deltaPos = mousePosition - mouseClickPath[0]
@@ -135,7 +146,6 @@ func updateMouseAction():
 	if Input.is_action_just_released("mouse_button_2"):
 		mouseClickPath.push_back(mousePosition)
 		
-
 		var newMoveActions = convertToMoveActions()
 		for unit in newMoveActions.keys():
 			pushToActionQueue(unit, newMoveActions[unit])
@@ -343,6 +353,9 @@ func setBuildmenuState(buildmenuTab_: int):
 func setBuildmenuBuilding(value: PackedScene):
 	buildmenuBuilding = value
 	
+func setRecipe(unit: ConvertResourceBuilding, recipe: Recipe):
+	unit.recipe = recipe
+
 func getBuildmenuTab():
 	return buildmenuTab
 

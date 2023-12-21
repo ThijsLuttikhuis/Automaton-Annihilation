@@ -4,6 +4,7 @@
 ## TODO:
 
 #### short term / fix bugs:
+ - Assembler / Miner / etc: input configuration --> only on belts / chests / convert buildings / ...
  - Add RMB on Ore Patch -> mine resource
  - E + Click -> queue remove building
  - Remove / Rotate Buildings

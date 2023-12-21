@@ -9,6 +9,8 @@ var selectUnitPanel: Container
 var worldStatePanel: Container
 var inputConfigPanel: Container
 
+var mouseOnContainer: Array[bool] = [false, false, false]
+
 var lastUnit: Unit
 
 func _ready():
@@ -159,7 +161,7 @@ func updateBuildmenuPanelKeyboardLabels(unit, stateIndex):
 	for i in range(4):
 		var tab = $"SelectUnitColor/SelectUnitPanel".get_child(i+1)
 		if tabNames.size() <= i:
-			tab.name = "             " + str(i)
+			tab.name = "           " + str(i)
 		else:
 			tab.name = tabNames[i]
 
@@ -224,7 +226,7 @@ func updateUnitBuildmenu(unit, buildMenuTab):
 	
 	var isPackedScene = false
 	if !buildList.is_empty():
-		assert(buildList[0] is PackedScene || buildList[0][0] is Inventory, \
+		assert(buildList[0] is PackedScene || buildList[0] is Recipe, \
 			'buildList should contain either a PackedScene or an Array[Inventory]')
 		
 		isPackedScene = (buildList[0] is PackedScene)
@@ -265,10 +267,7 @@ func updateUnitBuildmenu(unit, buildMenuTab):
 			gridElementCraftItemUI.get_parent().show() 
 			gridElementBuildingUI.get_parent().hide()
 			
-			var craftItemInventory = buildList[j]
-			var recipe = craftItemInventory[0]
-			var product = craftItemInventory[1]
-			updateGridElementCraftItem(unit, gridElementCraftItemUI, recipe, product)
+			updateGridElementCraftItem(unit, gridElementCraftItemUI,  buildList[j])
 			
 func updateGridElementBuilding(unit: Unit, gridElement: Control, building: Unit):
 	var sprite2D = building.get_node("Sprite2D")
@@ -304,9 +303,9 @@ func updateGridElementBuilding(unit: Unit, gridElement: Control, building: Unit)
 		else:
 			resourceNode.get_node("Value").self_modulate = Color(0.8,0.2,0.2)
 		
-func updateGridElementCraftItem(unit: Unit, gridElement: Control, recipe: Inventory, product: Inventory):
+func updateGridElementCraftItem(unit: Unit, gridElement: Control, recipe: Recipe):
 	var nodeNames = ["Recipe", "Product"]
-	var resources = [recipe, product]
+	var resources = [recipe.inputRecipe, recipe.product]
 	
 	for i in range(2):
 		var resourceNames = resources[i].resources.keys()
@@ -320,7 +319,7 @@ func updateGridElementCraftItem(unit: Unit, gridElement: Control, recipe: Invent
 				rName = resourceNames[j]
 				rValue = resourceValues[j]
 				hasResources = unit.inventory.hasResources(rName, rValue)
-
+			
 			var resourceNode = gridElement.get_node(nodeNames[i] + "/Resource" + str(j))
 			resourceNode.get_node("Value").text = str(rValue) if rValue > 0 else ""
 			resourceNode.get_node("Texture").texture = Utils.getResourceTexture(rName) if rValue > 0 else null
@@ -329,7 +328,20 @@ func updateGridElementCraftItem(unit: Unit, gridElement: Control, recipe: Invent
 			else:
 				resourceNode.get_node("Value").self_modulate = Color(0.8,0.2,0.2)
 
-		
-
 func isMouseOnHUD():
+	var mousePos = get_viewport().get_mouse_position()
+	
+	var mainPanels = [selectUnitPanel, worldStatePanel, inputConfigPanel]
+	
+	for panel in mainPanels:
+		var pos = panel.get_screen_position()
+		var size = panel.size
+		if mousePos.x > pos.x && mousePos.x < pos.x + size.x && \
+			mousePos.y > pos.y && mousePos.y < pos.y + size.y:
+			
+			print('mouse')
+			return true 
+		
+	print('exit')
 	return false
+		

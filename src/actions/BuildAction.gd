@@ -37,7 +37,9 @@ func update(unit: Unit, dt):
 				ghostBuilding.setGhost(false)
 				ghostBuilding.reparent(ghostBuilding.get_node("../../Buildings"))
 				unit.player.tileMap.set_cell(2, cellI, 2, ghostBuilding.toTileMapAtlasCoords())
-				unit.player.tileMap.updatePathfinder(cellI, true)
+				var cellData = unit.player.tileMap.get_cell_tile_data(2, cellI)
+				var blockPathfinding = cellData.get_custom_data("blockPathfinding")
+				unit.player.tileMap.updatePathfinder(cellI, blockPathfinding)
 				return true
 				
 			else:

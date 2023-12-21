@@ -47,6 +47,9 @@ radius = 7.0
 [node name="Assembler" type="StaticBody2D"]
 y_sort_enabled = true
 script = ExtResource("1_btavg")
+maxHealthPoints = null
+viewRange = null
+radarRange = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_n7ds3")

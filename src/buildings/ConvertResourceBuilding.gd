@@ -3,9 +3,7 @@ class_name ConvertResourceBuilding extends Building
 var duration: float = 1.0
 
 var singleResourceRecipes: Dictionary
-
-var multiRecipe: Inventory
-var multiProduct
+var recipe: Recipe
 
 var spaceOccupied: Array[int] = [0, 0, 0, 0, 0, 0, 0, 0]
 
@@ -42,20 +40,21 @@ func isConvertable(itemName):
 		if key == itemName:
 			return true
 	
-	if multiRecipe && multiRecipe.hasResources(itemName, 1):
-		return true
-		
-	return false
+	if !recipe || !recipe.inputRecipe:
+		return false
+	
+	return recipe.inputRecipe.hasResources(itemName, 1)
+
 
 func tryConvertSingleItem(item: Item):
 	for key in singleResourceRecipes.keys():
 		if key == item.resourceName:
-			var recipe = Inventory.new()
-			recipe.add(item.resourceName, 1)
+			var inputRecipe = Inventory.new()
+			inputRecipe.add(item.resourceName, 1)
 			var product = Inventory.new()
 			product.add(singleResourceRecipes[key], 1)
-			
-			var action = ConvertResourceAction.new(recipe, product, duration)
+			var singleRecipe: Recipe = Recipe.new(inputRecipe, product)
+			var action = ConvertResourceAction.new(singleRecipe, duration)
 			actionQueue.push_back([action])
 			
 			return true
@@ -63,11 +62,12 @@ func tryConvertSingleItem(item: Item):
 	return false
 
 func tryConvertMultiRecipe():
-	if inventory.hasResources(multiRecipe):
-		var action = ConvertResourceAction.new(multiRecipe, multiProduct, duration)
+	if inventory.hasResources(recipe.inputRecipe):
+		var action = ConvertResourceAction.new(recipe, duration)
 		actionQueue.push_back([action])
 
 func getProductFromResources(resources):
+	# if not Inventory try convert Item -> String -> Inventory
 	if resources is Item:
 		resources = resources.resourceName
 		
@@ -80,7 +80,10 @@ func getProductFromResources(resources):
 		var inv = Inventory.new()
 		inv.add(resources, 1)
 		resources = inv
+		
 	assert(resources is Inventory, 'ConvertResourceBuilding:isConvertable: itemName should be an Inventory, Item or a String')
 	
-	if multiRecipe && resources.hasResources(multiRecipe):
-		return multiProduct
+	if recipe && resources.hasResources(recipe.inputRecipe):
+		return recipe
+	
+	return null

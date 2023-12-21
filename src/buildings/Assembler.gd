@@ -4,8 +4,7 @@ func _init():
 	energyCost = 200
 	resourceCost.add("Iron Plate", 9)
 	
-	multiRecipe = Inventory.new()
-	multiProduct = Inventory.new()
+	recipe = Recipe.new()
 	
 	duration = 2.0
 
@@ -17,17 +16,19 @@ func initBuildActionList():
 	buildActionList = BuildActionList.new()
 	buildActionList.tabNames = ["Basic", "Military"]
 	
-	var recipeIronGear = Inventory.new()
-	recipeIronGear.add('Iron Plate', 2)
+	var recipeInputIronGear = Inventory.new()
+	recipeInputIronGear.add('Iron Plate', 2)
 	var productIronGear = Inventory.new()
 	productIronGear.add('Iron Gear', 2)
-	buildActionList.units0.push_back([recipeIronGear, productIronGear])
+	var recipeIronGear = Recipe.new(recipeInputIronGear, productIronGear)
+	buildActionList.units0.push_back(recipeIronGear)
 	
-	var recipeCopperWire = Inventory.new()
-	recipeIronGear.add('Copper Plate', 2)
+	var recipeInputCopperWire = Inventory.new()
+	recipeInputCopperWire.add('Copper Plate', 2)
 	var productCopperWire = Inventory.new()
-	productIronGear.add('Copper Wire', 2)
-	buildActionList.units0.push_back([recipeCopperWire, productCopperWire])
+	productCopperWire.add('Copper Wire', 2)
+	var recipeCopperWire = Recipe.new(recipeInputCopperWire, productCopperWire)
+	buildActionList.units0.push_back(recipeCopperWire)
 	
 func initInputConfiguration():
 	pass #todo

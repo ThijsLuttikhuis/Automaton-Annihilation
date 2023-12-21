@@ -2,38 +2,34 @@ class_name ConvertResourceAction extends PlaceResourceAction
 
 const setWaitTicks: int = 2
 
-var recipeResources: Inventory
-var product
+var recipe: Recipe
 
 var duration: float
 var time: float = 0.0
 var waitTicks: int = 0
 
-func _init(recipeResources_: Inventory, product_, duration_):
-	assert(product_ is Inventory || product_ is PackedScene, \
+func _init(recipe_: Recipe, duration_):
+	assert(recipe_.product is Inventory || recipe_.product is PackedScene, \
 		'product should be an Inventory or a PackedScene')
 		
 	duration = duration_
-	recipeResources = Inventory.deepCopy(recipeResources_)
 	
-	if product_ is Inventory:
-		product = Inventory.deepCopy(product_)
-	if product_ is PackedScene:
-		product = product_
+	recipe = Recipe.deepCopy(recipe_)
+	
 
 func update(unit: Unit, dt):
 	if actionPosition == Vector2(9e9, 9e9):
 		actionPosition = unit.position
-		var success = unit.inventory.ifHasResourcesRemove(recipeResources, 1)
+		var success = unit.inventory.ifHasResourcesRemove(recipe.inputRecipe, 1)
 		if !success:
 			return true # skip cause no resource available
-		
+	
 	time += dt
 	if time > duration:
-		if product is Inventory:
-			return placeResourceProduct(unit, product)
+		if recipe.product is Inventory:
+			return placeResourceProduct(unit, recipe.product)
 		else:
-			return placeUnitProduct(unit, product)
+			return placeUnitProduct(unit, recipe.product)
 	else:
 		var sprite = unit.get_node("Sprite2D")
 		sprite.set_frame(ceil(time / duration * (sprite.hframes-1.1)))

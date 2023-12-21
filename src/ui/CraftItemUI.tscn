@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dp1fw17xfwq0h"]
+[gd_scene load_steps=4 format=3 uid="uid://dp1fw17xfwq0h"]
 
 [ext_resource type="Texture2D" uid="uid://dgnelaqq34d32" path="res://assets/prototype/energy.png" id="1_omi2h"]
 [ext_resource type="Texture2D" uid="uid://rp8qmgf3550j" path="res://assets/resources/unknown_item.png" id="2_j1ure"]
 [ext_resource type="Texture2D" uid="uid://dinr200wfgcp1" path="res://assets/general/arrow_16x32.png" id="3_ywjbe"]
-[ext_resource type="Script" path="res://src/ui/ConfigurationUIButton.gd" id="4_rd7ls"]
 
 [node name="CraftItemUI" type="MarginContainer"]
 custom_minimum_size = Vector2(96, 68)
@@ -176,4 +175,3 @@ mouse_force_pass_scroll_events = false
 mouse_default_cursor_shape = 2
 action_mode = 0
 flat = true
-script = ExtResource("4_rd7ls")

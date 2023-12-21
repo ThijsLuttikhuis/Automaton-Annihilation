@@ -24,11 +24,6 @@ func _ready():
 	createBuildmenuTabLabels()
 	createConfigurationGrid()
 
-func _unhandled_input(event):
-	if event:
-		updateEnergyPanel()
-		updateSelectedUnitPanel()
-
 func _physics_process(dt):
 	if fmod(world.getTime(), updateTime) < dt:
 		updateEnergyPanel()
@@ -76,12 +71,16 @@ func createBuildingUITabs():
 			var buildinglabelKeyboardKey = buildingUI.get_node("BuildingUI/ClipContentNode/TextureRect/Label")
 			buildinglabelKeyboardKey.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_" + str(i))
 			child.add_child(buildingUI)
+			var buildingUIButton = buildingUI.get_node("Button")
+			buildingUIButton.button_up.connect(onPressBuildmenuBuilding.bind(i))
 			
 			var craftItemUI = craftItemUIScene.instantiate()
 			craftItemUI.name = "CraftItem" + str(i)
 			var craftItemLabelKeyboardKey = craftItemUI.get_node("CraftItemUI/EnergyCost/TextureRect/TextureRect/Label")
 			craftItemLabelKeyboardKey.text = Utils.getKeyboardKeyFromInputMap("ui_buildmenu_" + str(i))
 			child.add_child(craftItemUI)
+			var craftItemUIButton = craftItemUI.get_node("Button")
+			craftItemUIButton.button_up.connect(onPressBuildmenuBuilding.bind(i))
 
 func updateEnergyPanel():
 	var energy = world.getEnergy()
@@ -164,7 +163,6 @@ func updateBuildmenuPanelKeyboardLabels(unit, stateIndex):
 			tab.name = "           " + str(i)
 		else:
 			tab.name = tabNames[i]
-
 	
 	var unitLabel = $"SelectUnitColor/UnitTabLabel"
 	unitLabel.visible = stateIndex != 0
@@ -307,6 +305,12 @@ func updateGridElementCraftItem(unit: Unit, gridElement: Control, recipe: Recipe
 	var nodeNames = ["Recipe", "Product"]
 	var resources = [recipe.inputRecipe, recipe.product]
 	
+	if (!unit.recipe || recipe == unit.recipe):
+		gridElement.modulate = Color(1, 1, 1, 1)
+	else:
+		gridElement.modulate = Color(0.8, 0.8, 0.8, 0.8)
+		
+	gridElement.get_node("../Button").tooltip_text = recipe.getDisplayName()
 	for i in range(2):
 		var resourceNames = resources[i].resources.keys()
 		var resourceValues = resources[i].resources.values()
@@ -323,11 +327,13 @@ func updateGridElementCraftItem(unit: Unit, gridElement: Control, recipe: Recipe
 			var resourceNode = gridElement.get_node(nodeNames[i] + "/Resource" + str(j))
 			resourceNode.get_node("Value").text = str(rValue) if rValue > 0 else ""
 			resourceNode.get_node("Texture").texture = Utils.getResourceTexture(rName) if rValue > 0 else null
-			if hasResources:
-				resourceNode.get_node("Value").self_modulate = Color(1,1,1)
-			else:
-				resourceNode.get_node("Value").self_modulate = Color(0.8,0.2,0.2)
-
+			if i == 0:
+				if hasResources:
+					resourceNode.get_node("Value").self_modulate = Color(1,1,1)
+				else:
+					resourceNode.get_node("Value").self_modulate = Color(0.8,0.2,0.2)
+			
+			
 func isMouseOnHUD():
 	var mousePos = get_viewport().get_mouse_position()
 	
@@ -339,9 +345,19 @@ func isMouseOnHUD():
 		if mousePos.x > pos.x && mousePos.x < pos.x + size.x && \
 			mousePos.y > pos.y && mousePos.y < pos.y + size.y:
 			
-			print('mouse')
 			return true 
-		
-	print('exit')
+	
 	return false
-		
+
+func onPressBuildmenuBuilding(index: int):
+	player.setBuildmenuBuilding(index)
+
+func onTabChanged(tabIndex: int):
+	player.setBuildmenuState(tabIndex)
+	updateSelectedUnitPanel()
+	
+func _unhandled_input(event):
+	if event:
+		updateEnergyPanel()
+		updateSelectedUnitPanel()
+

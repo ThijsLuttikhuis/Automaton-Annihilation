@@ -262,7 +262,7 @@ text = "z"
 horizontal_alignment = 1
 
 [node name="SelectInputColor" type="ColorRect" parent="."]
-custom_minimum_size = Vector2(340, 0)
+custom_minimum_size = Vector2(340, 170)
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -273,6 +273,7 @@ grow_vertical = 0
 color = Color(0.396078, 0.168627, 0.0392157, 0.662745)
 
 [node name="InputConfiguration" type="VBoxContainer" parent="SelectInputColor"]
+custom_minimum_size = Vector2(340, 170)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -288,3 +289,5 @@ columns = 5
 [node name="InputGeneral" type="GridContainer" parent="SelectInputColor/InputConfiguration"]
 layout_mode = 2
 columns = 5
+
+[connection signal="tab_changed" from="SelectUnitColor/SelectUnitPanel" to="." method="onTabChanged"]

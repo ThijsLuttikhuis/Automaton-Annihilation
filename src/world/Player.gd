@@ -58,27 +58,16 @@ func updateUIBuildmenu():
 				return
 		return
 	
-	var unit = getMainSelectedUnit()
-
 	for i in range(12):
 		var uibmstr = "ui_buildmenu_" + str(i)
 		if Input.is_action_just_pressed(uibmstr):
 			print(tab, str(i))
-			var buildings = unit.getBuildActionList(tab)
-			if i < buildings.size():
-				assert(buildings[i] is PackedScene || buildings[i] is Recipe, \
-					'buildList should contain either a PackedScene or an Array[Inventory]')
-				if buildings[i] is PackedScene:
-					setBuildmenuBuilding(buildings[i]);
-					break
-				if buildings[i] is Recipe:
-					setRecipe(unit, buildings[i])
-					break
+			setBuildmenuBuilding(i)
+			break
+			
 
 func updateMouseAction():
 	mousePosition = get_viewport().get_camera_2d().get_global_mouse_position()
-	
-	
 	
 	if getBuildmenuTab() != 0:
 		if Input.is_action_just_pressed("mouse_button_2"):
@@ -350,9 +339,17 @@ func setBuildmenuState(buildmenuTab_: int):
 	if buildmenuTab == 0:
 		buildmenuBuilding = null
 
-func setBuildmenuBuilding(value: PackedScene):
-	buildmenuBuilding = value
-	
+func setBuildmenuBuilding(index: int):
+	var unit = getMainSelectedUnit()
+	var buildings = unit.getBuildActionList(getBuildmenuTab())
+	if index < buildings.size():
+		assert(buildings[index] is PackedScene || buildings[index] is Recipe, \
+			'buildList should contain either a PackedScene or an Array[Inventory]')
+		if buildings[index] is PackedScene:
+			buildmenuBuilding = buildings[index]
+		if buildings[index] is Recipe:
+			setRecipe(unit, buildings[index])
+
 func setRecipe(unit: ConvertResourceBuilding, recipe: Recipe):
 	unit.recipe = recipe
 

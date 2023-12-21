@@ -1,5 +1,6 @@
 class_name Recipe
 
+var displayName: String = ""
 var inputRecipe: Inventory = Inventory.new()
 var product
 
@@ -22,3 +23,12 @@ static func deepCopy(recipe_: Recipe):
 	
 	return Recipe.new(recipeCopy, productCopy)
 
+func getDisplayName():
+	if displayName.is_empty():
+		if product is Inventory:
+			return product.getFirstItemName()
+		if product is PackedScene:
+			var productScene = product.instantiate()
+			return productScene.getDisplayName()
+	else:
+		return displayName

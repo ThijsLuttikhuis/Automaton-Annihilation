@@ -332,8 +332,7 @@ func updateGridElementCraftItem(unit: Unit, gridElement: Control, recipe: Recipe
 					resourceNode.get_node("Value").self_modulate = Color(1,1,1)
 				else:
 					resourceNode.get_node("Value").self_modulate = Color(0.8,0.2,0.2)
-			
-			
+
 func isMouseOnHUD():
 	var mousePos = get_viewport().get_mouse_position()
 	

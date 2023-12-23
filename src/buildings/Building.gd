@@ -10,7 +10,9 @@ const NAME_TO_TILEMAP_INDEX: Dictionary = {
 	"Energy Storage": Vector2(6,0),
 	"Furnace": Vector2(7,0),
 	"Mech Lab": Vector2(8,0),
-	"Assembler": Vector2(9,0)
+	"Assembler": Vector2(9,0),
+	"Energy Tower": Vector2(10,0),
+	"Laser Tower": Vector2(11,0)
 }
 
 var direction: float
@@ -33,8 +35,7 @@ func canBuildOnTile(cellI: Vector2i):
 
 func toTileMapAtlasCoords():
 	var coords = NAME_TO_TILEMAP_INDEX[getDisplayName()]
-	if direction != null:
-		coords.y = $"Sprite2D".frame
+	coords.y = $"Sprite2D".frame
 	return coords
 
 static func NameToTileMapAtlasCoords(buildingName):

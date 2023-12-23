@@ -32,7 +32,7 @@ func _ready():
 	on_ready()
 
 func on_ready():
-	pass
+	pass # can be overwritten
 	
 func _physics_process(dt):
 	if !actionQueue:
@@ -66,6 +66,12 @@ func getBuildActionList(buildmenuTab):
 		list = buildActionList.units3
 	
 	return list
+
+func onDestroyed():
+	pass
+
+func onDisassembled():
+	pass
 
 func getDisplayName():
 	return "Unit name not set!"

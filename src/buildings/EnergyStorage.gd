@@ -11,7 +11,7 @@ func _init():
 	resourceCost.add('Iron Plate', 2)
 	resourceCost.add('Copper Plate', 5) # to be copper wire
 
-func _physics_process(dt):
+func on_physics_process(dt):
 	if isGhost():
 		return
 	

@@ -7,11 +7,16 @@ var recipe: Recipe
 
 var spaceOccupied: Array[int] = [0, 0, 0, 0, 0, 0, 0, 0]
 
-func on_physics_process(_dt):
+func on_physics_process(dt):
 	if actionQueue.actionsEmpty():
 		$"Sprite2D".set_frame(0)
 		if !inventory.is_empty():
 			tryConvertMultiRecipe()
+	
+	on2_physics_process(dt)
+
+func on2_physics_process(_dt):
+	pass # can be overwritten
 
 func addUnit(unit, pos: int):
 	if unit is BuildUnit || unit is Item:

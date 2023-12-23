@@ -66,9 +66,9 @@ func updatePathfinder(unit: Unit):
 		return
 		
 	# hack actionQueue line to show pathFound
-	unit.actionQueue.line.clear_points()
-	for point in pathFound:
-		unit.actionQueue.line.add_point(point)
+	#unit.actionQueue.line.clear_points()
+	#for point in pathFound:
+		#unit.actionQueue.line.add_point(point)
 	
 	unit.targetPosition = pathFound[pathIndex]
 	if unit.isNavigationFinished():

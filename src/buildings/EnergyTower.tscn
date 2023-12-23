@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://dtl82lv5vcbln"]
+
+[ext_resource type="Script" path="res://src/buildings/EnergyTower.gd" id="1_u6u4j"]
+[ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_vdkei"]
+[ext_resource type="Texture2D" uid="uid://ceqr7ga4wgcx7" path="res://assets/buildings/energy_tower.png" id="3_g5io4"]
+[ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_1eges"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
+resource_local_to_scene = true
+shader = ExtResource("2_vdkei")
+shader_parameter/outline_width = 0.0
+shader_parameter/ghost_greyout = false
+shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dcdk1"]
+resource_local_to_scene = true
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mjx8v"]
+radius = 60.0
+
+[node name="EnergyTower" type="StaticBody2D"]
+y_sort_enabled = true
+script = ExtResource("1_u6u4j")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_n7ds3")
+position = Vector2(0, -8)
+texture = ExtResource("3_g5io4")
+hframes = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dcdk1")
+
+[node name="ActionQueue" type="Node" parent="."]
+script = ExtResource("4_1eges")
+
+[node name="ActionPath" type="Line2D" parent="ActionQueue"]
+points = PackedVector2Array(59, 5)
+width = 1.5
+default_color = Color(0, 0.596078, 0.596078, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="EnemyTestCollision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyTestCollision"]
+shape = SubResource("CircleShape2D_mjx8v")
+
+[connection signal="body_entered" from="EnemyTestCollision" to="." method="addUnit"]
+[connection signal="body_exited" from="EnemyTestCollision" to="." method="removeUnit"]

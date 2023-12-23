@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://bkgn3m3r4d246"]
+
+[ext_resource type="Script" path="res://src/world/EnemyFactory.gd" id="1_kj7hc"]
+[ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_yyjud"]
+[ext_resource type="Texture2D" uid="uid://b8hc1nxcsk2uo" path="res://assets/buildings/mech_lab.png" id="3_1icy5"]
+[ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_hde07"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pypx7"]
+resource_local_to_scene = true
+shader = ExtResource("2_yyjud")
+shader_parameter/outline_width = 0.0
+shader_parameter/ghost_greyout = false
+shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f8j7h"]
+radius = 1.0
+
+[node name="EnemyFactory" type="StaticBody2D"]
+script = ExtResource("1_kj7hc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_pypx7")
+position = Vector2(0, -8)
+texture = ExtResource("3_1icy5")
+hframes = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_f8j7h")
+
+[node name="ActionQueue" type="Node" parent="."]
+script = ExtResource("4_hde07")
+
+[node name="ActionPath" type="Line2D" parent="ActionQueue"]
+width = 1.5
+default_color = Color(0, 0.596078, 0.596078, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2

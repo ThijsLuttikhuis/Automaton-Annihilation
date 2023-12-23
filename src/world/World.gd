@@ -2,6 +2,8 @@ class_name World extends Node2D
 
 var rng: RandomNumberGenerator
 
+@onready var architect: Architect = $"Units/Architect"
+
 # time
 var time: float = 0.0
 const tickTime: float = 0.5
@@ -30,6 +32,8 @@ var deltaWindSpeed: float = 0.75
 var defaultEnergyStorage: float = 1000.0
 var energy: float = 0.0
 var energyStorage: float = defaultEnergyStorage
+
+var difficulty: int = 0
 
 func _init():
 	rng = RandomNumberGenerator.new()
@@ -98,3 +102,13 @@ func getBuildings(buildingDisplayName: String = ""):
 			buildingsCorrectType.push_back(building)
 	
 	return buildingsCorrectType
+
+func getEnemyTarget():
+	# todo: set target building / architect / ...
+	return architect
+
+func setDifficulty(difficulty_: int):
+	difficulty = difficulty_
+	
+func getDifficulty():
+	return difficulty

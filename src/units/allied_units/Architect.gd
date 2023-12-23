@@ -33,6 +33,11 @@ func initBuildActionList():
 	var energystorage = preload("res://src/buildings/EnergyStorage.tscn")
 	buildActionList.units0.push_back(energystorage)
 	
+	var energytower = preload("res://src/buildings/EnergyTower.tscn")
+	buildActionList.units1.push_back(energytower)
+	
+	#var lasertower = preload("res/laserto")
+	
 	var conveyorbelt = preload("res://src/buildings/ConveyorBelt.tscn")
 	buildActionList.units3.push_back(conveyorbelt)
 	

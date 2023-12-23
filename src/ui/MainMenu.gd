@@ -23,7 +23,7 @@ func onClickSandboxMode():
 	world.defaultEnergyStorage = 100000
 	world.updateEnergyStorage()
 	world.addEnergy(100000)
-	#world.setDifficulty(0)
+	world.setDifficulty(0)
 	
 	var architect = world.get_node("Units/Architect")
 	architect.inventory.add('Iron Plate', 10000)
@@ -35,21 +35,22 @@ func onClickSandboxMode():
 func onClickEasyMode():
 	var world = startWorld()
 	world.addEnergy(1000)
-	#world.setDifficulty(1)
+	world.setDifficulty(1)
 	
 	var architect = world.get_node("Units/Architect")
-	architect.inventory.add('Iron Plate', 100)
+	architect.inventory.add('Iron Plate', 60)
 	architect.inventory.add('Stone', 20)
+	architect.inventory.add('Copper Plate', 10)
 	
 	queue_free()
 
 func onClickHardMode():
 	var world = startWorld()
 	world.addEnergy(1000)
-	#world.setDifficulty(2)
+	world.setDifficulty(2)
 	
 	var architect = world.get_node("Units/Architect")
-	architect.inventory.add('Iron Plate', 50)
+	architect.inventory.add('Iron Plate', 40)
 	architect.inventory.add('Stone', 10)
 	
 	queue_free()

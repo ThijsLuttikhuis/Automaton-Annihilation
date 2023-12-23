@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b8csqra5xruy6"]
+[gd_scene load_steps=19 format=3 uid="uid://b8csqra5xruy6"]
 
 [ext_resource type="Script" path="res://src/world/World.gd" id="1_0slbg"]
 [ext_resource type="PackedScene" uid="uid://iq0r750pgfmi" path="res://src/ui/HUD.tscn" id="2_5drou"]
@@ -7,7 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cqf2tf74b3gyb" path="res://assets/tilemap/building_tags.png" id="4_yxao6"]
 [ext_resource type="Texture2D" uid="uid://pb6y10f0p1lc" path="res://assets/tilemap/tileswater.png" id="5_4ptvx"]
 [ext_resource type="Script" path="res://src/world/WorldTileMap.gd" id="6_ghel7"]
-[ext_resource type="PackedScene" uid="uid://ccds6drvg4py2" path="res://src/units/Architect.tscn" id="6_ixb8k"]
+[ext_resource type="PackedScene" uid="uid://ccds6drvg4py2" path="res://src/units/allied_units/Architect.tscn" id="7_fysst"]
+[ext_resource type="PackedScene" uid="uid://bkgn3m3r4d246" path="res://src/world/EnemyFactory.tscn" id="10_khl6y"]
 [ext_resource type="PackedScene" uid="uid://b6bhdecusfje1" path="res://src/world/Player.tscn" id="11_2c86j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p2iv7"]
@@ -98,11 +99,11 @@ texture = ExtResource("4_yxao6")
 9:0/0/custom_data_4 = true
 10:0/0 = 0
 10:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_5d8uy")
-10:0/0/custom_data_2 = "Empty"
+10:0/0/custom_data_2 = "Energy Tower"
 10:0/0/custom_data_4 = true
 11:0/0 = 0
 11:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_5d8uy")
-11:0/0/custom_data_2 = "Empty"
+11:0/0/custom_data_2 = "Laser Tower"
 11:0/0/custom_data_4 = true
 12:0/0 = 0
 12:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_5d8uy")
@@ -674,9 +675,12 @@ y_sort_enabled = true
 [node name="Units" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="Architect" parent="Units" instance=ExtResource("6_ixb8k")]
+[node name="Architect" parent="Units" instance=ExtResource("7_fysst")]
 position = Vector2(-683, -384)
 
 [node name="Player" parent="." instance=ExtResource("11_2c86j")]
 
 [node name="HUD" parent="." instance=ExtResource("2_5drou")]
+
+[node name="EnemyFactory" parent="." instance=ExtResource("10_khl6y")]
+position = Vector2(100, -384)

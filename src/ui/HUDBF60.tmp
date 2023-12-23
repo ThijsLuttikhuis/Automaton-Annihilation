@@ -1,0 +1,293 @@
+[gd_scene load_steps=4 format=3 uid="uid://iq0r750pgfmi"]
+
+[ext_resource type="Script" path="res://src/ui/HUD.gd" id="1_hylji"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7w4um"]
+line_spacing = 0.0
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_ftoi5"]
+line_spacing = 0.0
+font_size = 12
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hylji")
+
+[node name="WorldStateColor" type="ColorRect" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 32.0
+grow_horizontal = 2
+pivot_offset = Vector2(683, 16)
+color = Color(0.396078, 0.168627, 0.0392157, 0.662745)
+metadata/_edit_use_anchors_ = true
+
+[node name="WorldStatePanel" type="HBoxContainer" parent="WorldStateColor"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 32.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="EnergyDisplay" type="Label" parent="WorldStateColor/WorldStatePanel"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_filter = 1
+text = "Energy: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="WindSpeedDisplay" type="Label" parent="WorldStateColor/WorldStatePanel"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_filter = 1
+text = "Wind Speed: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="SolarPowerLimits" type="VBoxContainer" parent="WorldStateColor/WorldStatePanel"]
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="SolarPowerMax" type="Label" parent="WorldStateColor/WorldStatePanel/SolarPowerLimits"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "max: 17"
+label_settings = SubResource("LabelSettings_7w4um")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="WindSpeedMin" type="Label" parent="WorldStateColor/WorldStatePanel/SolarPowerLimits"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "min:  3"
+label_settings = SubResource("LabelSettings_ftoi5")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="SolarPowerDisplay" type="Label" parent="WorldStateColor/WorldStatePanel"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Solar Power: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="WorldStateColor/WorldStatePanel/SolarPowerDisplay"]
+layout_mode = 2
+offset_left = 204.0
+offset_top = -3.0
+offset_right = 204.0
+offset_bottom = 29.0
+
+[node name="WindSpeedLimits" type="VBoxContainer" parent="WorldStateColor/WorldStatePanel"]
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="WindSpeedMax" type="Label" parent="WorldStateColor/WorldStatePanel/WindSpeedLimits"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "max: 20"
+label_settings = SubResource("LabelSettings_7w4um")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="WindSpeedMin" type="Label" parent="WorldStateColor/WorldStatePanel/WindSpeedLimits"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "min:  0"
+label_settings = SubResource("LabelSettings_ftoi5")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="SelectUnitColor" type="ColorRect" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -240.0
+offset_right = 400.0
+grow_vertical = 0
+color = Color(0.396078, 0.168627, 0.0392157, 0.662745)
+
+[node name="SelectUnitPanel" type="TabContainer" parent="SelectUnitColor"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -240.0
+offset_right = 400.0
+grow_vertical = 0
+mouse_force_pass_scroll_events = false
+tab_alignment = 1
+all_tabs_in_front = true
+
+[node name="Unit" type="VBoxContainer" parent="SelectUnitColor/SelectUnitPanel"]
+layout_mode = 2
+
+[node name="Spacer" type="AspectRatioContainer" parent="SelectUnitColor/SelectUnitPanel/Unit"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SelectUnitColor/SelectUnitPanel/Unit"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Unit Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Unit" type="HBoxContainer" parent="SelectUnitColor/SelectUnitPanel/Unit"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SelectUnitColor/SelectUnitPanel/Unit/Unit"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="SelectUnitColor/SelectUnitPanel/Unit/Unit"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+
+[node name="Inventory" type="GridContainer" parent="SelectUnitColor/SelectUnitPanel/Unit/Unit"]
+custom_minimum_size = Vector2(196, 0)
+layout_mode = 2
+columns = 5
+
+[node name="TabLbl0" type="GridContainer" parent="SelectUnitColor/SelectUnitPanel"]
+visible = false
+layout_mode = 2
+theme_override_constants/h_separation = 0
+columns = 4
+
+[node name="TabLbl1" type="GridContainer" parent="SelectUnitColor/SelectUnitPanel"]
+visible = false
+layout_mode = 2
+columns = 4
+
+[node name="TabLbl2" type="GridContainer" parent="SelectUnitColor/SelectUnitPanel"]
+visible = false
+layout_mode = 2
+columns = 4
+
+[node name="TabLbl3" type="GridContainer" parent="SelectUnitColor/SelectUnitPanel"]
+visible = false
+layout_mode = 2
+columns = 4
+
+[node name="UnitTabLabel" type="ColorRect" parent="SelectUnitColor"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 27.0
+offset_right = 59.0
+offset_bottom = 41.0
+color = Color(0.533333, 0.533333, 0.533333, 0.713726)
+
+[node name="Label" type="Label" parent="SelectUnitColor/UnitTabLabel"]
+layout_mode = 0
+offset_top = -6.0
+offset_right = 32.0
+offset_bottom = 20.0
+text = "z"
+horizontal_alignment = 1
+
+[node name="EconomyTabLabel" type="ColorRect" parent="SelectUnitColor"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 27.0
+offset_right = 132.0
+offset_bottom = 41.0
+color = Color(0.533333, 0.533333, 0.533333, 0.713726)
+
+[node name="Label" type="Label" parent="SelectUnitColor/EconomyTabLabel"]
+layout_mode = 0
+offset_top = -6.0
+offset_right = 32.0
+offset_bottom = 20.0
+text = "z"
+horizontal_alignment = 1
+
+[node name="DefenseTabLabel" type="ColorRect" parent="SelectUnitColor"]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 27.0
+offset_right = 212.0
+offset_bottom = 41.0
+color = Color(0.533333, 0.533333, 0.533333, 0.713726)
+
+[node name="Label" type="Label" parent="SelectUnitColor/DefenseTabLabel"]
+layout_mode = 0
+offset_top = -6.0
+offset_right = 32.0
+offset_bottom = 20.0
+text = "z"
+horizontal_alignment = 1
+
+[node name="UtilityTabLabel" type="ColorRect" parent="SelectUnitColor"]
+layout_mode = 0
+offset_left = 262.0
+offset_top = 27.0
+offset_right = 294.0
+offset_bottom = 41.0
+color = Color(0.533333, 0.533333, 0.533333, 0.713726)
+
+[node name="Label" type="Label" parent="SelectUnitColor/UtilityTabLabel"]
+layout_mode = 0
+offset_top = -6.0
+offset_right = 32.0
+offset_bottom = 20.0
+text = "z"
+horizontal_alignment = 1
+
+[node name="FactoryTabLabel" type="ColorRect" parent="SelectUnitColor"]
+layout_mode = 0
+offset_left = 343.0
+offset_top = 27.0
+offset_right = 375.0
+offset_bottom = 41.0
+color = Color(0.533333, 0.533333, 0.533333, 0.713726)
+
+[node name="Label" type="Label" parent="SelectUnitColor/FactoryTabLabel"]
+layout_mode = 0
+offset_top = -6.0
+offset_right = 32.0
+offset_bottom = 20.0
+text = "z"
+horizontal_alignment = 1
+
+[node name="SelectInputColor" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(340, 170)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 421.0
+offset_top = -169.0
+offset_right = 761.0
+grow_vertical = 0
+color = Color(0.396078, 0.168627, 0.0392157, 0.662745)
+
+[node name="InputConfiguration" type="VBoxContainer" parent="SelectInputColor"]
+custom_minimum_size = Vector2(340, 170)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="InputBuild" type="GridContainer" parent="SelectInputColor/InputConfiguration"]
+layout_mode = 2
+columns = 5
+
+[node name="InputCombat" type="GridContainer" parent="SelectInputColor/InputConfiguration"]
+layout_mode = 2
+columns = 5
+
+[node name="InputGeneral" type="GridContainer" parent="SelectInputColor/InputConfiguration"]
+layout_mode = 2
+columns = 5
+
+[connection signal="tab_changed" from="SelectUnitColor/SelectUnitPanel" to="." method="onTabChanged"]

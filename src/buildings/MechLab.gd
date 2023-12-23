@@ -8,7 +8,7 @@ func _init():
 	var inputRecipe = Inventory.new()
 	inputRecipe.add("Iron Plate", 2)
 	inputRecipe.add("Iron Gear", 2)
-	var product = load("res://src/units/Architect.tscn")
+	var product = load("res://src/units/allied_units/Architect.tscn")
 	recipe = Recipe.new(inputRecipe, product)
 
 func getDisplayName():

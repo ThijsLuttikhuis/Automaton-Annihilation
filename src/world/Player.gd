@@ -138,7 +138,7 @@ func updateMouseAction():
 		var newMoveActions = convertToMoveActions()
 		for unit in newMoveActions.keys():
 			pushToActionQueue(unit, newMoveActions[unit])
-			
+		
 		mouseClickPath.clear()
 		
 func updateGhosts():
@@ -286,6 +286,7 @@ func convertToMoveActionsMultipeUnits(moveUnits: Array[MoveUnit], nMoveUnits: in
 		var cumulativeDist = previousCumulativeDist + (previousPoint - point).length()
 		cumulativeDistArr.push_back(cumulativeDist)
 		previousCumulativeDist = cumulativeDist
+		previousPoint = point
 	
 	var totalDist = cumulativeDistArr[-1]
 	var cumulativeDistIndex: int = 0
@@ -294,8 +295,11 @@ func convertToMoveActionsMultipeUnits(moveUnits: Array[MoveUnit], nMoveUnits: in
 		var dividedLength = totalDist * i / (nMoveUnits - 1)
 		while cumulativeDistArr[cumulativeDistIndex] < dividedLength:
 			cumulativeDistIndex += 1
-			
-		moveActionsDict[unit] = mouseClickPath[cumulativeDistIndex]
+		
+		var action = MoveAction.new(mouseClickPath[cumulativeDistIndex])
+		var actionInArray: Array[UnitAction] = []
+		actionInArray.push_back(action)
+		moveActionsDict[unit] = actionInArray
 	
 	return moveActionsDict
 

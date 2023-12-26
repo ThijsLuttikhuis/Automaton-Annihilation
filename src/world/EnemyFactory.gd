@@ -5,8 +5,7 @@ var timeBetweenSpawns: float = 5.0
 var firstSpawnTime: float = 10.0
 
 func _init():
-	maxHealthPoints = 9e9
-	healthPoints = 9e9
+	setMaxHealthPoints(9e9)
 	
 	var inputRecipe = Inventory.new()
 	inputRecipe.add("Iron Gear", 1)
@@ -26,3 +25,6 @@ func on2_physics_process(dt):
 
 func removeHP(_value):
 	pass # this building is not supposed to die :)
+
+func getDisplayName():
+	return "Enemy Factory"

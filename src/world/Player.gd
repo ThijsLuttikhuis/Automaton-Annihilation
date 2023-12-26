@@ -15,7 +15,6 @@ var mousePosition: Vector2
 var mouseClickPath: Array[Vector2]
 var selectedUnits: Array[Unit]
 
-
 func _process(_dt):
 	updateInputConfiguration()
 	updateUIBuildmenu()

@@ -1,8 +1,9 @@
 class_name World extends Node2D
 
-var rng: RandomNumberGenerator
-
+@onready var gameOverScene = load("res://src/ui/GameOver.tscn")
 @onready var architect: Architect = $"Units/Architect"
+
+var rng: RandomNumberGenerator
 
 # time
 var time: float = 0.0
@@ -112,3 +113,12 @@ func setDifficulty(difficulty_: int):
 	
 func getDifficulty():
 	return difficulty
+
+func initGameOverWindow():
+	if !is_queued_for_deletion():
+		var gameOver = gameOverScene.instantiate()
+		get_tree().root.add_child(gameOver)
+		return gameOver
+	else:
+		# world should already be initialized
+		return get_tree().root.get_node("GameOver")

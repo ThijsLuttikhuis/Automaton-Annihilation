@@ -69,3 +69,10 @@ func initInputConfiguration():
 
 func getDisplayName():
 	return "Architect"
+
+func onDestroyed():
+	player.world.initGameOverWindow()
+	player.world.queue_free()
+
+func onDemolished():
+	onDestroyed()

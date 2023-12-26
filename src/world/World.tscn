@@ -684,3 +684,6 @@ position = Vector2(-683, -384)
 
 [node name="EnemyFactory" parent="." instance=ExtResource("10_khl6y")]
 position = Vector2(100, -384)
+maxHealthPoints = null
+viewRange = null
+radarRange = null

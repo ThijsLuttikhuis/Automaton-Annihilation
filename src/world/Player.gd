@@ -23,24 +23,26 @@ func _process(_dt):
 	updateGhosts()
 
 func updateInputConfiguration():
-	var mainUnit = getMainSelectedUnit()
+	var mainUnit: Unit = getMainSelectedUnit()
 	if !mainUnit:
 		return
 	
 	var isBuilding = (getBuildmenuTab() != 0)
-	var actions = mainUnit.inputConfigurationList.getInputMapActionsPressed(isBuilding)
-	for action in actions:
-		for unit in selectedUnits:
-			unit.inputConfigurationList.pressKey(action)
+	mainUnit.inputConfigurationList.update(selectedUnits, isBuilding)
 	
 	if getBuildmenuTab() != 0:
 		return
 	
 	for unit in selectedUnits:
+		if unit.is_queued_for_deletion():
+			continue
 		var pickupItems = unit.inputConfigurationList.find("Pickup Items")
 		if pickupItems && pickupItems.getIndex():
 			unit.pickupItemsInArea()
-
+	
+	if getDemolishButton():
+		buildmenuBuilding = preload("res://src/buildings/Demolish.tscn") 
+	
 func updateUIBuildmenu():
 	if !getMainSelectedUnit():
 		return
@@ -64,12 +66,11 @@ func updateUIBuildmenu():
 			print(tab, str(i))
 			setBuildmenuBuilding(i)
 			break
-			
 
 func updateMouseAction():
 	mousePosition = get_viewport().get_camera_2d().get_global_mouse_position()
 	
-	if getBuildmenuTab() != 0:
+	if getBuildmenuTab() != 0 || getBuildmenuBuilding():
 		if Input.is_action_just_pressed("mouse_button_2"):
 			return
 		if Input.is_action_pressed("mouse_button_2"):
@@ -86,6 +87,7 @@ func updateMouseAction():
 		mouseOnHUDatJustPressed = false
 		mouseClickPath.clear()
 		mouseClickPath.push_back(mousePosition)
+		
 		if !getBuildmenuBuilding():
 			removeAllSelectedUnits()
 			setCollisionBoxTransform(mousePosition, Vector2(0,0))
@@ -105,7 +107,7 @@ func updateMouseAction():
 		if getBuildmenuBuilding():
 			var unit = getMainSelectedUnit()
 			if unit is BuildUnit:
-				var newBuildActions = convertToBuildActions()
+				var newBuildActions = convertToBuildActions(getDemolishButton())
 				pushToActionQueue(unit, newBuildActions)
 				setBuildmenuState(0)
 		else:
@@ -143,8 +145,8 @@ func updateMouseAction():
 		
 func updateGhosts():
 	var ghostBuildingsNode = $"../GhostBuildings"
-
 	var ghostBuildings = ghostBuildingsNode.get_children()
+	
 	if !getBuildmenuBuilding():
 		for ghostBuilding in ghostBuildings:
 			if !ghostBuilding.is_queued_for_deletion():
@@ -215,7 +217,7 @@ func updateGhosts():
 	# check illegal ghost position
 	for ghostBuilding in ghostBuildings:
 		var cellI = tileMap.local_to_map(ghostBuilding.position)
-		if !ghostBuilding.canBuildOnTile(cellI):
+		if !ghostBuilding.canBuildOnTile(cellI) && !(ghostBuilding is Demolish):
 			ghostBuilding.queue_free()
 
 func addSelectedUnit(unit):
@@ -303,7 +305,7 @@ func convertToMoveActionsMultipeUnits(moveUnits: Array[MoveUnit], nMoveUnits: in
 	
 	return moveActionsDict
 
-func convertToBuildActions():
+func convertToBuildActions(toDemolishAction: bool = false):
 	var newBuildActions: Array[UnitAction] = []
 	var ghostBuildingsNode = $"../GhostBuildings"
 	var ghostBuildingsActionQueueNode = $"../ActionGhostBuildings"
@@ -314,7 +316,11 @@ func convertToBuildActions():
 			continue
 		
 		ghostBuilding.reparent(ghostBuildingsActionQueueNode)
-		var action = BuildAction.new(ghostBuilding.position, ghostBuilding)
+		var action: UnitAction
+		if toDemolishAction:
+			action = DemolishAction.new(ghostBuilding.position, ghostBuilding)
+		else:
+			action = BuildAction.new(ghostBuilding.position, ghostBuilding)
 		newBuildActions.push_back(action)
 	return newBuildActions
 
@@ -362,3 +368,15 @@ func getBuildmenuTab():
 
 func getBuildmenuBuilding():
 	return buildmenuBuilding
+
+func getDemolishButton() -> bool:
+	if buildmenuBuilding && buildmenuBuilding.instantiate() is Demolish:
+		return true
+		
+	var mainUnit = getMainSelectedUnit()
+	if mainUnit:
+		var demolishValue = mainUnit.inputConfigurationList.find("Demolish")
+		if demolishValue:
+			return demolishValue.getValue() == 'on'
+	return false
+

@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c6mt2qoaldo7d"]
+[gd_scene load_steps=8 format=3 uid="uid://c6mt2qoaldo7d"]
 
 [ext_resource type="Script" path="res://src/buildings/ConveyorBelt.gd" id="1_depdo"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_nyfa1"]
 [ext_resource type="Texture2D" uid="uid://dabvcte2ys8gc" path="res://assets/buildings/conveyor_belt.png" id="3_vjfuu"]
+[ext_resource type="PackedScene" uid="uid://c4w8olce6k804" path="res://src/ui/HealthBar.tscn" id="4_nyhaa"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_pap7n"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
@@ -25,6 +26,12 @@ material = SubResource("ShaderMaterial_n7ds3")
 position = Vector2(0, -8)
 texture = ExtResource("3_vjfuu")
 hframes = 4
+
+[node name="HealthBar" parent="Sprite2D" instance=ExtResource("4_nyhaa")]
+offset_left = -16.0
+offset_top = -12.0
+offset_right = 0.0
+offset_bottom = -8.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true

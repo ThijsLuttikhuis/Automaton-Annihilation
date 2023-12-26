@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://ccds6drvg4py2"]
+[gd_scene load_steps=10 format=3 uid="uid://ccds6drvg4py2"]
 
 [ext_resource type="Script" path="res://src/units/allied_units/Architect.gd" id="1_l6t7a"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_utb4v"]
 [ext_resource type="Texture2D" uid="uid://ldf533k7btxm" path="res://assets/units/architect.png" id="3_efd6f"]
+[ext_resource type="PackedScene" uid="uid://c4w8olce6k804" path="res://src/ui/HealthBar.tscn" id="4_0ptsn"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_o0oi2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tt46g"]
@@ -33,6 +34,12 @@ y_sort_enabled = true
 material = SubResource("ShaderMaterial_tt46g")
 position = Vector2(0, -8)
 texture = ExtResource("3_efd6f")
+
+[node name="HealthBar" parent="Sprite2D" instance=ExtResource("4_0ptsn")]
+offset_left = -16.0
+offset_top = -20.0
+offset_right = 0.0
+offset_bottom = -16.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true

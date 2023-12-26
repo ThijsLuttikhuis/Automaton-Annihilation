@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://b4e5br67w1b2n"]
+[gd_scene load_steps=17 format=3 uid="uid://b4e5br67w1b2n"]
 
 [ext_resource type="Script" path="res://src/buildings/Furnace.gd" id="1_mmnib"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_td6nu"]
 [ext_resource type="Texture2D" uid="uid://bdbrf8ec23me2" path="res://assets/buildings/furnace.png" id="3_kv5al"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_unl0t"]
+[ext_resource type="PackedScene" uid="uid://c4w8olce6k804" path="res://src/ui/HealthBar.tscn" id="4_xukxc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
 resource_local_to_scene = true
@@ -52,6 +53,12 @@ material = SubResource("ShaderMaterial_n7ds3")
 position = Vector2(0, -8)
 texture = ExtResource("3_kv5al")
 hframes = 5
+
+[node name="HealthBar" parent="Sprite2D" instance=ExtResource("4_xukxc")]
+offset_left = -16.0
+offset_top = -20.0
+offset_right = 0.0
+offset_bottom = -16.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_dcdk1")

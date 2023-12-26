@@ -8,7 +8,7 @@ func _init():
 	
 	duration = 2.0
 
-func _ready():
+func on_ready():
 	initBuildActionList()
 	initInputConfiguration()
 

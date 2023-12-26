@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://emt4ks5qtx8m"]
+[gd_scene load_steps=10 format=3 uid="uid://emt4ks5qtx8m"]
 
 [ext_resource type="Script" path="res://src/units/enemy_units/BasicEnemy.gd" id="1_s35by"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_of85l"]
 [ext_resource type="Texture2D" uid="uid://dp0gujkpslr2h" path="res://assets/units/unarmed_alien.png" id="3_y5vpa"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_806xa"]
+[ext_resource type="PackedScene" uid="uid://c4w8olce6k804" path="res://src/ui/HealthBar.tscn" id="4_m3vcr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tt46g"]
 resource_local_to_scene = true
@@ -33,6 +34,12 @@ y_sort_enabled = true
 material = SubResource("ShaderMaterial_tt46g")
 position = Vector2(0, -8)
 texture = ExtResource("3_y5vpa")
+
+[node name="HealthBar" parent="Sprite2D" instance=ExtResource("4_m3vcr")]
+offset_left = -16.0
+offset_top = -20.0
+offset_right = 0.0
+offset_bottom = -16.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true

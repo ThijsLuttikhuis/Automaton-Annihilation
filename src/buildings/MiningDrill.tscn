@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://baovv8dp6xw88"]
+[gd_scene load_steps=16 format=3 uid="uid://baovv8dp6xw88"]
 
 [ext_resource type="Script" path="res://src/buildings/MiningDrill.gd" id="1_rijuc"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_xtjmh"]
 [ext_resource type="Texture2D" uid="uid://c75tf6jafh3s0" path="res://assets/buildings/mining_drill.png" id="3_rgtpt"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="3_urnso"]
+[ext_resource type="PackedScene" uid="uid://c4w8olce6k804" path="res://src/ui/HealthBar.tscn" id="4_ljtn0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
 resource_local_to_scene = true
@@ -49,6 +50,12 @@ material = SubResource("ShaderMaterial_n7ds3")
 position = Vector2(0, -8)
 texture = ExtResource("3_rgtpt")
 hframes = 4
+
+[node name="HealthBar" parent="Sprite2D" instance=ExtResource("4_ljtn0")]
+offset_left = -16.0
+offset_top = -20.0
+offset_right = 0.0
+offset_bottom = -16.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_dcdk1")
@@ -112,20 +119,3 @@ shape = SubResource("CircleShape2D_ymxu7")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollision/Bottom"]
 position = Vector2(0, 16)
 shape = SubResource("CircleShape2D_7fojo")
-
-[connection signal="body_entered" from="ItemTestCollision/BottomRight" to="." method="addUnit" binds= [0]]
-[connection signal="body_exited" from="ItemTestCollision/BottomRight" to="." method="removeUnit" binds= [0]]
-[connection signal="body_entered" from="ItemTestCollision/Right" to="." method="addUnit" binds= [1]]
-[connection signal="body_exited" from="ItemTestCollision/Right" to="." method="removeUnit" binds= [1]]
-[connection signal="body_entered" from="ItemTestCollision/TopRight" to="." method="addUnit" binds= [2]]
-[connection signal="body_exited" from="ItemTestCollision/TopRight" to="." method="removeUnit" binds= [2]]
-[connection signal="body_entered" from="ItemTestCollision/Top" to="." method="addUnit" binds= [3]]
-[connection signal="body_exited" from="ItemTestCollision/Top" to="." method="removeUnit" binds= [3]]
-[connection signal="body_entered" from="ItemTestCollision/TopLeft" to="." method="addUnit" binds= [4]]
-[connection signal="body_exited" from="ItemTestCollision/TopLeft" to="." method="removeUnit" binds= [4]]
-[connection signal="body_entered" from="ItemTestCollision/Left" to="." method="addUnit" binds= [5]]
-[connection signal="body_exited" from="ItemTestCollision/Left" to="." method="removeUnit" binds= [5]]
-[connection signal="body_entered" from="ItemTestCollision/BottomLeft" to="." method="addUnit" binds= [6]]
-[connection signal="body_exited" from="ItemTestCollision/BottomLeft" to="." method="removeUnit" binds= [6]]
-[connection signal="body_entered" from="ItemTestCollision/Bottom" to="." method="addUnit" binds= [7]]
-[connection signal="body_exited" from="ItemTestCollision/Bottom" to="." method="removeUnit" binds= [7]]

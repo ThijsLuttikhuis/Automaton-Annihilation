@@ -92,3 +92,4 @@ func addUnit(unit):
 func removeUnit(unit):
 	if enemiesInRange.find(unit) != -1:
 		enemiesInRange.erase(unit)
+ 

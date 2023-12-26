@@ -50,7 +50,6 @@ func isConvertable(itemName):
 	
 	return recipe.inputRecipe.hasResources(itemName, 1)
 
-
 func tryConvertSingleItem(item: Item):
 	for key in singleResourceRecipes.keys():
 		if key == item.resourceName:

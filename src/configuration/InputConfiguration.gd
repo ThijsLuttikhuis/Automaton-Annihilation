@@ -7,6 +7,7 @@ var useValuesAsName: bool
 var inputMap: String
 var inputMapPrev: String = ""
 var pressWhileBuilding: bool = false
+var toggle: bool = true
 
 func _init(name_: String):
 	name = name_
@@ -31,6 +32,13 @@ func _init(name_: String):
 		inputMap = "ui_pickup_chest"
 		pressWhileBuilding = true
 	
+	if name == "Demolish":
+		values = ["off", "on"]
+		index = 0
+		useValuesAsName = false
+		inputMap = "ui_demolish"
+		toggle = false
+
 func next():
 	index = (index + 1) % values.size()
 
@@ -39,7 +47,10 @@ func prev():
 
 func getName():
 	return name
-	
+
+func isToggle():
+	return toggle
+
 func getValue():
 	return values[index]
 
@@ -48,6 +59,10 @@ func getNItems():
 
 func getIndex():
 	return index
+
+func setIndex(index_):
+	assert(index >= 0 && index < values.size(), 'InputConfiguration:setIndex: index out of range')
+	index = index_
 
 func getNametag():
 	if useValuesAsName:

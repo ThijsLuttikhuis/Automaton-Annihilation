@@ -1,5 +1,7 @@
 class_name WorldTileMap extends TileMap
 
+@onready var world: World = $".."
+
 const MAX_IMPOSSIBLE_PATHS_STORED: int = 50
 
 var aStarGrid: AStarGrid2D
@@ -16,11 +18,22 @@ func _init():
 	aStarGrid.jumping_enabled = false
 	aStarGrid.update()
 
+func getBuildingFromCell(cellI):
+	var cellData = get_cell_tile_data(2, cellI)
+	if !cellData:
+		return null
+	var buildingName = cellData.get_custom_data("buildingName")
+	for building in world.getBuildings(buildingName):
+		if local_to_map(building.position):
+			return building
+	
+	return null
+
 func updatePathfinder(cellI, solid):
 	aStarGrid.set_point_solid(cellI, solid)
 	if aStarGrid.is_dirty():
 		aStarGrid.update()
-		aStarUpdateTime = $"..".getTime()
+		aStarUpdateTime = world.getTime()
 		impossiblePaths = {}
 
 func isPointSolid(location: Vector2i):

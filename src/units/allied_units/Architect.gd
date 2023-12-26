@@ -7,7 +7,7 @@ func _init():
 	
 	inventory.setNumberOfSlots(5)
 
-func _ready():
+func on_ready():
 	initBuildActionList()
 	initInputConfiguration()
 
@@ -36,7 +36,8 @@ func initBuildActionList():
 	var energytower = preload("res://src/buildings/EnergyTower.tscn")
 	buildActionList.units1.push_back(energytower)
 	
-	#var lasertower = preload("res/laserto")
+	#var lasertower = preload("res://src/buildings/LaserTower.tscn")
+	#buildActionList.units1.push_back(lasertower)
 	
 	var conveyorbelt = preload("res://src/buildings/ConveyorBelt.tscn")
 	buildActionList.units3.push_back(conveyorbelt)
@@ -62,6 +63,9 @@ func initInputConfiguration():
 	
 	var chestpickup = InputConfiguration.new("Chest Pickup")
 	inputConfigurationList.inputBuild.push_back(chestpickup)
+	
+	var demolishC = InputConfiguration.new("Demolish")
+	inputConfigurationList.inputBuild.push_back(demolishC)
 
 func getDisplayName():
 	return "Architect"

@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bkgn3m3r4d246"]
+[gd_scene load_steps=8 format=3 uid="uid://bkgn3m3r4d246"]
 
 [ext_resource type="Script" path="res://src/world/EnemyFactory.gd" id="1_kj7hc"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_yyjud"]
 [ext_resource type="Texture2D" uid="uid://b8hc1nxcsk2uo" path="res://assets/buildings/mech_lab.png" id="3_1icy5"]
+[ext_resource type="PackedScene" uid="uid://c4w8olce6k804" path="res://src/ui/HealthBar.tscn" id="4_g18w8"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_hde07"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pypx7"]
@@ -24,6 +25,12 @@ material = SubResource("ShaderMaterial_pypx7")
 position = Vector2(0, -8)
 texture = ExtResource("3_1icy5")
 hframes = 7
+
+[node name="HealthBar" parent="Sprite2D" instance=ExtResource("4_g18w8")]
+offset_left = -16.0
+offset_top = -20.0
+offset_right = 0.0
+offset_bottom = -16.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_f8j7h")

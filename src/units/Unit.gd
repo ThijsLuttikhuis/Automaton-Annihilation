@@ -6,6 +6,10 @@ class_name Unit extends CollisionObject2D
 @onready var buildActionList: BuildActionList = BuildActionList.new()
 @onready var inputConfigurationList: InputConfigurationList = InputConfigurationList.new()
 
+var healthBar: HealthBar
+
+var timeAlive: float = 0.0
+
 var ghost = false
 var hasRotation = false
 
@@ -29,16 +33,22 @@ var conveyorPushSpeed: Array[ConveyorBelt] = []
 @export var radarRange: float = 100.0
 
 func _ready():
+	healthBar = $"Sprite2D/HealthBar"
+	if healthBar:
+		healthBar.update()
+	else:
+		print(name + " is missing a health bar")
 	on_ready()
 
 func on_ready():
 	pass # can be overwritten
 	
 func _physics_process(dt):
-	if !actionQueue:
-		return
+	timeAlive += dt
 	
-	actionQueue.update(self, dt)
+	if actionQueue:
+		actionQueue.update(self, dt)
+		
 	on_physics_process(dt)
 
 func on_physics_process(_dt):
@@ -67,10 +77,36 @@ func getBuildActionList(buildmenuTab):
 	
 	return list
 
+func removeHP(points: float):
+	assert(points >= 0.0, 'cannot remove a negative amount of health')
+	
+	healthPoints -= points
+	if healthBar:
+		healthBar.update()
+	
+	if healthPoints <= 0.0:
+		onDestroyed()
+		queue_free()
+		return
+
+func addHP(points: float):
+	assert(points >= 0.0, 'cannot add a negative amount of health')
+	
+	healthPoints += points
+	healthPoints = min(healthPoints, maxHealthPoints)
+	
+	if healthBar:
+		healthBar.update()
+
+func demolish():
+	
+	onDemolished()
+	queue_free()
+
 func onDestroyed():
 	pass
 
-func onDisassembled():
+func onDemolished():
 	pass
 
 func getDisplayName():

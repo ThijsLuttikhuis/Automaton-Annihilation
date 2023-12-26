@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4w8olce6k804"]
+
+[ext_resource type="Script" path="res://src/ui/HealthBar.gd" id="1_wgyn7"]
+
+[sub_resource type="Gradient" id="Gradient_8xxqo"]
+colors = PackedColorArray(0.752941, 0, 0, 0.501961, 1, 0.25098, 0.25098, 0.501961)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0aiwd"]
+gradient = SubResource("Gradient_8xxqo")
+width = 16
+height = 4
+
+[node name="HealthBar" type="MarginContainer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 4.0
+grow_horizontal = 2
+script = ExtResource("1_wgyn7")
+
+[node name="ProgressBar" type="TextureProgressBar" parent="."]
+custom_minimum_size = Vector2(16, 4)
+layout_mode = 2
+value = 50.0
+texture_progress = SubResource("GradientTexture2D_0aiwd")

@@ -12,6 +12,7 @@ func update():
 	progressBar.value = unit.healthPoints
 	
 	if unit.healthPoints / unit.maxHealthPoints > 0.99:
+		print( unit.healthPoints / unit.maxHealthPoints)
 		hide()
 	else:
 		show()

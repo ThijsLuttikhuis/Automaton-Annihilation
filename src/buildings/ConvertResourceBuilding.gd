@@ -6,6 +6,7 @@ var singleResourceRecipes: Dictionary
 var recipe: Recipe
 
 var spaceOccupied: Array[int] = [0, 0, 0, 0, 0, 0, 0, 0]
+var pickupArea: Array[Item] = []
 
 func on_physics_process(dt):
 	if actionQueue.actionsEmpty():
@@ -35,6 +36,8 @@ func pickupUnit(unit):
 			if problemAddingItem.resources.is_empty():
 				tryConvertSingleItem(unit)
 				unit.queue_free()
+		else:
+			pickupArea.push_back(unit)
 
 func isConvertable(itemName):
 	if itemName is Item:

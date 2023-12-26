@@ -77,6 +77,12 @@ func getBuildActionList(buildmenuTab):
 	
 	return list
 
+func setMaxHealthPoints(value: float, setHealthToMax: bool = true):
+	assert(value >= 0.0, 'cannot set a negative max health')
+	maxHealthPoints = value
+	if setHealthToMax:
+		healthPoints = maxHealthPoints
+
 func removeHP(points: float):
 	assert(points >= 0.0, 'cannot remove a negative amount of health')
 	
@@ -109,5 +115,8 @@ func onDestroyed():
 func onDemolished():
 	pass
 
-func getDisplayName():
+func getDisplayName() -> String:
 	return "Unit name not set!"
+
+func getShootPosition() -> Vector2:
+	return position

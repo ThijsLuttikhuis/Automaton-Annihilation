@@ -6,14 +6,13 @@
 #### short term / fix bugs:
  - Assembler / Miner / etc: input configuration --> only on belts / chests / convert buildings / ...
  - Add RMB on Ore Patch -> mine resource
- - E + Click -> queue remove building
- - Remove / Rotate Buildings
  - Add Enemy Unit
  - Add Factory -> Create Build Unit + Fight Unit
- - Catch input UI panels and prioritize over normal script
+
 
 
 #### long term:
+ - Make scene with root node script for Pickupitems, check neighbour squares, ... 
  - More offensive units
  - Vision system / Radar / ...
  - Buildings bigger than 1x1
@@ -21,6 +20,8 @@
 
 
 ## DONE:
+ - Catch input UI panels and prioritize over normal script
+ - E + Click -> queue remove building
  - Path Finding / Use TileMap to go around buildings
  - F-click = select box pickup items + pickup from chest if chest in region
  - Add panel with settings per unit: auto pickup items + fill inventory when pickup resources + ... + ...

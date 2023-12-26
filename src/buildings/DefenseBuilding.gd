@@ -90,6 +90,6 @@ func addUnit(unit):
 		enemiesInRange.push_back(unit)
 
 func removeUnit(unit):
-	if enemiesInRange.find(unit) != -1:
-		enemiesInRange.erase(unit)
- 
+	if unit is FightUnit:
+		if enemiesInRange.find(unit) != -1:
+			enemiesInRange.erase(unit)

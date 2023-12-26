@@ -20,6 +20,7 @@ radius = 1.0
 script = ExtResource("1_kj7hc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_pypx7")
 position = Vector2(0, -8)
@@ -27,18 +28,21 @@ texture = ExtResource("3_1icy5")
 hframes = 7
 
 [node name="HealthBar" parent="Sprite2D" instance=ExtResource("4_g18w8")]
+visible = false
 offset_left = -16.0
 offset_top = -20.0
 offset_right = 0.0
 offset_bottom = -16.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_f8j7h")
 
 [node name="ActionQueue" type="Node" parent="."]
 script = ExtResource("4_hde07")
 
 [node name="ActionPath" type="Line2D" parent="ActionQueue"]
+visible = false
 width = 1.5
 default_color = Color(0, 0.596078, 0.596078, 1)
 joint_mode = 2

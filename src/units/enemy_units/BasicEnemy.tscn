@@ -28,6 +28,10 @@ y_sort_enabled = true
 motion_mode = 1
 wall_min_slide_angle = 0.0872665
 script = ExtResource("1_s35by")
+moveSpeed = null
+maxHealthPoints = null
+viewRange = null
+radarRange = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
@@ -49,6 +53,7 @@ shape = SubResource("CircleShape2D_c14tu")
 script = ExtResource("4_806xa")
 
 [node name="ActionPath" type="Line2D" parent="ActionQueue"]
+visible = false
 width = 1.5
 default_color = Color(0, 0.596078, 0.596078, 1)
 joint_mode = 2

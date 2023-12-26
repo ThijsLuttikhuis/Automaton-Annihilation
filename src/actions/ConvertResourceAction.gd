@@ -40,11 +40,11 @@ func placeResourceProduct(unit: Unit, resourceProduct: Inventory):
 	if waitTicks > 0:
 		waitTicks -= 1
 		return false
-		
+	
 	resourceName = resourceProduct.getFirstItemName()
 	if !resourceName:
 		return true
-		
+	
 	var placed = placeResource(unit, true, true) #check place on conveyor belts
 	if !placed:
 		placed = placeResource(unit, false) #check place on ground

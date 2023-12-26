@@ -20,27 +20,30 @@ func update(unit: Unit, dt):
 		else:
 			moveAction = MoveAction.new(actionPosition)
 	else:
+		var tileMap = unit.player.tileMap
+		var world = unit.player.world
+		
 		unit.velocity = Vector2(0,0)
 		unit.targetPosition = Vector2(9e9, 9e9)
 		
-		var cellI = unit.player.tileMap.local_to_map(actionPosition)
+		var cellI = tileMap.local_to_map(actionPosition)
 		if !ghostBuilding.canBuildOnTile(cellI):
 			ghostBuilding.queue_free() # cancel
 			return true
 		
-		var energy = unit.player.world.getEnergy()
+		var energy = world.getEnergy()
 		var hasEnergy = energy >= ghostBuilding.energyCost 
 		if hasEnergy:
 			var hasResources = unit.inventory.ifHasResourcesRemove(ghostBuilding.resourceCost)
 			if hasResources:
-				unit.player.world.removeEnergy(ghostBuilding.energyCost)
+				world.removeEnergy(ghostBuilding.energyCost)
 				ghostBuilding.setGhost(false)
 				ghostBuilding.reparent(ghostBuilding.get_node("../../Buildings"))
 				var atlasCoords = ghostBuilding.toTileMapAtlasCoords()
-				unit.player.tileMap.set_cell(2, cellI, 2, atlasCoords)
-				var cellData = unit.player.tileMap.get_cell_tile_data(2, cellI)
+				tileMap.set_cell(2, cellI, 2, atlasCoords)
+				var cellData = tileMap.get_cell_tile_data(2, cellI)
 				var blockPathfinding = cellData.get_custom_data("blockPathfinding")
-				unit.player.tileMap.updatePathfinder(cellI, blockPathfinding)
+				tileMap.updatePathfinder(cellI, blockPathfinding)
 				return true
 			
 			else:

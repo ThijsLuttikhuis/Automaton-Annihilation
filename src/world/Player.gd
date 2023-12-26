@@ -34,7 +34,7 @@ func updateInputConfiguration():
 		return
 	
 	for unit in selectedUnits:
-		if unit.is_queued_for_deletion():
+		if !unit || unit.is_queued_for_deletion():
 			continue
 		var pickupItems = unit.inputConfigurationList.find("Pickup Items")
 		if pickupItems && pickupItems.getIndex():

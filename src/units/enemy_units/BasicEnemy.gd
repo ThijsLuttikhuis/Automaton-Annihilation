@@ -2,7 +2,7 @@ class_name BasicEnemy extends FightUnit
 
 func _init():
 	moveSpeed = 150
-	healthPoints = 200
+	setMaxHealthPoints(200)
 	
 	selectedActionPriority = -7
 

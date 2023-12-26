@@ -24,7 +24,7 @@ func getBuildingFromCell(cellI):
 		return null
 	var buildingName = cellData.get_custom_data("buildingName")
 	for building in world.getBuildings(buildingName):
-		if local_to_map(building.position):
+		if cellI == local_to_map(building.position):
 			return building
 	
 	return null

@@ -25,6 +25,9 @@ func update(unit: Unit, dt):
 		
 		tileMap.set_cell(2, cellI)
 		tileMap.updatePathfinder(cellI, false)
+		unit.inventory.add(building.inventory)
+		building.inventory.remove(building.inventory)
+		unit.inventory.add(building.resourceCost)
 		building.demolish()
 		return true
 	

@@ -2,7 +2,7 @@ class_name EnemyFactory extends ConvertResourceBuilding
 
 var time: float = 0.0
 var timeBetweenSpawns: float = 5.0
-var firstSpawnTime: float = 20.0
+var firstSpawnTime: float = 10.0
 
 func _init():
 	maxHealthPoints = 9e9

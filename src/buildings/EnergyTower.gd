@@ -1,5 +1,7 @@
 class_name EnergyTower extends DefenseBuilding
 
+@onready var laserShoot: LaserShoot = $"LaserShoot"
+
 func _init():
 	energyCost = 100
 	resourceCost.add('Iron Plate', 4)
@@ -13,7 +15,12 @@ func _init():
 	idleAnimationFrame = 0
 	loadShotAnimationFrames = [1, 2, 3]
 	shootAndCooldownAnimationFrames = [4, 5, 6]
-	
+
+func shoot(targetEnemy: FightUnit):
+	laserShoot.shoot(self, targetEnemy)
+
 func getDisplayName():
 	return "Energy Tower"
 
+func getShootPosition():
+	return position + Vector2(0, -20)

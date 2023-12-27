@@ -12,6 +12,7 @@ var reloadTime: float = 0.0
 var damage: float
 var fireRate: float
 var fireRange: float
+var shootEnergyCost: float = 30
 
 var idleAnimationFrame: int = 0
 var loadShotAnimationFrames: Array[int] = [0]
@@ -35,12 +36,16 @@ func on_physics_process(dt):
 	if !targetEnemy || reloadTime > 0:
 		return
 	
+	if !player.world.hasEnergy(shootEnergyCost):
+		return
+	
+	player.world.removeEnergy(shootEnergyCost)
 	shoot(targetEnemy)
 	reloadTime = 1.0 / fireRate
 
 func updateAnimation():
 	var sprite = $"Sprite2D"
-	if !getTargetEnemy():
+	if !getTargetEnemy() && reloadTime < 0.02:
 		sprite.frame = idleAnimationFrame;
 		return
 	

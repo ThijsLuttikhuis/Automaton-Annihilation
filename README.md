@@ -1,25 +1,31 @@
 # Automaton-Annihilation
 
+## TODO: DEMO v2
+ - Second Enemy Type (ranged / faster / ...)
+ - Better Manage Enemy Waves + add info bar / panel / animation
+ - Wall
+ - Laser Tower
 
-## TODO:
-
-#### short term / fix bugs:
- - Assembler / Miner / etc: input configuration --> only on belts / chests / convert buildings / ...
- - Add RMB on Ore Patch -> mine resource
- - Add Enemy Unit
- - Add Factory -> Create Build Unit + Fight Unit
-
-
-
-#### long term:
+## TODO: long term
  - Make scene with root node script for Pickupitems, check neighbour squares, ... 
+ - General code refactor and modularization of the code
+ - Use more Composition rather than Inheritance
+ - Actions: should / can they be compositions in tree structure (not sure)
+ - Passives: should / can they be compositions in tree structure (probably)
+ - Add Factory -> Create Build Unit + Fight Unit
  - More offensive units
+ - Assembler / Miner / etc: input configuration --> only on belts / chests / convert buildings / ...
+ - Add RMB on Ore Patch -> mine resource?
  - Vision system / Radar / ...
  - Buildings bigger than 1x1
  - Airplanes
-
+ - Smart enemy units that avoid towers, break towers ...
 
 ## DONE:
+ - DEMO!!! :)
+ - Enemies spawn more the later the game
+ - Enemy Attacks
+ - Add Enemy Unit
  - Catch input UI panels and prioritize over normal script
  - E + Click -> queue remove building
  - Path Finding / Use TileMap to go around buildings

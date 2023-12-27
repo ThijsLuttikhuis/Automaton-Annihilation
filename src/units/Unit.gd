@@ -7,7 +7,9 @@ class_name Unit extends CollisionObject2D
 @onready var inputConfigurationList: InputConfigurationList = InputConfigurationList.new()
 
 var healthBar: HealthBar
-
+var maxHealthPoints: float = 100.0
+var healthPoints: float = maxHealthPoints
+var healthRegen: float = 0.0
 var timeAlive: float = 0.0
 
 var ghost = false
@@ -26,11 +28,9 @@ var buildRange: float
 
 var conveyorPushSpeed: Array[ConveyorBelt] = []
 
-@export var maxHealthPoints: float = 100.0
-@export var healthPoints: float = maxHealthPoints
 
-@export var viewRange: float = 100.0
-@export var radarRange: float = 100.0
+var viewRange: float = 100.0
+var radarRange: float = 100.0
 
 func _ready():
 	healthBar = $"Sprite2D/HealthBar"
@@ -45,6 +45,9 @@ func on_ready():
 	
 func _physics_process(dt):
 	timeAlive += dt
+	
+	if fmod(timeAlive, 1) < dt:
+		addHP(healthRegen)
 	
 	if actionQueue:
 		actionQueue.update(self, dt)

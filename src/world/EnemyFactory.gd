@@ -6,6 +6,7 @@ var firstSpawnTime: float = 10.0
 
 func _init():
 	setMaxHealthPoints(9e9)
+	duration = 0.1
 	
 	var inputRecipe = Inventory.new()
 	inputRecipe.add("Iron Gear", 1)
@@ -21,7 +22,7 @@ func on2_physics_process(dt):
 		return
 	
 	if fmod(time, timeBetweenSpawns) < dt:
-		inventory.add("Iron Gear", 1)
+		inventory.add("Iron Gear", ceil(timeAlive / 100)) #TODO: fix this hacky hack
 
 func removeHP(_value):
 	pass # this building is not supposed to die :)

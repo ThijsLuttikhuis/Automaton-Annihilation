@@ -72,7 +72,6 @@ func updatePathfinder(unit: Unit):
 	
 	unit.targetPosition = pathFound[pathIndex]
 	if unit.isNavigationFinished():
-		print(str(pathIndex) + ' / ' + str(pathFound.size()))
 		pathIndex += 1
 
 func getCellOccupied(tileMap: TileMap, cellPos: Vector2i):

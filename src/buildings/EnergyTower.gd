@@ -10,9 +10,9 @@ func _init():
 	healthPoints = 300
 	damage = 50
 	fireRate = 0.5
-	fireRange = 50
+	fireRange = 70
 	
-	idleAnimationFrame = 0
+	idleAnimationFrame = 3
 	loadShotAnimationFrames = [1, 2, 3]
 	shootAndCooldownAnimationFrames = [4, 5, 6]
 

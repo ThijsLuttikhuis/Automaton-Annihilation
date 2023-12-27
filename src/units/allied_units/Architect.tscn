@@ -28,6 +28,7 @@ y_sort_enabled = true
 motion_mode = 1
 wall_min_slide_angle = 0.0872665
 script = ExtResource("1_l6t7a")
+moveSpeed = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true

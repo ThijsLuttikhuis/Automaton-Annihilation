@@ -50,8 +50,9 @@ func onClickHardMode():
 	world.setDifficulty(2)
 	
 	var architect = world.get_node("Units/Architect")
-	architect.inventory.add('Iron Plate', 40)
+	architect.inventory.add('Iron Plate', 30)
 	architect.inventory.add('Stone', 10)
+	architect.inventory.add('Copper Plate', 5)
 	
 	queue_free()
 

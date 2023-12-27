@@ -4,6 +4,7 @@ func _init():
 	buildRange = 50
 	moveSpeed = 150
 	selectedActionPriority = 9
+	healthRegen = 0.5
 	
 	inventory.setNumberOfSlots(5)
 

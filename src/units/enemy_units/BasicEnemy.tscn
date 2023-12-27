@@ -14,7 +14,7 @@ shader_parameter/ghost_greyout = false
 shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c14tu"]
-radius = 7.0
+radius = 3.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s4q3x"]
 resource_local_to_scene = true
@@ -30,6 +30,7 @@ wall_min_slide_angle = 0.0872665
 script = ExtResource("1_s35by")
 moveSpeed = null
 maxHealthPoints = null
+healthPoints = null
 viewRange = null
 radarRange = null
 

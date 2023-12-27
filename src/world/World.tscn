@@ -677,6 +677,7 @@ y_sort_enabled = true
 
 [node name="Architect" parent="Units" instance=ExtResource("7_fysst")]
 position = Vector2(-683, -384)
+moveSpeed = null
 
 [node name="Player" parent="." instance=ExtResource("11_2c86j")]
 

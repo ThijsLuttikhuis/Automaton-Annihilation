@@ -1,12 +1,12 @@
 class_name MiningDrill extends Building
 
-var spaceOccupied: Array[int] = [0, 0, 0, 0, 0, 0, 0, 0]
+@onready var placeItemsComponent: PlaceItemsComponent = $"PlaceItemsComponent"
 
 func _init():
 	nonBuilableResourceTiles.push_back("Empty")
 	
 	energyCost = 500
-	resourceCost.add('Iron Plate', 12)
+	resourceCost.add('Iron Plate', 10)
 
 func on_ready():
 	var gatherResource = MineResourceAction.new(1)
@@ -14,11 +14,3 @@ func on_ready():
 
 func getDisplayName():
 	return "Mining Drill"
-
-func addUnit(unit, pos: int):
-	if unit is BuildUnit || unit is Item:
-		spaceOccupied[pos] += 1
-
-func removeUnit(unit, pos: int):
-	if unit is BuildUnit || unit is Item:
-		spaceOccupied[pos] -= 1

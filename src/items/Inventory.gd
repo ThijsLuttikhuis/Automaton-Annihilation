@@ -128,6 +128,9 @@ func getUniqueItemNames():
 func is_empty():
 	return resources.is_empty()
 
+func is_full():
+	return false # TODO
+
 func clearResources():
 	resources = Dictionary()
 

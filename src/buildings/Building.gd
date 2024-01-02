@@ -1,5 +1,12 @@
 class_name Building extends Unit
 
+enum ACCEPT_ITEMS_MODE {
+	NEVER, 
+	ONLY_WHEN_EMPTY, 
+	ONLY_WHEN_NOT_FULL, 
+	ALWAYS
+}
+
 const NAME_TO_TILEMAP_INDEX: Dictionary = {
 	"Empty": Vector2(0,0),
 	"Windmill": Vector2(1,0),
@@ -18,6 +25,8 @@ const NAME_TO_TILEMAP_INDEX: Dictionary = {
 var direction: float
 
 var nonBuilableResourceTiles: Array[String] = []
+
+var acceptItemsMode: ACCEPT_ITEMS_MODE = ACCEPT_ITEMS_MODE.NEVER
 
 func canBuildOnTile(cellI: Vector2i):
 	var tileMap = player.tileMap
@@ -40,3 +49,13 @@ func toTileMapAtlasCoords():
 
 static func NameToTileMapAtlasCoords(buildingName):
 	return NAME_TO_TILEMAP_INDEX[buildingName]
+
+func acceptsItems():
+	if acceptItemsMode == ACCEPT_ITEMS_MODE.ALWAYS:
+		return true
+	if acceptItemsMode == ACCEPT_ITEMS_MODE.NEVER:
+		return false
+	if acceptItemsMode == ACCEPT_ITEMS_MODE.ONLY_WHEN_EMPTY:
+		return inventory.is_empty()
+	if acceptItemsMode == ACCEPT_ITEMS_MODE.ONLY_WHEN_NOT_FULL:
+		return !inventory.is_full()

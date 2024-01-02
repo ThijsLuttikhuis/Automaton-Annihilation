@@ -1,0 +1,95 @@
+[gd_scene load_steps=10 format=3 uid="uid://roft8dwc14qu"]
+
+[ext_resource type="Script" path="res://src/buildings/components/PlaceItemsComponent.gd" id="1_u1061"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mjx8v"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_76s7q"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jpvex"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bbbkj"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t6cb7"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y1ro6"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ymxu7"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7fojo"]
+radius = 7.0
+
+[node name="PlaceItemsComponent" type="Node2D"]
+script = ExtResource("1_u1061")
+
+[node name="BottomRight" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomRight"]
+position = Vector2(16, 16)
+shape = SubResource("CircleShape2D_mjx8v")
+
+[node name="Right" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right"]
+position = Vector2(16, 0)
+shape = SubResource("CircleShape2D_76s7q")
+
+[node name="TopRight" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopRight"]
+position = Vector2(16, -16)
+shape = SubResource("CircleShape2D_jpvex")
+
+[node name="Top" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top"]
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_bbbkj")
+
+[node name="TopLeft" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopLeft"]
+position = Vector2(-16, -16)
+shape = SubResource("CircleShape2D_t6cb7")
+
+[node name="Left" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left"]
+position = Vector2(-16, 0)
+shape = SubResource("CircleShape2D_y1ro6")
+
+[node name="BottomLeft" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomLeft"]
+position = Vector2(-16, 16)
+shape = SubResource("CircleShape2D_ymxu7")
+
+[node name="Bottom" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom"]
+position = Vector2(0, 16)
+shape = SubResource("CircleShape2D_7fojo")
+
+[connection signal="body_entered" from="BottomRight" to="." method="addUnit" binds= [0]]
+[connection signal="body_exited" from="BottomRight" to="." method="removeUnit" binds= [0]]
+[connection signal="body_entered" from="Right" to="." method="addUnit" binds= [1]]
+[connection signal="body_exited" from="Right" to="." method="removeUnit" binds= [1]]
+[connection signal="body_entered" from="TopRight" to="." method="addUnit" binds= [2]]
+[connection signal="body_exited" from="TopRight" to="." method="removeUnit" binds= [2]]
+[connection signal="body_entered" from="Top" to="." method="addUnit" binds= [3]]
+[connection signal="body_exited" from="Top" to="." method="removeUnit" binds= [3]]
+[connection signal="body_entered" from="TopLeft" to="." method="addUnit" binds= [4]]
+[connection signal="body_exited" from="TopLeft" to="." method="removeUnit" binds= [4]]
+[connection signal="body_entered" from="Left" to="." method="addUnit" binds= [5]]
+[connection signal="body_exited" from="Left" to="." method="removeUnit" binds= [5]]
+[connection signal="body_entered" from="BottomLeft" to="." method="addUnit" binds= [6]]
+[connection signal="body_exited" from="BottomLeft" to="." method="removeUnit" binds= [6]]
+[connection signal="body_entered" from="Bottom" to="." method="addUnit" binds= [7]]
+[connection signal="body_exited" from="Bottom" to="." method="removeUnit" binds= [7]]

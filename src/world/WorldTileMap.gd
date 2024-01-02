@@ -78,7 +78,8 @@ func isImpossiblePath(unit: Unit, to: Vector2i):
 	if impossiblePaths.has(unit):
 		var unitPaths = impossiblePaths[unit]
 		if unitPaths.size() > MAX_IMPOSSIBLE_PATHS_STORED:
-			unitPaths.erase(impossiblePaths[0])
+			var keys = impossiblePaths.keys()
+			unitPaths.erase(keys[0])
 		
 		for path in unitPaths:
 			if path == to:

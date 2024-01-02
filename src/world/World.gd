@@ -2,6 +2,7 @@ class_name World extends Node2D
 
 @onready var gameOverScene = load("res://src/ui/GameOver.tscn")
 @onready var architect: Architect = $"Units/Architect"
+@onready var tileMap: WorldTileMap = $"WorldTileMap"
 
 var rng: RandomNumberGenerator
 
@@ -103,6 +104,20 @@ func getBuildings(buildingDisplayName: String = ""):
 			buildingsCorrectType.push_back(building)
 	
 	return buildingsCorrectType
+
+func getBuildingFromCellI(cellI: Vector2i) -> Building:
+	var tileData = tileMap.get_cell_tile_data(2, cellI)
+	if !tileData:
+		return null
+	
+	var buildingName = tileData.get_custom_data("buildingName")
+	var buildingsWithName = getBuildings(buildingName)
+	for building in buildingsWithName:
+		if tileMap.local_to_map(building.position) == cellI:
+			return building
+	
+	assert(false, 'Unknown building at cell location ' + str(cellI))
+	return null
 
 func getEnemyTarget():
 	# todo: set target building / architect / ...

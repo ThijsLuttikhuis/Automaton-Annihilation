@@ -1,8 +1,9 @@
-class_name MineResourceAction extends PlaceResourceAction
+class_name MineResourceAction extends UnitAction
 
 var efficiency: int = 1
 var time: float = 0.0
 var resourceGain: float = 0.0
+var resourceName: String
 
 var resourceRichness: float
 
@@ -23,9 +24,7 @@ func update(unit: Unit, dt):
 	resourceGain += resourceRichness * efficiency * dt
 	
 	if resourceGain > 1:
-		var placed = placeResource(unit, true) #check place on conveyor belts
-		if !placed:
-			placed = placeResource(unit, false) #check place on ground
+		var placed = unit.placeItemsComponent.placeResource(resourceName)
 		if placed: 
 			resourceGain = 0
 	else:

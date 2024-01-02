@@ -16,28 +16,31 @@ func _init(name_: String):
 		index = 1
 		useValuesAsName = false
 		inputMap = "ui_pickup_item"
-		
-	if name == "Rotation":
+	elif name == "Rotation":
 		values = ["Rot: Up", "Rot: Right", "Rot: Down", "Rot: Left"]
 		index = 0
 		useValuesAsName = true
 		inputMap = "ui_rotate_right"
 		inputMapPrev = "ui_rotate_left"
 		pressWhileBuilding = true
-	
-	if name == "Chest Pickup":
+	elif name == "Chest Pickup":
 		values = ["Needed Only", "Get Stack", "Get All"]
 		index = 1
 		useValuesAsName = false
 		inputMap = "ui_pickup_chest"
 		pressWhileBuilding = true
-	
-	if name == "Demolish":
+	elif name == "Demolish":
 		values = ["off", "on"]
 		index = 0
 		useValuesAsName = false
 		inputMap = "ui_demolish"
 		toggle = false
+	else:
+		print("UNKNOWN INPUT CONFIGURATION: ", name)
+		values = ["off", "on"]
+		index = 0
+		useValuesAsName = true
+		inputMap = "ui_"
 
 func next():
 	index = (index + 1) % values.size()

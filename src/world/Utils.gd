@@ -23,6 +23,8 @@ static func getResourceTexture(name):
 
 static func getKeyboardKeyFromInputMap(inputMapKey):
 	var keyIndex = InputMap.action_get_events(inputMapKey)
+	if keyIndex.is_empty():
+		return "Unknown Key"
 	var physicalKeyCode = DisplayServer.keyboard_get_keycode_from_physical(keyIndex[0].physical_keycode)
 	var keycode = OS.get_keycode_string(physicalKeyCode)
 	if keycode is String && !keycode.is_empty() && keycode.length() < 3:

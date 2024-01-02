@@ -1,5 +1,8 @@
 # Automaton-Annihilation
 
+## TODO: Refactor
+ - 
+
 ## TODO: DEMO v2
  - Second Enemy Type (ranged / faster / ...)
  - Better Manage Enemy Waves + add info bar / panel / animation

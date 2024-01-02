@@ -3,8 +3,8 @@ class_name Unit extends CollisionObject2D
 @onready var player: Player = $"/root/World/Player"
 @onready var actionQueue: ActionQueue = $"ActionQueue"
 
-@onready var buildActionList: BuildActionList = BuildActionList.new()
-@onready var inputConfigurationList: InputConfigurationList = InputConfigurationList.new()
+var buildActionList: BuildActionList = BuildActionList.new()
+var inputConfigurationList: InputConfigurationList = InputConfigurationList.new()
 
 var healthBar: HealthBar
 var maxHealthPoints: float = 100.0

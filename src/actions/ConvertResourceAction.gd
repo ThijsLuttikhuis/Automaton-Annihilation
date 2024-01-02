@@ -1,4 +1,4 @@
-class_name ConvertResourceAction extends PlaceResourceAction
+class_name ConvertResourceAction extends UnitAction
 
 const setWaitTicks: int = 2
 
@@ -41,15 +41,13 @@ func placeResourceProduct(unit: Unit, resourceProduct: Inventory):
 		waitTicks -= 1
 		return false
 	
-	resourceName = resourceProduct.getFirstItemName()
+	var resourceName = resourceProduct.getFirstItemName()
 	if !resourceName:
 		return true
 	
-	var placed = placeResource(unit, true, true) #check place on conveyor belts
-	if !placed:
-		placed = placeResource(unit, false) #check place on ground
+	var placed = unit.placeItemsComponent.placeResource(resourceName)
 	if placed: 
-		resourceProduct.removeTillEmpty(resourceName, 1)
+		resourceProduct.remove(resourceName, 1)
 		waitTicks = setWaitTicks
 		return resourceProduct.is_empty()
 

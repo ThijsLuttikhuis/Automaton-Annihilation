@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/buildings/Demolish.gd" id="1_gtt26"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_21e1v"]
-[ext_resource type="Texture2D" uid="uid://d16ugenf2kqtm" path="res://assets/general/demolish.png" id="3_58kkq"]
+[ext_resource type="Texture2D" path="res://assets/general/demolish.png" id="3_58kkq"]
 [ext_resource type="PackedScene" uid="uid://c4w8olce6k804" path="res://src/ui/HealthBar.tscn" id="4_ul683"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="5_p2tax"]
 

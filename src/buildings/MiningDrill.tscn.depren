@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c75tf6jafh3s0" path="res://assets/buildings/mining_drill.png" id="3_rgtpt"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="3_urnso"]
 [ext_resource type="PackedScene" uid="uid://c4w8olce6k804" path="res://src/ui/HealthBar.tscn" id="4_ljtn0"]
-[ext_resource type="PackedScene" uid="uid://roft8dwc14qu" path="res://src/buildings/components/PlaceItemsComponent.tscn" id="6_bn7wv"]
+[ext_resource type="PackedScene" uid="uid://roft8dwc14qu" path="res://src/buildings/components/PlaceItemsComponent.tscn" id="6_v0o0j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
 resource_local_to_scene = true
@@ -48,4 +48,4 @@ joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="PlaceItemsComponent" parent="." instance=ExtResource("6_bn7wv")]
+[node name="PlaceItemTestCollision" parent="." instance=ExtResource("6_v0o0j")]

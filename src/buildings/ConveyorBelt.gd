@@ -3,6 +3,7 @@ class_name ConveyorBelt extends Building
 var conveyorSpeed: float = 60
 
 func _init():
+	acceptItemsMode = ACCEPT_ITEMS_MODE.ALWAYS
 	hasRotation = true
 	energyCost = 50
 	resourceCost.add('Iron Plate', 2)

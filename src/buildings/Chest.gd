@@ -5,6 +5,7 @@ const timeToClose: float = 0.4
 var timeLeftOpen: float = 0.0
 
 func _init():
+	acceptItemsMode = ACCEPT_ITEMS_MODE.ONLY_WHEN_NOT_FULL
 	energyCost = 100
 	resourceCost.add('Iron Plate', 4)
 	inventory = Inventory.new(20)

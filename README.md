@@ -8,6 +8,9 @@
  - Better Manage Enemy Waves + add info bar / panel / animation
  - Wall
  - Laser Tower
+ - Conveyor Splitter
+ - Conveyor Tunnel
+ - Inserter
 
 ## TODO: long term
  - Make scene with root node script for Pickupitems, check neighbour squares, ... 

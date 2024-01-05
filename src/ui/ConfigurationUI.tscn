@@ -6,11 +6,11 @@
 font_size = 12
 
 [node name="ConfigurationUI" type="MarginContainer"]
-custom_minimum_size = Vector2(64, 32)
+custom_minimum_size = Vector2(80, 32)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1302.0
+offset_right = -1286.0
 offset_bottom = -731.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -25,6 +25,7 @@ mouse_filter = 1
 text = "Wait"
 label_settings = SubResource("LabelSettings_2cu3p")
 horizontal_alignment = 1
+clip_text = true
 
 [node name="SliderColor" type="ColorRect" parent="Configuration"]
 self_modulate = Color(0.501961, 1, 0, 1)

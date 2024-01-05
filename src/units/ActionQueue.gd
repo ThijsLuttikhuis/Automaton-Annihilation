@@ -37,6 +37,11 @@ func pop_front():
 	actions.pop_front()
 	line.remove_point(1)
 
+func get_front():
+	if actions.is_empty():
+		return null
+	return actions.front()
+
 func clear():
 	for action in actions:
 		action.clear()
@@ -68,7 +73,7 @@ func updateActions(unit, dt):
 	if actions.is_empty():
 		return
 	
-	var action = actions.front()
+	var action = get_front()
 	var completed = action.update(unit, dt)
 	if completed:
 		pop_front()

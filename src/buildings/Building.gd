@@ -50,7 +50,7 @@ func toTileMapAtlasCoords():
 static func NameToTileMapAtlasCoords(buildingName):
 	return NAME_TO_TILEMAP_INDEX[buildingName]
 
-func acceptsItems():
+func acceptsItem(_resourceName: String):
 	if acceptItemsMode == ACCEPT_ITEMS_MODE.ALWAYS:
 		return true
 	if acceptItemsMode == ACCEPT_ITEMS_MODE.NEVER:

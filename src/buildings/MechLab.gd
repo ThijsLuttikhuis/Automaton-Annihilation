@@ -1,6 +1,9 @@
 class_name MechLab extends ConvertResourceBuilding
 
+@onready var placeItemsComponent: PlaceItemsComponent = $"PlaceItemsComponent"
+
 func _init():
+	acceptItemsMode = ACCEPT_ITEMS_MODE.ONLY_WHEN_NOT_FULL
 	energyCost = 500
 	resourceCost.add('Stone', 5)
 	resourceCost.add('Iron Plate', 5)

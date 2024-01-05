@@ -8,6 +8,9 @@ var recipe: Recipe
 var spaceOccupied: Array[int] = [0, 0, 0, 0, 0, 0, 0, 0]
 var pickupArea: Array[Item] = []
 
+func _init():
+	acceptItemsMode = ACCEPT_ITEMS_MODE.ONLY_WHEN_NOT_FULL
+
 func on_physics_process(dt):
 	if actionQueue.actionsEmpty():
 		$"Sprite2D".set_frame(0)
@@ -31,7 +34,7 @@ func pickupUnit(unit):
 	if ghost:
 		return
 	if unit is Item:
-		if isConvertable(unit):
+		if acceptsItem(unit.resourceName):
 			var problemAddingItem = inventory.addTillFull(unit.resourceName, 1)
 			if problemAddingItem.resources.is_empty():
 				tryConvertSingleItem(unit)
@@ -94,3 +97,17 @@ func getProductFromResources(resources):
 		return recipe
 	
 	return null
+
+func acceptsItem(resourceName: String):
+	if acceptItemsMode == ACCEPT_ITEMS_MODE.NEVER:
+		return false
+	
+	if !isConvertable(resourceName):
+		return false
+	
+	if acceptItemsMode == ACCEPT_ITEMS_MODE.ALWAYS:
+		return true
+	if acceptItemsMode == ACCEPT_ITEMS_MODE.ONLY_WHEN_EMPTY:
+		return inventory.is_empty()
+	if acceptItemsMode == ACCEPT_ITEMS_MODE.ONLY_WHEN_NOT_FULL:
+		return !inventory.is_full()

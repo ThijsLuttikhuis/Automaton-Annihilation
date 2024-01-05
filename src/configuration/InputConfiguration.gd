@@ -35,6 +35,30 @@ func _init(name_: String):
 		useValuesAsName = false
 		inputMap = "ui_demolish"
 		toggle = false
+	elif name == "Place Items":
+		values = ["disabled", "custom", "anywhere"]
+		pressWhileBuilding = true
+		index = 1
+		useValuesAsName = false
+		inputMap = "ui_place_item_mode"
+	elif name == "Chest Prio":
+		values = ["disabled", "0", "1", "2"]
+		pressWhileBuilding = true
+		index = 3
+		useValuesAsName = false
+		inputMap = "ui_place_item_chest"
+	elif name == "Conveyor Prio":
+		values = ["disabled", "0", "1", "2"]
+		pressWhileBuilding = true
+		index = 2
+		useValuesAsName = false
+		inputMap = "ui_place_item_conveyor"
+	elif name == "Other Prio":
+		values = ["disabled", "0", "1", "2"]
+		pressWhileBuilding = true
+		index = 1
+		useValuesAsName = false
+		inputMap = "ui_place_item_other"
 	else:
 		print("UNKNOWN INPUT CONFIGURATION: ", name)
 		values = ["off", "on"]

@@ -29,18 +29,11 @@ func updateInputConfiguration():
 	var isBuilding = (getBuildmenuTab() != 0)
 	mainUnit.inputConfigurationList.update(selectedUnits, isBuilding)
 	
-	for unit in selectedUnits:
-		if !unit || unit.is_queued_for_deletion():
-			continue
-		var pickupItems = unit.inputConfigurationList.find("Pickup Items")
-		if pickupItems && pickupItems.getIndex():
-			unit.pickupItemsInArea()
-	
 	if isBuilding:
 		return
 		
 	if getDemolishButton():
-		buildmenuBuilding = preload("res://src/buildings/Demolish.tscn") 
+		buildmenuBuilding = preload("res://src/units/buildings/Demolish.tscn") 
 	
 func updateUIBuildmenu():
 	if !getMainSelectedUnit():

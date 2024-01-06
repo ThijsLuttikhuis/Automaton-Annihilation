@@ -71,7 +71,7 @@ func placeResource(resourceName: String) -> bool:
 			
 			if placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.CUSTOM:
 				var canBuild = false
-				if neighborBuilding && neighborBuilding.acceptsItem(resourceName):
+				if neighborBuilding && neighborBuilding.pickupItemsComponent.acceptsItem(resourceName):
 					canBuild = canBuild || (placeItemsMode.chestPrio == prioI && neighborBuilding.getDisplayName() == "Chest")
 					canBuild = canBuild || (placeItemsMode.conveyorPrio == prioI && neighborBuilding.getDisplayName() == "Conveyor Belt")
 					canBuild = canBuild || (placeItemsMode.otherPrio == prioI && neighborBuilding.getDisplayName() != "Chest" && neighborBuilding.getDisplayName() != "Conveyor Belt")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://roft8dwc14qu"]
 
-[ext_resource type="Script" path="res://src/buildings/components/PlaceItemsComponent.gd" id="1_u1061"]
+[ext_resource type="Script" path="res://src/units/buildings/components/PlaceItemsComponent.gd" id="1_iivkx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mjx8v"]
 radius = 7.0
@@ -27,7 +27,7 @@ radius = 7.0
 radius = 7.0
 
 [node name="PlaceItemsComponent" type="Node2D"]
-script = ExtResource("1_u1061")
+script = ExtResource("1_iivkx")
 
 [node name="BottomRight" type="Area2D" parent="."]
 

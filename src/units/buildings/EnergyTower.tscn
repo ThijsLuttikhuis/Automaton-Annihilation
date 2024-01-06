@@ -1,11 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://dtl82lv5vcbln"]
 
-[ext_resource type="Script" path="res://src/buildings/EnergyTower.gd" id="1_u6u4j"]
+[ext_resource type="Script" path="res://src/units/buildings/EnergyTower.gd" id="1_u6u4j"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_vdkei"]
 [ext_resource type="Texture2D" uid="uid://ceqr7ga4wgcx7" path="res://assets/buildings/energy_tower.png" id="3_g5io4"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_1eges"]
 [ext_resource type="PackedScene" uid="uid://c4w8olce6k804" path="res://src/ui/HealthBar.tscn" id="4_2q4th"]
-[ext_resource type="Script" path="res://src/buildings/components/LaserShoot.gd" id="6_5j8c8"]
+[ext_resource type="Script" path="res://src/units/buildings/components/LaserShoot.gd" id="6_5j8c8"]
+
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
 resource_local_to_scene = true

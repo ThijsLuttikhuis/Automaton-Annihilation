@@ -12,8 +12,8 @@ var toggle: bool = true
 func _init(name_: String):
 	name = name_
 	if name == "Pickup Items":
-		values = ["off", "on"]
-		index = 1
+		values = ["disabled", "only when empty", "only when not full", "always"]
+		index = 2
 		useValuesAsName = false
 		inputMap = "ui_pickup_item"
 	elif name == "Rotation":

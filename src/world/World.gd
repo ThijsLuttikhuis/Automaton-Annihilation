@@ -105,11 +105,10 @@ func getBuildings(buildingDisplayName: String = ""):
 	
 	return buildingsCorrectType
 
-
-func getBuildingFromPosition(position: Vector2) -> Building:
-	var cellI = tileMap.local_to_map(position)
+func getBuildingFromPosition(pos: Vector2) -> Building:
+	var cellI = tileMap.local_to_map(pos)
 	return getBuildingFromCellI(cellI)
-	
+
 func getBuildingFromCellI(cellI: Vector2i) -> Building:
 	var tileData = tileMap.get_cell_tile_data(2, cellI)
 	if !tileData:

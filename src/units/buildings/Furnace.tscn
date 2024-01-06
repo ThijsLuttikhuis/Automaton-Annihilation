@@ -1,15 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://k2v17fp0y7el"]
+[gd_scene load_steps=10 format=3 uid="uid://b4e5br67w1b2n"]
 
-[ext_resource type="Script" path="res://src/buildings/MechLab.gd" id="1_set0y"]
-[ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_pxbmu"]
-[ext_resource type="Texture2D" uid="uid://b8hc1nxcsk2uo" path="res://assets/buildings/mech_lab.png" id="3_1dsfg"]
-[ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_1v3av"]
-[ext_resource type="PackedScene" uid="uid://c4w8olce6k804" path="res://src/ui/HealthBar.tscn" id="4_3025u"]
-[ext_resource type="PackedScene" uid="uid://roft8dwc14qu" path="res://src/buildings/components/PlaceItemsComponent.tscn" id="6_hffp7"]
+[ext_resource type="Script" path="res://src/units/buildings/Furnace.gd" id="1_mmnib"]
+[ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_td6nu"]
+[ext_resource type="Texture2D" uid="uid://bdbrf8ec23me2" path="res://assets/buildings/furnace.png" id="3_kv5al"]
+[ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_unl0t"]
+[ext_resource type="PackedScene" uid="uid://c4w8olce6k804" path="res://src/ui/HealthBar.tscn" id="4_xukxc"]
+[ext_resource type="PackedScene" uid="uid://roft8dwc14qu" path="res://src/units/buildings/components/PlaceItemsComponent.tscn" id="6_3bnvr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
 resource_local_to_scene = true
-shader = ExtResource("2_pxbmu")
+shader = ExtResource("2_td6nu")
 shader_parameter/outline_width = 0.0
 shader_parameter/ghost_greyout = false
 shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
@@ -21,17 +21,17 @@ radius = 6.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_d4lfq"]
 radius = 7.0
 
-[node name="MechLab" type="StaticBody2D"]
+[node name="Furnace" type="StaticBody2D"]
 y_sort_enabled = true
-script = ExtResource("1_set0y")
+script = ExtResource("1_mmnib")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_n7ds3")
 position = Vector2(0, -8)
-texture = ExtResource("3_1dsfg")
-hframes = 7
+texture = ExtResource("3_kv5al")
+hframes = 5
 
-[node name="HealthBar" parent="Sprite2D" instance=ExtResource("4_3025u")]
+[node name="HealthBar" parent="Sprite2D" instance=ExtResource("4_xukxc")]
 offset_left = -16.0
 offset_top = -20.0
 offset_right = 0.0
@@ -41,7 +41,7 @@ offset_bottom = -16.0
 shape = SubResource("CircleShape2D_dcdk1")
 
 [node name="ActionQueue" type="Node" parent="."]
-script = ExtResource("4_1v3av")
+script = ExtResource("4_unl0t")
 
 [node name="ActionPath" type="Line2D" parent="ActionQueue"]
 visible = false
@@ -56,6 +56,6 @@ end_cap_mode = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollisionIn"]
 shape = SubResource("CircleShape2D_d4lfq")
 
-[node name="PlaceItemsComponent" parent="." instance=ExtResource("6_hffp7")]
+[node name="PlaceItemsComponent" parent="." instance=ExtResource("6_3bnvr")]
 
 [connection signal="body_entered" from="ItemTestCollisionIn" to="." method="pickupUnit"]

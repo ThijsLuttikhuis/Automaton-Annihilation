@@ -15,7 +15,6 @@ func _init(recipe_: Recipe, duration_):
 	duration = duration_
 	
 	recipe = Recipe.deepCopy(recipe_)
-	
 
 func update(unit: Unit, dt):
 	if actionPosition == Vector2(9e9, 9e9):

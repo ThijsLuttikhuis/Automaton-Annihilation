@@ -46,7 +46,7 @@ func on_ready():
 func _physics_process(dt):
 	timeAlive += dt
 	
-	if fmod(timeAlive, 1) < dt:
+	if fmod(timeAlive, 1.0) < dt:
 		addHP(healthRegen)
 	
 	if actionQueue:

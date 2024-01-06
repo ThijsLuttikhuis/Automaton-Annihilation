@@ -49,13 +49,3 @@ func toTileMapAtlasCoords():
 
 static func NameToTileMapAtlasCoords(buildingName):
 	return NAME_TO_TILEMAP_INDEX[buildingName]
-
-func acceptsItem(_resourceName: String):
-	if acceptItemsMode == ACCEPT_ITEMS_MODE.ALWAYS:
-		return true
-	if acceptItemsMode == ACCEPT_ITEMS_MODE.NEVER:
-		return false
-	if acceptItemsMode == ACCEPT_ITEMS_MODE.ONLY_WHEN_EMPTY:
-		return inventory.is_empty()
-	if acceptItemsMode == ACCEPT_ITEMS_MODE.ONLY_WHEN_NOT_FULL:
-		return !inventory.is_full()

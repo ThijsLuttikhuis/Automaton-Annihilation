@@ -1,10 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://bqbmulr42mrih"]
 
-[ext_resource type="Script" path="res://src/buildings/Chest.gd" id="1_odm5f"]
+[ext_resource type="Script" path="res://src/units/buildings/Chest.gd" id="1_odm5f"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_awv76"]
 [ext_resource type="Texture2D" uid="uid://dh8kxcrg6mcph" path="res://assets/buildings/chest.png" id="3_mhsof"]
 [ext_resource type="PackedScene" uid="uid://c4w8olce6k804" path="res://src/ui/HealthBar.tscn" id="4_ki5hq"]
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_mr2j8"]
+[ext_resource type="PackedScene" uid="uid://dsk6vxkj8cfo7" path="res://src/units/buildings/components/PickupItemsComponent.tscn" id="6_fuvgb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
 resource_local_to_scene = true
@@ -16,9 +17,6 @@ shader_parameter/outline_color = Color(0, 0.25098, 1, 0.501961)
 [sub_resource type="CircleShape2D" id="CircleShape2D_dcdk1"]
 resource_local_to_scene = true
 radius = 6.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_mjx8v"]
-radius = 7.0
 
 [node name="Chest" type="StaticBody2D"]
 y_sort_enabled = true
@@ -35,6 +33,7 @@ offset_left = -16.0
 offset_top = -8.0
 offset_right = 0.0
 offset_bottom = -4.0
+metadata/_edit_use_anchors_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_dcdk1")
@@ -50,9 +49,4 @@ joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="ItemTestCollision" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemTestCollision"]
-shape = SubResource("CircleShape2D_mjx8v")
-
-[connection signal="body_entered" from="ItemTestCollision" to="." method="pickupUnit"]
+[node name="PickupItemsComponent" parent="." instance=ExtResource("6_fuvgb")]

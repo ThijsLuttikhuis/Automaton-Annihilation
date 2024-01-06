@@ -1,19 +1,19 @@
 class_name Chest extends Building
 
-const timeToClose: float = 0.4
+@onready var pickupItemsComponent: PickupItemsComponent = $"PickupItemsComponent"
 
+const timeToClose: float = 0.4
 var timeLeftOpen: float = 0.0
 
 func _init():
-	acceptItemsMode = ACCEPT_ITEMS_MODE.ONLY_WHEN_NOT_FULL
 	energyCost = 100
 	resourceCost.add('Iron Plate', 4)
 	inventory = Inventory.new(20)
 	
 	selectedActionPriority = 3
-	
+
 func on_ready():
-	pass
+	pickupItemsComponent.onPickupItemFunc = openChest
 
 func on_physics_process(dt):
 	if timeLeftOpen > 0.0:
@@ -21,18 +21,9 @@ func on_physics_process(dt):
 		if timeLeftOpen <= 0.0:
 			$"Sprite2D".set_frame(0)
 
-func getDisplayName():
-	return "Chest"
-
-func pickupUnit(unit):
-	if ghost:
-		return
-	if unit is Item:
-		var problemAddingItem = inventory.addTillFull(unit.resourceName, 1)
-		if problemAddingItem.resources.is_empty():
-			unit.queue_free()
-			openChest()
-
 func openChest():
 	timeLeftOpen = timeToClose
 	$"Sprite2D".set_frame(1)
+
+func getDisplayName():
+	return "Chest"

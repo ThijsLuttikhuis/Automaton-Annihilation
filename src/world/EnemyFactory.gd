@@ -1,5 +1,7 @@
 class_name EnemyFactory extends ConvertResourceBuilding
 
+# TODO: this should not be convertresourcebuilding but it's own class
+
 var time: float = 0.0
 var timeBetweenSpawns: float = 5.0
 var firstSpawnTime: float = 10.0
@@ -13,7 +15,7 @@ func _init():
 	var product = load("res://src/units/enemy_units/BasicEnemy.tscn")
 	recipe = Recipe.new(inputRecipe, product)
 
-func on2_physics_process(dt):
+func on_physics_process(dt):
 	if player.world.getDifficulty() == 0:
 		return
 	

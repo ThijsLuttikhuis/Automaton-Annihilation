@@ -18,14 +18,16 @@ var idleAnimationFrame: int = 0
 var loadShotAnimationFrames: Array[int] = [0]
 var shootAndCooldownAnimationFrames: Array[int] = [0]
 
-func on_ready():
+func _ready():
+	super._ready()
 	var collisionShape = $"EnemyTestCollision/CollisionShape2D"
 	collisionShape.shape.radius = fireRange
 
-func on_physics_process(dt):
+func _physics_process(dt):
 	if isGhost():
 		return
-		
+	
+	super._physics_process(dt)
 	time += dt
 	reloadTime -= dt
 	reloadTime = max(reloadTime, 0.0)

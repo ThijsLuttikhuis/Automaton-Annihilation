@@ -1,7 +1,11 @@
 # Automaton-Annihilation
 
-## TODO: Refactor
- - 
+## TODO: Improvement Items
+ - Mech Lab: move unit to empty spot
+ - Multi Unit apply input button: bool for each config: apply to all selected?
+ - Pathfinding on separate Thread
+ - Wider input config UI
+ - Sometimes the architect gets freed when demolishing a building in self position
 
 ## TODO: DEMO v2
  - Second Enemy Type (ranged / faster / ...)

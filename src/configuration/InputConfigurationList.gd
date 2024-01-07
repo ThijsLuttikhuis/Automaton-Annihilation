@@ -54,6 +54,15 @@ func find(name) -> InputConfiguration:
 	
 	return null
 
+func erase(name):
+	var config = find(name)
+	if !config: 
+		return
+	
+	inputBuild.erase(config)
+	inputCombat.erase(config)
+	inputGeneral.erase(config)
+
 func pressKey(action: String, value: int = -1) -> int:
 	assert(action.begins_with('ui'), 'action should be the name of an Input action')
 	

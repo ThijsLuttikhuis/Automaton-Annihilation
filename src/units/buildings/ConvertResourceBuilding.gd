@@ -1,5 +1,7 @@
 class_name ConvertResourceBuilding extends Building
 
+@onready var pickupItemsComponent: PickupItemsComponent = $"PickupItemsComponent"
+
 var duration: float = 1.0
 
 var singleResourceRecipes: Dictionary
@@ -8,19 +10,17 @@ var recipe: Recipe
 var spaceOccupied: Array[int] = [0, 0, 0, 0, 0, 0, 0, 0]
 var pickupArea: Array[Item] = []
 
-func _init():
-	acceptItemsMode = ACCEPT_ITEMS_MODE.ONLY_WHEN_NOT_FULL
+func _ready():
+	pickupItemsComponent.onPickupItemFunc = tryConvertSingleItem
+	super._ready()
 
-func on_physics_process(dt):
+func _physics_process(dt):
 	if actionQueue.actionsEmpty():
 		$"Sprite2D".set_frame(0)
 		if !inventory.is_empty():
 			tryConvertMultiRecipe()
 	
-	on2_physics_process(dt)
-
-func on2_physics_process(_dt):
-	pass # can be overwritten
+	super._physics_process(dt)
 
 func addUnit(unit, pos: int):
 	if unit is BuildUnit || unit is Item:
@@ -29,18 +29,6 @@ func addUnit(unit, pos: int):
 func removeUnit(unit, pos: int):
 	if unit is BuildUnit || unit is Item:
 		spaceOccupied[pos] -= 1
-
-func pickupUnit(unit):
-	if ghost:
-		return
-	if unit is Item:
-		if acceptsItem(unit.resourceName):
-			var problemAddingItem = inventory.addTillFull(unit.resourceName, 1)
-			if problemAddingItem.resources.is_empty():
-				tryConvertSingleItem(unit)
-				unit.queue_free()
-		else:
-			pickupArea.push_back(unit)
 
 func isConvertable(itemName):
 	if itemName is Item:
@@ -72,6 +60,9 @@ func tryConvertSingleItem(item: Item):
 	return false
 
 func tryConvertMultiRecipe():
+	if !recipe || recipe.is_empty():
+		return
+	
 	if inventory.hasResources(recipe.inputRecipe):
 		var action = ConvertResourceAction.new(recipe, duration)
 		actionQueue.push_back([action])
@@ -98,16 +89,12 @@ func getProductFromResources(resources):
 	
 	return null
 
-func acceptsItem(resourceName: String):
-	if acceptItemsMode == ACCEPT_ITEMS_MODE.NEVER:
-		return false
+func updateAcceptedItems() -> Array[String]:
+	var acceptedItems: Array[String] = []
+	if recipe:
+		acceptedItems = recipe.inputRecipe.getUniqueItemNames()
 	
-	if !isConvertable(resourceName):
-		return false
+	for itemName in singleResourceRecipes.keys():
+		acceptedItems.push_back(itemName)
 	
-	if acceptItemsMode == ACCEPT_ITEMS_MODE.ALWAYS:
-		return true
-	if acceptItemsMode == ACCEPT_ITEMS_MODE.ONLY_WHEN_EMPTY:
-		return inventory.is_empty()
-	if acceptItemsMode == ACCEPT_ITEMS_MODE.ONLY_WHEN_NOT_FULL:
-		return !inventory.is_full()
+	return acceptedItems

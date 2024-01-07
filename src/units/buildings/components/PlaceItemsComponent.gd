@@ -15,12 +15,11 @@ class PlaceItemsMode:
  
 var placeItemsMode := PlaceItemsMode.new()
 
-var building: Building
+@onready var building: Building = $".."
 
 var spaceOccupied := [0, 0, 0, 0, 0, 0, 0, 0]
 
 func _ready():
-	building = $".."
 	var inputBuild = building.inputConfigurationList.inputBuild
 	inputBuild.push_back(InputConfiguration.new("Place Items"))
 	inputBuild.push_back(InputConfiguration.new("Chest Prio"))
@@ -71,7 +70,7 @@ func placeResource(resourceName: String) -> bool:
 			
 			if placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.CUSTOM:
 				var canBuild = false
-				if neighborBuilding && neighborBuilding.pickupItemsComponent.acceptsItem(resourceName):
+				if neighborBuilding && neighborBuilding.has_node("PickupItemsComponent") && neighborBuilding.pickupItemsComponent.acceptsItem(resourceName):
 					canBuild = canBuild || (placeItemsMode.chestPrio == prioI && neighborBuilding.getDisplayName() == "Chest")
 					canBuild = canBuild || (placeItemsMode.conveyorPrio == prioI && neighborBuilding.getDisplayName() == "Conveyor Belt")
 					canBuild = canBuild || (placeItemsMode.otherPrio == prioI && neighborBuilding.getDisplayName() != "Chest" && neighborBuilding.getDisplayName() != "Conveyor Belt")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b4e5br67w1b2n"]
+[gd_scene load_steps=11 format=3 uid="uid://b4e5br67w1b2n"]
 
 [ext_resource type="Script" path="res://src/units/buildings/Furnace.gd" id="1_mmnib"]
 [ext_resource type="Shader" path="res://assets/shaders/aura.gdshader" id="2_td6nu"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_unl0t"]
 [ext_resource type="PackedScene" uid="uid://c4w8olce6k804" path="res://src/ui/HealthBar.tscn" id="4_xukxc"]
 [ext_resource type="PackedScene" uid="uid://roft8dwc14qu" path="res://src/units/buildings/components/PlaceItemsComponent.tscn" id="6_3bnvr"]
+[ext_resource type="PackedScene" uid="uid://dsk6vxkj8cfo7" path="res://src/units/buildings/components/PickupItemsComponent.tscn" id="7_k0bpm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
 resource_local_to_scene = true
@@ -57,5 +58,7 @@ end_cap_mode = 2
 shape = SubResource("CircleShape2D_d4lfq")
 
 [node name="PlaceItemsComponent" parent="." instance=ExtResource("6_3bnvr")]
+
+[node name="PickupItemsComponent" parent="." instance=ExtResource("7_k0bpm")]
 
 [connection signal="body_entered" from="ItemTestCollisionIn" to="." method="pickupUnit"]

@@ -36,6 +36,5 @@ static func getKeyboardKeyFromInputMap(inputMapKey):
 			return "]"
 		if keycode == "BraceLeft":
 			return "["
-	print(keycode)
-	print(keyIndex[0].keycode)
+
 	return "Unknown Key"

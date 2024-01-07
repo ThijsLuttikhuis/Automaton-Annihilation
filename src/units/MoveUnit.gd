@@ -17,18 +17,16 @@ var timeHardStuck = 0.0
 @export var moveSpeed: float
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func on_physics_process(dt):
+func _physics_process(dt):
+	super._physics_process(dt)
+	
 	if isNavigationFinished():
 		targetPosition = Vector2(9e9, 9e9)
 	else:
 		self.velocity = (targetPosition - position).normalized() * moveSpeed
 	
-	on2_physics_process(dt)
-
+	on_physics_process(dt)
 	move_and_slide_with_conveyors()
-	
-func on2_physics_process(_dt):
-	pass
 
 func move_and_slide_with_conveyors(dt: float = 0.01):
 	var characterBody = self

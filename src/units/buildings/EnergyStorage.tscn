@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://src/units/ActionQueue.gd" id="4_dm1f3"]
 [ext_resource type="PackedScene" uid="uid://c4w8olce6k804" path="res://src/ui/HealthBar.tscn" id="4_tpkxx"]
 
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n7ds3"]
 resource_local_to_scene = true
 shader = ExtResource("2_1ghlp")

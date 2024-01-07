@@ -23,6 +23,9 @@ static func deepCopy(recipe_: Recipe):
 	
 	return Recipe.new(recipeCopy, productCopy)
 
+func is_empty():
+	return inputRecipe.is_empty()
+
 func getDisplayName():
 	if displayName.is_empty():
 		if product is Inventory:

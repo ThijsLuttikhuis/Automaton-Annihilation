@@ -21,9 +21,14 @@ func on_physics_process(dt):
 		if timeLeftOpen <= 0.0:
 			$"Sprite2D".set_frame(0)
 
-func openChest():
+func openChest(_item: Item = null):
 	timeLeftOpen = timeToClose
 	$"Sprite2D".set_frame(1)
 
 func getDisplayName():
 	return "Chest"
+
+func updateAcceptedItems() -> Array[String]:
+	if isGhost():
+		return ["Empty"]
+	return []

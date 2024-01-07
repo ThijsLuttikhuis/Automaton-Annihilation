@@ -120,10 +120,12 @@ func getFirstItemName():
 	else:
 		return resources.keys()[0]
 
-func getUniqueItemNames():
+func getUniqueItemNames() -> Array[String]:
 	var items: Array[String] = []
 	for key in resources.keys():
 		items.push_back(key)
+	
+	return items
 
 func is_empty():
 	return resources.is_empty()

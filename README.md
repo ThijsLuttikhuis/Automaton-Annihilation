@@ -6,6 +6,7 @@
  - Pathfinding on separate Thread
  - Wider input config UI
  - Sometimes the architect gets freed when demolishing a building in self position
+ - Make UI Mobile friendly
 
 ## TODO: DEMO v2
  - Second Enemy Type (ranged / faster / ...)

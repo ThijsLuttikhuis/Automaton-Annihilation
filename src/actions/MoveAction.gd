@@ -42,7 +42,7 @@ func isPathClear(unit):
 	var tileMap: WorldTileMap = unit.player.tileMap
 
 	var targetCellPos = tileMap.local_to_map(actionPosition)
-	if tileMap.isPointSolid(targetCellPos):
+	if tileMap.pathfinder.isPointSolid(targetCellPos):
 		return unit.actionQueue.lineTestCollisionCount < 3
 	else:
 		return unit.actionQueue.lineTestCollisionCount < 2
@@ -55,9 +55,9 @@ func updatePathfinder(unit: Unit):
 	
 	if !pathFound || \
 		tileMap.local_to_map(pathFound[-1]) != targetCellPos || \
-		tileMap.getLastUpdateTime() >= pathUpdateTime:
+		tileMap.pathfinder.getLastUpdateTime() >= pathUpdateTime:
 		
-		pathFound = tileMap.getPath(unit, unitCellPos, targetCellPos)
+		pathFound = tileMap.pathfinder.getPath(unit, unitCellPos, targetCellPos)
 		pathIndex = 1
 		pathUpdateTime = unit.player.world.getTime()
 	

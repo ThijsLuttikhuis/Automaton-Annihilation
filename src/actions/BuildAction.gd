@@ -43,7 +43,7 @@ func update(unit: Unit, dt):
 				tileMap.set_cell(2, cellI, 2, atlasCoords)
 				var cellData = tileMap.get_cell_tile_data(2, cellI)
 				var blockPathfinding = cellData.get_custom_data("blockPathfinding")
-				tileMap.updatePathfinder(cellI, blockPathfinding)
+				tileMap.pathfinder.updatePathfinder(cellI, blockPathfinding)
 				return true
 			
 			else:

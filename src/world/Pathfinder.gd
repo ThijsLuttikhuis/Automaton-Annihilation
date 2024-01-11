@@ -15,7 +15,7 @@ class PathfindingThread:
 		thread = Thread.new()
 		thread.start(threadFunction)
 		pathFinder = pathFinder_
-		
+	
 	func threadFunction():
 		while true:
 			semaphore.wait()
@@ -98,30 +98,36 @@ func updateAStarThreadFunction():
 		var tasks = pathfinderTasks
 		pathfinderTasks = []
 		updateAstarMutex.unlock()
-		mutex.lock()
+		
+		print("Update AStar Thread: " + str(tasks.size()) + " tasks todo")
+		
 		for task in tasks:
 			for thread in pathfindingThreads:
 				if !thread.isBusy():
+					mutex.lock()
 					thread.setTask(task)
+					mutex.unlock()
 					thread.semaphore.post()
 
-		mutex.unlock()
-
 func addPathfinderTask(task: Callable):
+	print("Adding AStar Thread: " + task.get_method() + " task")
 	updateAstarMutex.lock()
+	var postSemaphore = pathfinderTasks.is_empty()
 	pathfinderTasks.push_back(task)
 	updateAstarMutex.unlock()
-	updateAstarSemaphore.post()
+	if postSemaphore:
+		updateAstarSemaphore.post()
 
 func updatePathfinderThread(cellI: Vector2i, solid: bool):
 	mutex.lock()
 	updateAstarMutex.lock()
+	
 	aStarGrid.set_point_solid(cellI, solid)
 	if aStarGrid.is_dirty():
 		aStarGrid.update()
 		aStarUpdateTime = world.getTime()
 		impossiblePaths = {}
-		
+	
 	updateAstarMutex.unlock()
 	mutex.unlock()
 
@@ -140,7 +146,7 @@ func addImpossiblePath(unit: Unit, to: Vector2i):
 func addValidPath(unit: Unit, to: Vector2i, path: PackedVector2Array = []):
 	updateAstarMutex.lock()
 	if path.is_empty():
-		validPaths[unit] = [to]
+		validPaths[unit] = [Vector2(to)]
 	else:
 		validPaths[unit] = path
 	updateAstarMutex.unlock()
@@ -172,18 +178,26 @@ func getPath(unit: Unit, from: Vector2i, to: Vector2i):
 				to = point
 				newPointFound = true
 				break
-		if ~newPointFound:
+		if newPointFound:
+			if isValidPath(unit, to):
+				return getValidPath(unit)
+		else:
 			addImpossiblePath(unit, to)
 			return []
+		
 	
 	addValidPath(unit, to)
-	var callFunction = Callable(self, "getPointPathThreadFunction").bind(unit, from, to)
+	var callFunction = Callable(self, "getPointPathThread").bind(unit, from, to)
 	addPathfinderTask(callFunction)
 	return []
 
-func getPointPathThreadFunction(unit: Unit, from: Vector2i, to: Vector2i):
+func getPointPathThread(unit: Unit, from: Vector2i, to: Vector2i) -> PackedVector2Array:
+	if isImpossiblePath(unit, to):
+		return []
 	mutex.lock()
+	var time := Time.get_ticks_usec()
 	var pathFound = aStarGrid.get_point_path(from, to)
+	print("thread time: " + str(-time + Time.get_ticks_usec()))
 	mutex.unlock()
 	if pathFound.is_empty():
 		addImpossiblePath(unit, to)

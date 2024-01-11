@@ -19,12 +19,12 @@ func update(unit: Unit, dt):
 		unit.targetPosition = Vector2(9e9, 9e9)
 		
 		var cellI = tileMap.local_to_map(actionPosition)
-		var building = tileMap.getBuildingFromCell(cellI)
+		var building = tileMap.world.getBuildingFromCellI(cellI)
 		if !building:
 			return true
 		
 		tileMap.set_cell(2, cellI)
-		tileMap.updatePathfinder(cellI, false)
+		tileMap.pathfinder.updatePathfinder(cellI, false)
 		unit.inventory.add(building.inventory)
 		building.inventory.remove(building.inventory)
 		unit.inventory.add(building.resourceCost)

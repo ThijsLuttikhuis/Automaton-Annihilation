@@ -4,26 +4,26 @@ var inputBuild: Array[InputConfiguration] = []
 var inputCombat: Array[InputConfiguration] = []
 var inputGeneral: Array[InputConfiguration] = []
 
-func update(selectedUnits: Array[Unit], isBuilding: bool):
-	var actions = getInputMapActionsPressed(isBuilding)
+func update(selectedUnits: Array[Unit], isInBuildmenu: bool):
+	var actions: Array[String] = getInputMapActionsPressed(isInBuildmenu)
 	for action in actions:
 		var value = pressKey(action)
 		for unit in selectedUnits:
 			unit.inputConfigurationList.pressKey(action, value)
 	
-	actions = getInputMapActionsReleased(isBuilding)
+	actions = getInputMapActionsReleased(isInBuildmenu)
 	for action in actions:
 		for unit in selectedUnits:
 			unit.inputConfigurationList.pressKey(action, 0)
-	
+
 func getAllInputConfigs():
 	return [inputBuild, inputCombat, inputGeneral]
 
-func getInputMapActionsPressed(isBuilding: bool):
+func getInputMapActionsPressed(isInBuildmenu: bool) -> Array[String]:
 	var actions: Array[String] = []
 	for inputs in getAllInputConfigs():
 		for config in inputs:
-			if !isBuilding || (isBuilding && config.canPressWhileBuilding()):
+			if !isInBuildmenu || (isInBuildmenu && config.canPressWhileBuilding()):
 				if Input.is_action_just_pressed(config.getInputMap()):
 					actions.push_back(config.getInputMap())
 				if !config.getInputMapPrev().is_empty() && Input.is_action_just_pressed(config.getInputMapPrev()):
@@ -32,11 +32,11 @@ func getInputMapActionsPressed(isBuilding: bool):
 					actions.push_back(config.getInputMap())
 	return actions
 
-func getInputMapActionsReleased(isBuilding: bool):
+func getInputMapActionsReleased(isInBuildmenu: bool):
 	var actions: Array[String] = []
 	for inputs in getAllInputConfigs():
 		for config in inputs:
-			if !isBuilding || (isBuilding && config.canPressWhileBuilding()):
+			if !isInBuildmenu || (isInBuildmenu && config.canPressWhileBuilding()):
 				if !config.isToggle() && Input.is_action_just_released(config.getInputMap()):
 					actions.push_back(config.getInputMap())
 	return actions

@@ -52,10 +52,10 @@ func clear():
 func update(unit: Unit, dt):
 	if !line.points.is_empty():
 		line.points[0] = get_parent().position
-		
+	
 	if paused:
 		return
-		
+	
 	updatePassives(unit, dt)
 	updateActions(unit, dt)
 
@@ -65,7 +65,7 @@ func updatePassives(unit, dt):
 		var completed = passive.update(unit, dt)
 		if completed:
 			toErase.push_back(passive)
-			
+		
 	for item in toErase:
 		actions.erase(toErase)
 

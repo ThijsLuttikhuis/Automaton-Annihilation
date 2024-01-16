@@ -1,12 +1,14 @@
 # Automaton-Annihilation
 
 ## TODO: Improvement Items
- - Mech Lab: move unit to empty spot
+ - Conveyor moving away -> PlaceItemsComponent
  - Multi Unit apply input button: bool for each config: apply to all selected?
  - Pathfinding on separate Thread
  - Wider input config UI
  - Sometimes the architect gets freed when demolishing a building in self position
  - Make UI Mobile friendly
+ - Threads: check if a thread is already finding the target pos / location (check addpath? idk)
+ - Check if you can skip part of the path (sometimes units go back seemingly at random)
 
 ## TODO: DEMO v2
  - Second Enemy Type (ranged / faster / ...)
@@ -16,6 +18,7 @@
  - Conveyor Splitter
  - Conveyor Tunnel
  - Inserter
+ - Inventory max size / Management
 
 ## TODO: long term
  - Make scene with root node script for Pickupitems, check neighbour squares, ... 
@@ -33,6 +36,9 @@
  - Smart enemy units that avoid towers, break towers ...
 
 ## DONE:
+ - Refactor inheritance -> composition of PickupItemsComponent and PlaceItemsComponent
+ - Mech Lab: move unit to empty spot
+ - ------------------------------------------------------
  - DEMO!!! :)
  - Enemies spawn more the later the game
  - Enemy Attacks

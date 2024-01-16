@@ -26,10 +26,10 @@ func updateInputConfiguration():
 	if !mainUnit:
 		return
 	
-	var isBuilding = (getBuildmenuTab() != 0)
-	mainUnit.inputConfigurationList.update(selectedUnits, isBuilding)
+	var isInBuildmenu = (getBuildmenuTab() != 0)
+	mainUnit.inputConfigurationList.update(selectedUnits, isInBuildmenu)
 	
-	if isBuilding:
+	if isInBuildmenu:
 		return
 		
 	if getDemolishButton():

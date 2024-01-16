@@ -1,9 +1,10 @@
 class_name MoveAction extends UnitAction
 
-const DISTANCE_THRESHOLD = 5
+const DISTANCE_THRESHOLD := 5.0
+const MOVE_AWAY_DISTANCE := 12.0
 
 var testLine: Node2D
-var pathFound
+var pathFound: PackedVector2Array = []
 var pathIndex: int = 1
 var pathUpdateTime: float = 0.0
 
@@ -16,10 +17,20 @@ func update(unit: Unit, _dt):
 	
 	updateTestLinePosition(unit)
 	
-	if !isPathClear(unit):
-		updatePathfinder(unit)
-	else:
+	if isPathClear(unit):
 		unit.targetPosition = actionPosition
+	else:
+		var closestUnitOnLine := getClosestMoveUnitOnTestLine(unit)
+		var distanceToClosestUnitSquared = (closestUnitOnLine.position - unit.position).length_squared()
+		var avoidanceMargin = 1.2
+		var avoidDistance = (unit.get_node("CollisionShape2D").shape.radius + closestUnitOnLine.get_node("CollisionShape2D").shape.radius) * avoidanceMargin
+		if closestUnitOnLine != unit && distanceToClosestUnitSquared < avoidDistance * avoidDistance:
+			var actionPosDir = (actionPosition - unit.position)
+			unit.targetPosition = unit.position + actionPosDir.rotated(deg_to_rad(90))
+			var moveAwayDistance = MOVE_AWAY_DISTANCE
+			closestUnitOnLine.pleaseMoveAwayFrom(unit, moveAwayDistance)
+		else:
+			updatePathfinder(unit)
 	
 	if unit.targetPosition == actionPosition && unit.isNavigationFinished():
 		unit.velocity = Vector2(0,0)
@@ -38,9 +49,19 @@ func updateTestLinePosition(unit: Unit):
 	capsule.position = (endPos + startPos) * 0.5
 	capsule.rotation = PI * 0.5 + atan2(endPos.y - startPos.y, endPos.x - startPos.x)
 
+func getClosestMoveUnitOnTestLine(unit: Unit) -> Unit:
+	var unitsOnLine = unit.actionQueue.lineTestCollisionUnits
+	var closestUnit = unit
+	for unitOnLine in unitsOnLine:
+		if unitOnLine is MoveUnit && unit != unitOnLine && (closestUnit == unit || \
+			unitOnLine.position.distance_squared_to(unit.position) < closestUnit.position.distance_squared_to(unit.position)):
+			
+			closestUnit = unitOnLine
+	return closestUnit
+
 func isPathClear(unit):
 	var tileMap: WorldTileMap = unit.player.tileMap
-
+	
 	var targetCellPos = tileMap.local_to_map(actionPosition)
 	if tileMap.pathfinder.isPointSolid(targetCellPos):
 		return unit.actionQueue.lineTestCollisionCount < 3
@@ -49,26 +70,26 @@ func isPathClear(unit):
 
 func updatePathfinder(unit: Unit):
 	var tileMap: TileMap = unit.player.tileMap
+	var pathfinder: Pathfinder = tileMap.pathfinder
 	
 	var unitCellPos = tileMap.local_to_map(unit.position)
 	var targetCellPos = tileMap.local_to_map(actionPosition)
 	
-	if !pathFound || \
-		tileMap.local_to_map(pathFound[-1]) != targetCellPos || \
-		tileMap.pathfinder.getLastUpdateTime() >= pathUpdateTime:
-		
-		pathFound = tileMap.pathfinder.getPath(unit, unitCellPos, targetCellPos)
+	var oldPathFound := pathFound
+	pathFound = pathfinder.getPath(unit, unitCellPos, targetCellPos)
+	if oldPathFound != pathFound:
 		pathIndex = 1
-		pathUpdateTime = unit.player.world.getTime()
+
+	pathUpdateTime = unit.player.world.getTime()
 	
 	if pathIndex >= pathFound.size():
 		unit.targetPosition = actionPosition
 		return
 		
 	# hack actionQueue line to show pathFound
-	#unit.actionQueue.line.clear_points()
-	#for point in pathFound:
-		#unit.actionQueue.line.add_point(point)
+	unit.actionQueue.line.clear_points()
+	for point in pathFound:
+		unit.actionQueue.line.add_point(point)
 	
 	unit.targetPosition = pathFound[pathIndex]
 	if unit.isNavigationFinished():

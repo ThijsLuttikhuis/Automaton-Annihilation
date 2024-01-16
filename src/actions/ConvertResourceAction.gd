@@ -51,7 +51,12 @@ func placeResourceProduct(unit: Unit, resourceProduct: Inventory):
 		return resourceProduct.is_empty()
 
 func placeUnitProduct(unit: Unit, unitProductScene: PackedScene):
+	var position = unit.placeItemsComponent.getPlaceUnitPos()
+	if position == Vector2(9e9, 9e9):
+		return false
+	
 	var unitProduct = unitProductScene.instantiate()
-	unitProduct.position = actionPosition
+	unitProduct.position = position
 	unit.player.world.get_node("Units").add_child(unitProduct)
 	return true
+

@@ -28,7 +28,6 @@ var buildRange: float
 
 var conveyorPushSpeed: Array[ConveyorBelt] = []
 
-
 var viewRange: float = 100.0
 var radarRange: float = 100.0
 
@@ -56,6 +55,10 @@ func _physics_process(dt):
 
 func on_physics_process(_dt):
 	pass # can be overwritten
+
+func _exit_tree():
+	if player.selectedUnits.has(self):
+		player.selectedUnits.erase(self)
 
 func setGhost(ghost_: bool = true):
 	ghost = ghost_
@@ -108,8 +111,11 @@ func addHP(points: float):
 		healthBar.update()
 
 func demolish():
-	
 	onDemolished()
+	queue_free()
+
+func destroy():
+	onDestroyed()
 	queue_free()
 
 func onDestroyed():

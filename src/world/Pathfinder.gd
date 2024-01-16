@@ -127,6 +127,7 @@ func updatePathfinderThread(cellI: Vector2i, solid: bool):
 		aStarGrid.update()
 		aStarUpdateTime = world.getTime()
 		impossiblePaths = {}
+		validPaths = {}
 	
 	updateAstarMutex.unlock()
 	mutex.unlock()
@@ -163,7 +164,7 @@ func getLastUpdateTime() -> float:
 	updateAstarMutex.unlock()
 	return updateTime
 
-func getPath(unit: Unit, from: Vector2i, to: Vector2i):
+func getPath(unit: Unit, from: Vector2i, to: Vector2i) -> PackedVector2Array:
 	if isValidPath(unit, to):
 		return getValidPath(unit)
 	
@@ -184,7 +185,6 @@ func getPath(unit: Unit, from: Vector2i, to: Vector2i):
 		else:
 			addImpossiblePath(unit, to)
 			return []
-		
 	
 	addValidPath(unit, to)
 	var callFunction = Callable(self, "getPointPathThread").bind(unit, from, to)
@@ -208,10 +208,17 @@ func getPointPathThread(unit: Unit, from: Vector2i, to: Vector2i) -> PackedVecto
 
 func isValidPath(unit: Unit, to: Vector2i):
 	updateAstarMutex.lock()
+	
 	var isValid := false
 	if validPaths.has(unit):
 		var unitPath = validPaths[unit]
-		if unitPath[-1] == world.tileMap.map_to_local(to):
+		if isPointSolid(to):
+			var validPositions = getNeighbourPointsToTry(to)
+			for validPos in validPositions:
+				if unitPath[-1] == world.tileMap.map_to_local(validPos):
+					isValid = true
+					break
+		elif unitPath[-1] == world.tileMap.map_to_local(to):
 			isValid = true
 	
 	updateAstarMutex.unlock()

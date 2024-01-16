@@ -73,3 +73,9 @@ func isStuck(dt: float):
 	timeHardStuck += dt
 	
 	return timeStuck > TIME_TILL_UNSTUCK || timeHardStuck > TIME_TILL_HARD_UNSTUCK
+
+func pleaseMoveAwayFrom(unit: Unit, distance: float):
+	if !actionQueue.get_front():
+		var targetPos = position + (position - unit.position).normalized() * distance
+		var action = MoveAction.new(targetPos)
+		actionQueue.push_back([action])

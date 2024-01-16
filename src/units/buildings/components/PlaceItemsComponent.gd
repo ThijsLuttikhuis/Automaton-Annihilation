@@ -17,7 +17,9 @@ var placeItemsMode := PlaceItemsMode.new()
 
 @onready var building: Building = $".."
 
-var spaceOccupied := [0, 0, 0, 0, 0, 0, 0, 0]
+var spaceOccupiedBuildings := [0, 0, 0, 0, 0, 0, 0, 0]
+var spaceOccupiedItems := [0, 0, 0, 0, 0, 0, 0, 0]
+var spaceOccupiedMoveUnits := [0, 0, 0, 0, 0, 0, 0, 0]
 
 func _ready():
 	var inputBuild = building.inputConfigurationList.inputBuild
@@ -29,73 +31,44 @@ func _ready():
 func placeResource(resourceName: String) -> bool:
 	updatePlaceItemsMode()
 	
-	var tileMap = building.player.tileMap
-	var cellI = tileMap.local_to_map(global_position)
+	var cellI = building.player.tileMap.local_to_map(global_position)
 	
-	var xDirs = [1, 1, 1, 0, -1, -1, -1, 0]
-	var yDirs = [1, 0, -1, -1, -1, 0, 1, 1]
-	var dirs = range(8)
-	dirs.shuffle()
-	
-	for prioI in [2, 1, 0]:
-		if placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.CUSTOM &&\
-			!placeItemsMode.chestPrio == prioI &&\
-			!placeItemsMode.conveyorPrio == prioI &&\
-			!placeItemsMode.otherPrio == prioI:
-			
-			continue # skip inner for if there is no config with correct prio
-		
-		if prioI != 2 &&\
-			(placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.ANYWHERE ||\
-			placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.DISABLED):
-			
-			return false # prio is irrelevant if placeitemsmode is not custom
-			
-		for i in range(8):
-			if spaceOccupied[dirs[i]]:
-				continue
-			
-			var dxI = xDirs[dirs[i]]
-			var dyI = yDirs[dirs[i]]
-			var neighborCellI = cellI + Vector2i(dxI, dyI)
-			var neighborBuilding := building.player.world.getBuildingFromCellI(neighborCellI)
-			
-			if placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.DISABLED:
-				return false
-			
-			if placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.ANYWHERE:
-				if !neighborBuilding || neighborBuilding.acceptsItem(resourceName):
-					placeDown(resourceName, neighborCellI)
-					return true
-			
-			if placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.CUSTOM:
-				var canBuild = false
-				if neighborBuilding && neighborBuilding.has_node("PickupItemsComponent") && neighborBuilding.pickupItemsComponent.acceptsItem(resourceName):
-					canBuild = canBuild || (placeItemsMode.chestPrio == prioI && neighborBuilding.getDisplayName() == "Chest")
-					canBuild = canBuild || (placeItemsMode.conveyorPrio == prioI && neighborBuilding.getDisplayName() == "Conveyor Belt")
-					canBuild = canBuild || (placeItemsMode.otherPrio == prioI && neighborBuilding.getDisplayName() != "Chest" && neighborBuilding.getDisplayName() != "Conveyor Belt")
-				
-				if canBuild:
-					placeDown(resourceName, neighborCellI)
-					return true
-	
-	if placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.CUSTOM:
-		for i in range(8):
-			if spaceOccupied[dirs[i]]:
-				continue
-				
-			var dxI = xDirs[dirs[i]]
-			var dyI = yDirs[dirs[i]]
-			var neighborCellI = cellI + Vector2i(dxI, dyI)
-			var neighborBuilding: Building = building.player.world.getBuildingFromCellI(neighborCellI)
-			
-			if !neighborBuilding:
-				placeDown(resourceName, neighborCellI)
-				return true
+	var placeLocation = getCellIToPlaceResource(cellI, resourceName)
+	if placeLocation != Vector2i(9e9, 9e9):
+		placeDownItem(resourceName, placeLocation)
+		return true
 	
 	return false
 
-func placeDown(resourceName: String, cellI: Vector2i):
+func getPlaceUnitPos() -> Vector2:
+	updatePlaceItemsMode()
+	
+	var cellI = building.player.tileMap.local_to_map(global_position)
+	var placeLocation = getCellIToPlaceUnit(cellI)
+	if placeLocation == Vector2i(9e9, 9e9):
+		return Vector2(9e9, 9e9)
+	else:
+		return building.player.tileMap.map_to_local(placeLocation)
+
+func getCellIToPlaceUnit(cellI):
+	var dirs = range(8)
+	dirs.shuffle()
+		
+	for i in range(8):
+		var dir = dirs[i]
+		if spaceOccupiedItems[dir] || spaceOccupiedBuildings[dir] || spaceOccupiedMoveUnits[dir]:
+			continue
+		
+		var dPos = indexToRelativeNeighbourPos(dir)
+		var neighbourCellI = cellI + dPos
+		var neighbourBuilding: Building = building.player.world.getBuildingFromCellI(neighbourCellI)
+		
+		if !neighbourBuilding:
+			return neighbourCellI
+	
+	return Vector2i(9e9, 9e9)
+
+func placeDownItem(resourceName: String, cellI: Vector2i):
 	var itemScene = preload("res://src/items/Item.tscn")
 	var item = itemScene.instantiate()
 	item.setResource(resourceName)
@@ -121,10 +94,92 @@ func updatePlaceItemsMode():
 	config = building.inputConfigurationList.find("Other Prio")
 	placeItemsMode.otherPrio = config.getIndex() - 1
 
+func getCellIToPlaceResource(cellI, resourceName) -> Vector2i:
+	var dirs = range(8)
+	dirs.shuffle()
+	
+	for prioI in [2, 1, 0]:
+		if !prioIInPlaceItemsMode(prioI):
+			continue
+		
+		for i in range(8):
+			var dir = dirs[i]
+			if spaceOccupiedItems[dir] || spaceOccupiedMoveUnits[dir]:
+				continue
+			
+			var dPos = indexToRelativeNeighbourPos(dir)
+			var neighbourCellI = cellI + dPos
+			var neighbourBuilding := building.player.world.getBuildingFromCellI(neighbourCellI)
+			
+			if placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.DISABLED:
+				return Vector2i(9e9, 9e9)
+			
+			if placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.ANYWHERE:
+				if !neighbourBuilding || neighbourBuilding.acceptsItem(resourceName):
+					return neighbourCellI
+			
+			if placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.CUSTOM:
+				if buildingAcceptsItem(neighbourBuilding, resourceName) && canPlaceInBuilding(neighbourBuilding, prioI, ):
+					return neighbourCellI
+	
+	if placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.CUSTOM:
+		for i in range(8):
+			var dir = dirs[i]
+			if spaceOccupiedItems[dir] || spaceOccupiedBuildings[dir] || spaceOccupiedMoveUnits[dir]:
+				continue
+			
+			var dPos = indexToRelativeNeighbourPos(dir)
+			var neighbourCellI = cellI + dPos
+			var neighbourBuilding: Building = building.player.world.getBuildingFromCellI(neighbourCellI)
+			
+			if !neighbourBuilding:
+				return neighbourCellI
+	
+	return Vector2i(9e9, 9e9)
+
+func canPlaceInBuilding(neighbourBuilding, prioI) -> bool:
+	return (placeItemsMode.chestPrio == prioI && neighbourBuilding.getDisplayName() == "Chest") || \
+	 	(placeItemsMode.conveyorPrio == prioI && neighbourBuilding.getDisplayName() == "Conveyor Belt") || \
+	 	(placeItemsMode.otherPrio == prioI && neighbourBuilding.getDisplayName() != "Chest" && neighbourBuilding.getDisplayName() != "Conveyor Belt")
+
+func buildingAcceptsItem(neighbourBuilding, resourceName) -> bool:
+	return neighbourBuilding && \
+		neighbourBuilding.has_node("PickupItemsComponent") && \
+		neighbourBuilding.pickupItemsComponent.acceptsItem(resourceName)
+
+func prioIInPlaceItemsMode(prioI) -> bool:
+	if placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.CUSTOM && \
+		!placeItemsMode.chestPrio == prioI && \
+		!placeItemsMode.conveyorPrio == prioI && \
+		!placeItemsMode.otherPrio == prioI:
+		
+		return false # skip inner for if there is no config with correct prio
+	
+	if prioI != 2 && \
+		(placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.ANYWHERE ||\
+		placeItemsMode.mode == PlaceItemsMode.PLACE_ITEMS_MODE.DISABLED):
+		
+		return false # prio is irrelevant if placeitemsmode is not custom
+	
+	return true
+
+func indexToRelativeNeighbourPos(index: int) -> Vector2i: 
+	var xDirs = [1, 1, 1, 0, -1, -1, -1, 0]
+	var yDirs = [1, 0, -1, -1, -1, 0, 1, 1]
+	return Vector2i(xDirs[index], yDirs[index])
+
 func addUnit(unit: Node2D, pos: int):
-	if unit is BuildUnit || unit is Item || unit is Building:
-		spaceOccupied[pos] += 1
+	if unit is BuildUnit:
+		spaceOccupiedMoveUnits[pos] += 1
+	if unit is Item:
+		spaceOccupiedItems[pos] += 1
+	if unit is Building:
+		spaceOccupiedBuildings[pos] += 1
 
 func removeUnit(unit: Node2D, pos: int):
-	if unit is BuildUnit || unit is Item || unit is Building:
-		spaceOccupied[pos] -= 1
+	if unit is BuildUnit:
+		spaceOccupiedMoveUnits[pos] -= 1
+	if unit is Item:
+		spaceOccupiedItems[pos] -= 1
+	if unit is Building:
+		spaceOccupiedBuildings[pos] -= 1
